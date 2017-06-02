@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="text_color_common_normal">#444444</color>
+    <color name="send_tips_bg">#FFFFE0</color>
+    <color name="send_tips_txt">#FF8C69</color>
+    <color name="text_color_common_lighted1">#777777</color>
+    <color name="text_color_common_lighted">#999999</color>
+    <color name="color_gray_normal">#aaaaaa</color>
+    <color name="text_color_red_4">#fc5151</color>
+    <color name="text_color_red_1">#ff6a63</color>
+</resources>
