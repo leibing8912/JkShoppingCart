@@ -25,6 +25,10 @@ public class ShoppingCartTestBean {
     public static class Product{
         // 产品名
         public String productName = "";
+        // 产品价格
+        public double price = -1;
+        // 产品数量
+        public int count = 0;
         // 产品是否选中
         public boolean isSelected = false;
     }

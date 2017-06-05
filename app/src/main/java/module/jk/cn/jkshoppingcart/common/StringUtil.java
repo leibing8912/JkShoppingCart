@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.common;
 
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,5 +85,18 @@ public class StringUtil {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * 保留两位小数
+	 * @author leibing
+	 * @createTime 2017/3/13
+	 * @lastModify 2017/3/13
+	 * @param num
+	 * @return
+	 */
+	public static String doubleTwoDecimal(Double num){
+		DecimalFormat df  = new DecimalFormat("######0.00");
+		return df.format(num);
 	}
 }

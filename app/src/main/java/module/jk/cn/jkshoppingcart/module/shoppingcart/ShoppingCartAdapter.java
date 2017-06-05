@@ -243,6 +243,10 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
         CheckBox childCb;
         @BindView(R.id.tv_product_child)
         TextView productChildTv;
+        @BindView(R.id.tv_price_child)
+        TextView childPriceTv;
+        @BindView(R.id.tv_buy_num_child)
+        TextView childBuyNumTv;
 
         /**
          * Constructor
@@ -273,6 +277,12 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             // 设置商家名称
             if (StringUtil.isNotEmpty(model.productName))
                 productChildTv.setText(model.productName);
+            // 设置价格
+            if (model.price != -1)
+                childPriceTv.setText("￥" + StringUtil.doubleTwoDecimal(model.price));
+            // 设置数量
+            if (model.count != 0)
+                childBuyNumTv.setText("x " + model.count);
         }
     }
 

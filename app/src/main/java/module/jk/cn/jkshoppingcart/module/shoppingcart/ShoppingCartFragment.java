@@ -17,8 +17,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
+import module.jk.cn.jkshoppingcart.common.StringUtil;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.SHOPPINGCART;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.TOTAL_PRICE_PREX;
 
 /**
  * @className: ShoppingCartFragment
@@ -61,6 +64,10 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     private ArrayList<ShoppingCartTestBean> mData;
     // 适配器
     private ShoppingCartAdapter mAdapter;
+    // 购买的商品总价
+    private double totalPrice = 0.00;
+    // 购买的商品总数量
+    private int totalCount = 0;
 
     @Nullable
     @Override
@@ -104,7 +111,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
       * @return
       */
     private void getData() {
-        for (int i=0; i< 5; i++){
+        for (int i=0; i< 100; i++){
             ShoppingCartTestBean mShoppingCartTestBean = new ShoppingCartTestBean();
             mShoppingCartTestBean.isSelected = false;
             mShoppingCartTestBean.sellerName = "卖家" + i;
@@ -113,6 +120,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 ShoppingCartTestBean.Product mProduct = new ShoppingCartTestBean.Product();
                 mProduct.productName = "产品" + j;
                 mProduct.isSelected = false;
+                mProduct.count = j + 1;
+                mProduct.price = 1 + j * 1.6;
                 mProducts.add(mProduct);
             }
             mShoppingCartTestBean.product = mProducts;
@@ -147,7 +156,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     }
 
     @OnClick({R.id.iv_back, R.id.btn_edit, R.id.btn_collect, R.id.btn_delete,
-            R.id.btn_pay, R.id.cb_all_check})
+            R.id.btn_pay, R.id.cb_all_check, R.id.ly_all_check})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -167,6 +176,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 // 结算
                 break;
             case R.id.cb_all_check:
+                // 全选、反选
+                doCheckAll();
+                break;
+            case R.id.ly_all_check:
+                allCheckCb.setChecked(!allCheckCb.isChecked());
                 // 全选、反选
                 doCheckAll();
                 break;
@@ -230,7 +244,6 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 mData.get(groupPosition).product.get(i).isSelected = isChecked;
             }
         }
-
         if (isAllCheck()) {
             // 全选
             allCheckCb.setChecked(true);
@@ -238,12 +251,14 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             // 反选
             allCheckCb.setChecked(false);
         }
-
+        // 更新数据源
         if (mAdapter != null){
             mAdapter.setData(mData);
         }
+        // 统计操作(购物车数量、合计金额)
+        calculate();
     }
-    
+
     /**
       * 全选、反选
       * @author leibing
@@ -264,8 +279,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 }
             }
         }
+        // 更新数据源
         if (mAdapter != null)
             mAdapter.setData(mData);
+        // 统计操作(购物车数量、合计金额)
+        calculate();
     }
 
     @Override
@@ -294,7 +312,6 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 mData.get(groupPosition).isSelected = false;
             }
         }
-
         if (isAllCheck()) {
             // 全选
             allCheckCb.setChecked(true);
@@ -302,9 +319,48 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             // 反选
             allCheckCb.setChecked(false);
         }
-
+        // 更新数据源
         if (mAdapter != null){
             mAdapter.setData(mData);
+        }
+        // 统计操作(购物车数量、合计金额)
+        calculate();
+    }
+
+    /**
+      * 统计操作(购物车数量、合计金额)
+      * @author leibing
+      * @createTime 2017/6/5
+      * @lastModify 2017/6/5
+      * @param
+      * @return
+      */
+    private void calculate(){
+        totalCount = 0;
+        totalPrice = 0.00;
+        if (mData != null
+                && mData.size() !=0){
+            for (int i = 0; i < mData.size(); i++) {
+                if (mData.get(i) != null
+                        && mData.get(i).product != null){
+                    for (int j=0; j<mData.get(i).product.size();j++){
+                        ShoppingCartTestBean.Product mProduct = mData.get(i).product.get(j);
+                        if (mProduct != null
+                                && mProduct.isSelected){
+                            totalCount++;
+                            totalPrice += mProduct.price * mProduct.count;
+                        }
+                    }
+                }
+            }
+            // 合计金额
+            totalTv.setText(TOTAL_PRICE_PREX + StringUtil.doubleTwoDecimal(totalPrice));
+            // 计算购物车的金额为0时候清空购物车的视图
+            if(totalCount == 0){
+                titleTv.setText(SHOPPINGCART);
+            } else{
+                titleTv.setText(SHOPPINGCART + "(" + totalCount + ")");
+            }
         }
     }
 }
