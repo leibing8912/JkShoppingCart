@@ -12,4 +12,5 @@
     <color name="color_gray_normal">#aaaaaa</color>
     <color name="text_color_red_4">#fc5151</color>
     <color name="text_color_red_1">#ff6a63</color>
+    <color name="page_backgroup">#f2f2f2</color>
 </resources>

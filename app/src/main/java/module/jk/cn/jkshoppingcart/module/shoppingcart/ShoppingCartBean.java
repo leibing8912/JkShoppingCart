@@ -19,7 +19,7 @@ public class ShoppingCartBean implements Serializable{
     // 该卖家下产品是否全部选中
     public boolean isSelected = false;
     // 产品
-    public Product product;
+    public ArrayList<Product> product;
 
     /**
      * @className: Product
