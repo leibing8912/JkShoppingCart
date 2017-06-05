@@ -1,4 +1,4 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart;
+package module.jk.cn.jkshoppingcart.module.shoppingcart.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart;
+package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +19,9 @@ import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.cache.ListCache;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ShoppingCartAdapter;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartTestBean;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.SHOPPINGCART;
@@ -80,10 +83,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             ListCache<ShoppingCartTestBean> mReadCache
                     = (ListCache<ShoppingCartTestBean>) object;
             mData = mReadCache.getObjList();
-            if (mAdapter != null)
-                mAdapter.setData(mData);
+            // 设置全选or反选
+            setAllCheck();
+            // 更新数据源
+            updateData();
         }
-
+        
         @Override
         public void saveBeforeEditDataSuccess() {
             doCheckAll(false);
@@ -286,17 +291,10 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 mData.get(groupPosition).product.get(i).isSelected = isChecked;
             }
         }
-        if (isAllCheck()) {
-            // 全选
-            allCheckCb.setChecked(true);
-        } else {
-            // 反选
-            allCheckCb.setChecked(false);
-        }
+        // 设置全选or反选
+        setAllCheck();
         // 更新数据源
-        if (mAdapter != null){
-            mAdapter.setData(mData);
-        }
+        updateData();
         // 统计操作(购物车数量、合计金额)
         calculate();
     }
@@ -322,8 +320,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             }
         }
         // 更新数据源
-        if (mAdapter != null)
-            mAdapter.setData(mData);
+        updateData();
         // 统计操作(购物车数量、合计金额)
         calculate();
     }
@@ -354,6 +351,37 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 mData.get(groupPosition).isSelected = false;
             }
         }
+        // 设置全选or反选
+        setAllCheck();
+        // 更新数据源
+        updateData();
+        // 统计操作(购物车数量、合计金额)
+        calculate();
+    }
+
+    /**
+      * 更新数据源
+      * @author leibing
+      * @createTime 2017/6/5
+      * @lastModify 2017/6/5
+      * @param
+      * @return
+      */
+    private void updateData(){
+        if (mAdapter != null){
+            mAdapter.setData(mData);
+        }
+    }
+
+    /**
+      * 设置全选or反选
+      * @author leibing
+      * @createTime 2017/6/5
+      * @lastModify 2017/6/5
+      * @param
+      * @return
+      */
+    private void setAllCheck(){
         if (isAllCheck()) {
             // 全选
             allCheckCb.setChecked(true);
@@ -361,12 +389,6 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             // 反选
             allCheckCb.setChecked(false);
         }
-        // 更新数据源
-        if (mAdapter != null){
-            mAdapter.setData(mData);
-        }
-        // 统计操作(购物车数量、合计金额)
-        calculate();
     }
 
     /**

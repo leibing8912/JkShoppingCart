@@ -1,4 +1,4 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart;
+package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ViewPagerAdapter;
 
 /**
  * @className: ShoppingCartActivity

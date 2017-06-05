@@ -1,7 +1,8 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart;
+package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 
 import android.content.Context;
 import java.lang.ref.WeakReference;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 
 /**
  * @className: ShoppingCartViewModel

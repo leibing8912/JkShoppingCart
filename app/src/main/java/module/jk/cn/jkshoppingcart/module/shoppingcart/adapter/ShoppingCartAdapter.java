@@ -1,4 +1,4 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart;
+package module.jk.cn.jkshoppingcart.module.shoppingcart.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartTestBean;
 
 /**
  * @className: ShoppingCartAdapter

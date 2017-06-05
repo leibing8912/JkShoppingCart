@@ -1,10 +1,12 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart;
+package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 
 import android.content.Context;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import module.jk.cn.jkshoppingcart.cache.ListCache;
 import module.jk.cn.jkshoppingcart.cache.SpLocalCache;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartTestBean;
 
 /**
  * @className: ShoppingCartModel
@@ -12,7 +14,7 @@ import module.jk.cn.jkshoppingcart.cache.SpLocalCache;
  * @author: leibing
  * @createTime: 2017/6/5
  */
-public class ShoppingCartModel implements ShoppingCartInterface.UIToDataInterface{
+public class ShoppingCartModel implements ShoppingCartInterface.UIToDataInterface {
     // activity weak refer
     private WeakReference<Context> mContextWeakRef;
     // shoppingcart data listener
