@@ -17,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
 
 /**
  * @className: ShoppingCartFragment
@@ -69,12 +71,28 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         View view = inflater.inflate(R.layout.fragment_shopping_cart, null);
         // bind buffer knife
         ButterKnife.bind(this, view);
+        // initView
+        initView();
         // set adapter
         setAdapter();
         // get data to update ui
         getData();
 
         return view;
+    }
+
+    /**
+      * init view
+      * @author leibing
+      * @createTime 2017/6/5
+      * @lastModify 2017/6/5
+      * @param
+      * @return
+      */
+    private void initView() {
+        // 右上角文案显示为“编辑”
+        editBtn.setText(EDIT_TXT);
+        editBtn.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -137,6 +155,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
             case R.id.btn_edit:
                 // 编辑
+                editLogic();
                 break;
             case R.id.btn_collect:
                 // 移入收藏
@@ -150,6 +169,33 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             case R.id.cb_all_check:
                 // 全选、反选
                 doCheckAll();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+      * 编辑逻辑
+      * @author leibing
+      * @createTime 2017/6/5
+      * @lastModify 2017/6/5
+      * @param
+      * @return
+      */
+    private void editLogic() {
+        switch (editBtn.getText().toString().trim()){
+            case EDIT_TXT:
+                // 编辑处理
+                editBtn.setText(COMPLETE_TXT);
+                collectDeleteLy.setVisibility(View.VISIBLE);
+                totalSettleLy.setVisibility(View.GONE);
+                break;
+            case COMPLETE_TXT:
+                // 编辑完成
+                editBtn.setText(EDIT_TXT);
+                collectDeleteLy.setVisibility(View.GONE);
+                totalSettleLy.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -197,7 +243,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             mAdapter.setData(mData);
         }
     }
-
+    
     /**
       * 全选、反选
       * @author leibing
