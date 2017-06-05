@@ -87,6 +87,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             setAllCheck();
             // 更新数据源
             updateData();
+            // 统计操作(购物车数量、合计金额)
+            calculate();
         }
         
         @Override
