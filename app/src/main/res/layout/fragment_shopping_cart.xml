@@ -27,6 +27,7 @@
             android:layout_height="match_parent"
             android:childIndicator="@null"
             android:groupIndicator="@null"
+            android:scrollbars="none"
             android:layout_above="@+id/fly_shoppingcart_settle">
         </ExpandableListView>
     </RelativeLayout>

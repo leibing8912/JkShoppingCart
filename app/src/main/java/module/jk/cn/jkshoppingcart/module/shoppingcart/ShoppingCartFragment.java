@@ -127,7 +127,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         // set adapter
         shoppingcartExlv.setAdapter(mAdapter);
     }
-    
+
     @OnClick({R.id.iv_back, R.id.btn_edit, R.id.btn_collect, R.id.btn_delete,
             R.id.btn_pay, R.id.cb_all_check})
     public void onClick(View view){
