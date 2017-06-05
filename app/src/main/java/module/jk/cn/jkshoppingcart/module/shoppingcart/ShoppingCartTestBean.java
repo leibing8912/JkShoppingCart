@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.module.shoppingcart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,9 @@ import java.util.ArrayList;
  * @author: leibing
  * @createTime: 2017/6/5
  */
-public class ShoppingCartTestBean {
+public class ShoppingCartTestBean implements Serializable{
+    // uid
+    private static final long serialVersionUID = 7835084188888087406L;
     // 卖家名称
     public String sellerName = "";
     // 该卖家下产品是否全部选中
@@ -22,7 +25,9 @@ public class ShoppingCartTestBean {
      * @author: leibing
      * @createTime: 2017/6/2
      */
-    public static class Product{
+    public static class Product implements Serializable{
+        // uid
+        private static final long serialVersionUID = 7897435387291649986L;
         // 产品名
         public String productName = "";
         // 产品价格

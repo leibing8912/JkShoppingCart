@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
+import module.jk.cn.jkshoppingcart.cache.ListCache;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
@@ -68,6 +69,26 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     private double totalPrice = 0.00;
     // 购买的商品总数量
     private int totalCount = 0;
+    // shoppingcart logical processing instance
+    private ShoppingCartViewModel mShoppingCartViewModel;
+    // shoppingcart logical processing listener
+    private ShoppingCartViewModel.ViewModelListener mViewModelListener
+            = new ShoppingCartViewModel.ViewModelListener() {
+
+        @Override
+        public void readBeforeEditData(Object object) {
+            ListCache<ShoppingCartTestBean> mReadCache
+                    = (ListCache<ShoppingCartTestBean>) object;
+            mData = mReadCache.getObjList();
+            if (mAdapter != null)
+                mAdapter.setData(mData);
+        }
+
+        @Override
+        public void saveBeforeEditDataSuccess() {
+            doCheckAll(false);
+        }
+    };
 
     @Nullable
     @Override
@@ -82,10 +103,24 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         initView();
         // set adapter
         setAdapter();
+        // init shoppingcart logical processing
+        initShoppingCartViewModel();
         // get data to update ui
         getData();
 
         return view;
+    }
+
+    /**
+      * init shoppingcart logical processing
+      * @author leibing
+      * @createTime 2017/6/5
+      * @lastModify 2017/6/5
+      * @param
+      * @return
+      */
+    private void initShoppingCartViewModel() {
+        mShoppingCartViewModel = new ShoppingCartViewModel(getActivity(), mViewModelListener);
     }
 
     /**
@@ -177,12 +212,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
             case R.id.cb_all_check:
                 // 全选、反选
-                doCheckAll();
+                doCheckAll(allCheckCb.isChecked());
                 break;
             case R.id.ly_all_check:
                 allCheckCb.setChecked(!allCheckCb.isChecked());
                 // 全选、反选
-                doCheckAll();
+                doCheckAll(allCheckCb.isChecked());
                 break;
             default:
                 break;
@@ -201,12 +236,19 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         switch (editBtn.getText().toString().trim()){
             case EDIT_TXT:
                 // 编辑处理
+                // 保存编辑前数据
+                if (mShoppingCartViewModel != null)
+                    mShoppingCartViewModel.saveBeforeEditData(mData);
+                allCheckCb.setChecked(false);
                 editBtn.setText(COMPLETE_TXT);
                 collectDeleteLy.setVisibility(View.VISIBLE);
                 totalSettleLy.setVisibility(View.GONE);
                 break;
             case COMPLETE_TXT:
                 // 编辑完成
+                // 获取编辑前数据
+                if (mShoppingCartViewModel != null)
+                    mShoppingCartViewModel.getBeforeEditData();
                 editBtn.setText(EDIT_TXT);
                 collectDeleteLy.setVisibility(View.GONE);
                 totalSettleLy.setVisibility(View.VISIBLE);
@@ -264,18 +306,18 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
       * @author leibing
       * @createTime 2017/6/5
       * @lastModify 2017/6/5
-      * @param
+      * @param isSelectAll
       * @return
       */
-    private void doCheckAll() {
+    private void doCheckAll(boolean isSelectAll) {
         if (mData == null || mData.size() == 0)
             return;
         for (int i = 0; i < mData.size(); i++) {
-            mData.get(i).isSelected = allCheckCb.isChecked();
+            mData.get(i).isSelected = isSelectAll;
             if (mData.get(i).product != null
                     && mData.get(i).product.size() != 0) {
                 for (int j = 0; j < mData.get(i).product.size(); j++) {
-                    mData.get(i).product.get(j).isSelected = allCheckCb.isChecked();
+                    mData.get(i).product.get(j).isSelected = isSelectAll;
                 }
             }
         }

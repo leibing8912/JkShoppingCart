@@ -31,5 +31,29 @@ public class ShoppingCartInterface {
         void checkChild(int groupPosition, int childPosition, boolean isChecked);
     }
 
+    /**
+     * @interfaceName:UIToDataInterface
+     * @interfaceDescription: ui层往数据层操作接口
+     * @author: leibing
+     * @createTime: 2017/6/5
+     */
+    public interface UIToDataInterface{
+        // 保存编辑前数据
+        void saveBeforeEditData(Object object);
+        // 获取编辑前数据
+        void getBeforeEditData();
+    }
 
+    /**
+     * @interfaceName: DataToUIListener
+     * @interfaceDescription: 数据层往ui层回调监听
+     * @author: leibing
+     * @createTime: 2017/6/5
+     */
+    public interface DataToUIListener{
+        // 读取编辑前数据
+        void readBeforeEditData(Object object);
+        // 保存编辑前数据成功
+        void saveBeforeEditDataSuccess();
+    }
 }
