@@ -118,4 +118,5 @@
     <color name="tab_select">#06a6f8</color>
     <color name="tab_normal">#333333</color>
     <color name="half_transparent_bg">#88000000</color>
+    <color name="shoppingcart_gift_bg">#eff7fe</color>
 </resources>

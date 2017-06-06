@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="15dp"
+    android:orientation="vertical">
+    <!-- 组合 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
+        android:background="@color/color_white">
+        <!-- 子选 -->
+        <CheckBox
+            android:id="@+id/cb_child_group"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:button="@drawable/selector_check_box_round_blue"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        <!-- 药品图 -->
+        <ImageView
+            android:id="@+id/iv_child_group"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@color/colorAccent"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        <!-- 药品名称、数量、价格-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:orientation="vertical">
+            <!-- 药品名称 -->
+            <TextView
+                android:id="@+id/tv_drug_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black2"
+                android:singleLine="true"
+                android:ellipsize = "end"
+                android:text="金锁固精丸金锁固精丸金锁固精丸金锁固精丸金锁固精丸金锁固精丸"/>
+            <!-- 价格、数量显示 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <!-- 价格 -->
+                <TextView
+                    android:id="@+id/tv_real_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_color_black2"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="￥326.60"/>
+                <!-- 数量显示 -->
+                <TextView
+                    android:id="@+id/tv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x2"
+                    android:textColor="@color/text_color_black2"
+                    android:layout_alignParentRight="true"
+                    android:textSize="13sp"/>
+            </RelativeLayout>
+            <!-- 数量加减 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <!-- 商品减 -->
+                <ImageView
+                    android:id="@+id/iv_child_group_sub"
+                    android:layout_width="24dp"
+                    android:layout_height="19dp"
+                    android:scaleType="fitXY"
+                    android:background="@color/colorAccent" />
+                <!-- 数量 -->
+                <EditText
+                    android:id="@+id/edt_child_group_number"
+                    android:layout_width="38dp"
+                    android:layout_height="24dp"
+                    android:longClickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:background="@color/color_yellow"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_color_common_normal"
+                    android:gravity="center"
+                    android:inputType="phone"
+                    android:text="1" />
+                <!-- 商品加 -->
+                <ImageView
+                    android:id="@+id/iv_child_group_add"
+                    android:layout_width="24dp"
+                    android:layout_height="19dp"
+                    android:scaleType="fitXY"
+                    android:background="@color/colorAccent" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 组合单项商品容器 -->
+    <LinearLayout
+        android:id="@+id/ly_item_child_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:orientation="vertical"/>
+</LinearLayout>

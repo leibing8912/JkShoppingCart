@@ -88,7 +88,7 @@
                     android:textColor="@color/text_color_common_lighted"
                     android:layout_marginTop="8dp"
                     android:text="规格：10包*20"/>
-                <!-- 数量 -->
+                <!-- 数量加减 -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

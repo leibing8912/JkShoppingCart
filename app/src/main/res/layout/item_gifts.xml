@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="26dp"
-    android:background="@color/text_color_blue"
+    android:background="@color/shoppingcart_gift_bg"
     android:paddingLeft="46dp">
     <TextView
         android:id="@+id/tv_gift"
