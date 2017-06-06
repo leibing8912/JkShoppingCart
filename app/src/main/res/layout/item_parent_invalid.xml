@@ -6,8 +6,7 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:gravity="center_vertical"
-    android:background="@color/color_white"
-    android:visibility="gone">
+    android:background="@color/color_white">
     <!-- 组选 -->
     <CheckBox
         android:id="@+id/cb_parent_invalid_item"

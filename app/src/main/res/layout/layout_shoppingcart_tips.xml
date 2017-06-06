@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ly_shoppingcart_tips"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="37dp"
+    android:gravity="center_vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:background="@color/send_tips_bg">
+    <!-- 提示语 -->
+    <TextView
+        android:id="@+id/tv_shoppingcart_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/send_tips_txt"
+        android:textSize="12sp"
+        android:text="健客自营产品" />
+    <!-- 跳转登录 -->
+    <RelativeLayout
+        android:id="@+id/rly_goto_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_goto_login"
+            android:layout_width="6dp"
+            android:layout_height="11dp"
+            android:src="@drawable/shoppingcart_new_delivery_address_check_details"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="去登录"
+            android:textColor="@color/send_tips_txt"
+            android:layout_toLeftOf="@+id/iv_goto_login"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"/>
+    </RelativeLayout>
 </LinearLayout>

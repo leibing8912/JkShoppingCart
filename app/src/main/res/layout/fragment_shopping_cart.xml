@@ -7,7 +7,7 @@
     <!-- actionbar -->
     <include layout="@layout/common_actionbar"/>
     <!-- 提示栏 -->
-    <include layout="@layout/layout_send_tips"/>
+    <include layout="@layout/layout_shoppingcart_tips"/>
     <!-- 购物车列表 + 底部结算布局 -->
     <RelativeLayout
         android:layout_width="match_parent"

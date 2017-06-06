@@ -18,7 +18,7 @@
         android:layout_height="40dp"
         android:scaleType="fitXY"
         android:layout_marginLeft="10dp"
-        android:background="@color/colorAccent"/>
+        android:src="@drawable/two_health_drug_pic1"/>
     <!-- 价格、数量、名称、规格 -->
     <RelativeLayout
         android:layout_width="match_parent"

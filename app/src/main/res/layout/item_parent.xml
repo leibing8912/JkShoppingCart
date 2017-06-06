@@ -41,7 +41,8 @@
             android:id="@+id/iv_right_item"
             android:layout_width="6dp"
             android:layout_height="11dp"
-            android:background="@color/colorAccent"
+            android:src="@drawable/shoppingcart_new_view_product_details"
+            android:visibility="gone"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
 </LinearLayout>

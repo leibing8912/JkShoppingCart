@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingRight="15dp"
-    android:orientation="vertical"
-    android:visibility="gone">
+    android:orientation="vertical">
     <!-- 单品 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
             android:id="@+id/iv_child_award"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:background="@color/colorAccent"
+            android:src="@drawable/two_health_drug_pic1"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
@@ -98,7 +97,7 @@
                     android:layout_height="15dp"
                     android:scaleType="fitXY"
                     android:layout_marginTop="11dp"
-                    android:background="@color/colorAccent"
+                    android:src="@drawable/shoppingcart_new_credits_exchange"
                     android:visibility="gone"/>
                 <!-- 奖品 -->
                 <ImageView
@@ -107,7 +106,7 @@
                     android:layout_height="15dp"
                     android:scaleType="fitXY"
                     android:layout_marginTop="11dp"
-                    android:background="@color/colorAccent" />
+                    android:src="@drawable/shoppingcart_new_prize" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

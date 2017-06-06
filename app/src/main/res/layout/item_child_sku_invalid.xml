@@ -26,7 +26,7 @@
             android:id="@+id/iv_child_sku_invalid"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:background="@color/colorAccent"
+            android:src="@drawable/two_health_drug_pic1"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"

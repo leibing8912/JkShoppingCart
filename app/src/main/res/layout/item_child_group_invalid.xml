@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
         android:scaleType="fitXY"
-        android:src="@drawable/shoppingcart_new_failure"/>
+        android:src="@drawable/shoppingcart_new_failure" />
     <!-- 套装名称 -->
     <TextView
         android:id="@+id/tv_invalid_drugname"
