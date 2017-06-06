@@ -4,17 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="15dp"
-    android:paddingTop="14dp"
-    android:visibility="gone">
+    android:paddingTop="14dp">
     <!-- 失效标志 -->
-    <TextView
-        android:id="@+id/tv_invalid_id"
+    <ImageView
+        android:id="@+id/iv_invalid_id"
         android:layout_width="24dp"
         android:layout_height="13dp"
-        android:textSize="10sp"
-        android:text="失效"
-        android:textColor="@color/color_white"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/shoppingcart_new_failure"/>
     <!-- 套装名称 -->
     <TextView
         android:id="@+id/tv_invalid_drugname"
@@ -24,7 +23,7 @@
         android:paddingLeft="7dp"
         android:textStyle="bold"
         android:text="前列腺炎并发阳痿"
-        android:layout_toRightOf="@+id/tv_invalid_id"
+        android:layout_toRightOf="@+id/iv_invalid_id"
         android:textColor="@color/text_color_common_lighted"/>
     <!-- 价格 -->
     <TextView

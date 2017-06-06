@@ -8,8 +8,8 @@
     <ImageView
         android:layout_width="4dp"
         android:layout_height="4dp"
-        android:background="@color/colorAccent"
         android:scaleType="fitXY"
+        android:src="@drawable/shoppingcart_new_suit_point"
         android:layout_marginLeft="57dp"/>
     <!-- 药品图片 -->
     <ImageView

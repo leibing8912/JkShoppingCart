@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="15dp"
-    android:orientation="vertical"
-    android:visibility="gone">
+    android:orientation="vertical">
     <!-- 组合 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,7 +87,7 @@
                     android:layout_width="24dp"
                     android:layout_height="19dp"
                     android:scaleType="fitXY"
-                    android:background="@color/colorAccent" />
+                    android:src="@drawable/shoppingcart_new_sub"/>
                 <!-- 数量 -->
                 <EditText
                     android:id="@+id/edt_child_group_number"
@@ -97,11 +96,11 @@
                     android:longClickable="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:background="@color/color_yellow"
                     android:textSize="13sp"
                     android:textColor="@color/text_color_common_normal"
                     android:gravity="center"
                     android:inputType="phone"
+                    android:background="@color/color_white"
                     android:text="1" />
                 <!-- 商品加 -->
                 <ImageView
@@ -109,7 +108,7 @@
                     android:layout_width="24dp"
                     android:layout_height="19dp"
                     android:scaleType="fitXY"
-                    android:background="@color/colorAccent" />
+                    android:src="@drawable/shoppingcart_new_add" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

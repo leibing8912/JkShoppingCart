@@ -25,7 +25,7 @@
             android:id="@+id/iv_goto_login"
             android:layout_width="6dp"
             android:layout_height="11dp"
-            android:background="@color/colorAccent"
+            android:src="@drawable/shoppingcart_new_delivery_address_check_details"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
         <TextView

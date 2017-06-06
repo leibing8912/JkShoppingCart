@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingRight="15dp"
-    android:orientation="vertical"
-    android:visibility="gone">
+    android:orientation="vertical">
     <!-- 单品 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,13 +14,13 @@
         android:paddingBottom="6dp"
         android:background="@color/color_white">
         <!-- 失效标志 -->
-        <TextView
+        <ImageView
             android:id="@+id/tv_child_sku_invalid"
             android:layout_width="24dp"
             android:layout_height="13dp"
-            android:textSize="10sp"
-            android:text="失效"
-            android:textColor="@color/color_white"/>
+            android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/shoppingcart_new_failure"/>
         <!-- 药品图 -->
         <ImageView
             android:id="@+id/iv_child_sku_invalid"
