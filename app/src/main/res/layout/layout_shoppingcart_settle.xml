@@ -17,7 +17,7 @@
             android:id="@+id/cb_all_check"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="15dp"
             android:button="@drawable/selector_check_box_round_blue"/>
         <TextView
             android:layout_width="wrap_content"
@@ -27,15 +27,59 @@
             android:textColor="@color/text_color_common_lighted1"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
-    <!-- 收藏、删除布局 -->
+    <!-- 结算布局 -->
     <LinearLayout
-        android:id="@+id/ly_collect_delete"
+        android:id="@+id/ly_total_settle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical"
         android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="15dp" >
+            <!-- 合计金额 -->
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合计：￥0.00"
+                android:textSize="15sp"
+                android:textColor="@color/text_color_red_4" />
+            <!-- 不含运费提示 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="不含运费"
+                android:textSize="10sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/text_color_common_lighted" />
+        </LinearLayout>
+        <!-- 结算按钮 -->
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@drawable/selector_btn_red_no_conner"
+            android:text="结算"
+            android:textSize="15sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+    <!-- 收藏、删除布局 -->
+    <LinearLayout
+        android:id="@+id/ly_collect_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
         <Button
             android:id="@+id/btn_collect"
             android:layout_marginRight="10dp"
@@ -45,59 +89,18 @@
             android:background="@drawable/selector_btn_white"
             android:gravity="center"
             android:text="移入收藏"
-            android:textColor="@color/text_color_common_lighted1"
-            android:textSize="13sp"/>
+            android:textColor="@color/text_color_common_lighted"
+            android:textSize="15sp"/>
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="88dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="1dp"
             android:layout_height="30dp"
-            android:background="@drawable/selector_btn_white"
+            android:background="@drawable/selector_btn_red"
             android:gravity="center"
             android:text="删除"
-            android:textColor="@color/text_color_common_lighted1"
+            android:textColor="@color/color_white"
             android:textSize="13sp"/>
-    </LinearLayout>
-    <!-- 结算布局 -->
-    <LinearLayout
-        android:id="@+id/ly_total_settle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_alignParentRight="true"
-        android:gravity="center_vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="14dp" >
-            <!-- 合计金额 -->
-            <TextView
-                android:id="@+id/tv_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="合计：￥0.00"
-                android:textSize="13sp"
-                android:textColor="@color/text_color_red_4" />
-            <!-- 不含运费提示 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="不含运费"
-                android:textSize="10sp"
-                android:textColor="#B6B6B6" />
-        </LinearLayout>
-        <!-- 结算按钮 -->
-        <Button
-            android:id="@+id/btn_pay"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:background="@drawable/selector_btn_red_no_conner"
-            android:text="结算"
-            android:textSize="13sp"
-            android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>
