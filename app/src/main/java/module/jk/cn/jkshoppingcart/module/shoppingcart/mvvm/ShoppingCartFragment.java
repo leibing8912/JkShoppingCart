@@ -44,11 +44,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     @BindView(R.id.btn_edit)
     Button editBtn;
     // 提示栏容器
-    @BindView(R.id.ly_send_tips)
-    LinearLayout sendTipsLy;
+    @BindView(R.id.ly_shoppingcart_tips)
+    LinearLayout shoppingcartTipsLy;
     // 提示栏文案
-    @BindView(R.id.tv_send_tips)
-    TextView sendTipsTv;
+    @BindView(R.id.tv_shoppingcart_tips)
+    TextView shoppingcartTipsTv;
     // 全选
     @BindView(R.id.cb_all_check)
     CheckBox allCheckCb;
