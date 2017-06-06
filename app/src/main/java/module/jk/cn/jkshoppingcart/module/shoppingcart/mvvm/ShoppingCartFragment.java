@@ -90,7 +90,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             // 统计操作(购物车数量、合计金额)
             calculate();
         }
-        
+
         @Override
         public void saveBeforeEditDataSuccess() {
             doCheckAll(false);
