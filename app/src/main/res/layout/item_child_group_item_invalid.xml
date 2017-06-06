@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp">
+    <!-- 指示图片 -->
+    <ImageView
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:background="@color/colorAccent"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="57dp"
+        android:visibility="invisible"/>
+    <!-- 药品图片 -->
+    <ImageView
+        android:id="@+id/iv_invalid_group_item_drug"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="10dp"
+        android:background="@color/colorAccent"/>
+    <!-- 价格、数量、名称、规格 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- 价格、数量 -->
+        <LinearLayout
+            android:id="@+id/ly_invalid_number_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right"
+            android:layout_alignParentRight="true">
+            <!-- 价格 -->
+            <TextView
+                android:id="@+id/tv_invalid_child_group_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/text_color_common_lighted"
+                android:text="￥266.90"/>
+            <!-- 数量 -->
+            <TextView
+                android:id="@+id/tv_invalid_child_group_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_color_common_lighted"
+                android:text="x1"/>
+        </LinearLayout>
+        <!-- 名称、规格 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:layout_toLeftOf="@+id/ly_invalid_number_price">
+            <!-- 名称 -->
+            <TextView
+                android:id="@+id/tv_invalid_child_group_drugname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/text_color_common_lighted"
+                android:text="前列腺炎并发阳痿"/>
+            <!-- 规格 -->
+            <TextView
+                android:id="@+id/tv_invalid_child_group_specification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_color_common_lighted"
+                android:text="规格：10包*30"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
