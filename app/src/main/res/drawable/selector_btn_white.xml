@@ -3,5 +3,5 @@
     <item android:drawable="@drawable/conner_btn_white_lighted" android:state_pressed="true"></item>
     <item android:drawable="@drawable/conner_btn_white_lighted" android:state_focused="true"></item>
     <item android:drawable="@drawable/conner_btn_white_lighted" android:state_selected="true"></item>
-    <item android:drawable="@drawable/conner_btn_white_normal"></item>
+    <item android:drawable="@drawable/conner_btn_white_normal_new"></item>
 </selector>

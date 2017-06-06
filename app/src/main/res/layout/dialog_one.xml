@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rly_dialog_one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent_pure"
+    android:clickable="true"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:layout_width="295dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/conner_btn_white_normal_new"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <!-- 文案 -->
+        <TextView
+            android:id="@+id/tv_prompt_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择您的操作？"
+            android:textColor="@color/text_color_black2"
+            android:layout_marginTop="44dp"
+            android:layout_marginBottom="44dp"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- 分割线 -->
+            <include layout="@layout/common_line_gray_horizontal"/>
+            <!-- 按钮 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal">
+                <!-- 移入收藏 -->
+                <Button
+                    android:id="@+id/btn_collect"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_color_black3"
+                    android:layout_weight="1"
+                    android:text="移入收藏"
+                    android:background="@drawable/selector_btn_gray_new"/>
+                <!-- 删除 -->
+                <Button
+                    android:id="@+id/btn_del"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_white"
+                    android:background="@drawable/selector_btn_blue_new"
+                    android:layout_weight="1"
+                    android:text="删除"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
