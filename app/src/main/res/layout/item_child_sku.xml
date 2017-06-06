@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingRight="15dp"
-    android:orientation="vertical"
-    android:background="@color/color_white">
+    android:orientation="vertical">
     <!-- 单品 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
-        android:paddingBottom="6dp">
+        android:paddingBottom="6dp"
+        android:background="@color/color_white">
         <!-- 子选 -->
         <CheckBox
             android:id="@+id/cb_child_sku"
@@ -127,4 +127,10 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
+    <!-- 赠品容器 -->
+    <LinearLayout
+        android:id="@+id/ly_item_child_sku_gift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 </LinearLayout>
