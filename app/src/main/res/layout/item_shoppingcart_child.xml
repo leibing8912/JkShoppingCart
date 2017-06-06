@@ -2,5 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!-- 单品子项正常 -->
+    <include layout="@layout/item_child_sku"/>
+    <!-- 组合子项正常 -->
+    <include layout="@layout/item_child_group"/>
+    <!-- 单品子项奖品 -->
+    <include layout="@layout/item_child_award"/>
+    <!-- 单品子项失败 -->
+    <include layout="@layout/item_child_sku_invalid"/>
+    <!-- 组合子项失败 -->
+    <include layout="@layout/item_child_group_invalid"/>
 </LinearLayout>

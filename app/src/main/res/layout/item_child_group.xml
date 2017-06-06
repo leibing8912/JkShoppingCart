@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ly_child_group_normal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="15dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
     <!-- 组合 -->
     <LinearLayout
         android:layout_width="match_parent"
