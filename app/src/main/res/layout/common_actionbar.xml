@@ -10,8 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:paddingLeft="18dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="15dp"
         android:src="@drawable/title_btn_back"
         android:visibility="gone"/>
     <!-- 标题 -->
@@ -22,19 +21,18 @@
         android:layout_centerVertical="true"
         android:layout_centerInParent="true"
         android:text="购物车"
-        android:textSize="22sp"/>
+        android:textColor="@color/text_color_black2"
+        android:textSize="18sp"/>
     <!-- 右按钮 -->
     <Button
         android:id="@+id/btn_edit"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:gravity="right|center_vertical"
         android:layout_alignParentRight="true"
-        android:paddingRight="18dp"
-        android:paddingLeft="15dp"
         android:text="编辑"
         android:background="@color/white"
-        android:textColor="@color/text_color_common_normal"
-        android:textSize="14sp"
-        android:visibility="gone"/>
+        android:paddingRight="15dp"
+        android:textColor="@color/text_color_black2"
+        android:textSize="16sp" />
 </RelativeLayout>
