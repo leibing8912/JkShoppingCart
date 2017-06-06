@@ -5,7 +5,7 @@
     android:background="@color/shoppingcart_invalid_bg"
     android:paddingLeft="46dp">
     <TextView
-        android:id="@+id/tv_gift"
+        android:id="@+id/tv_gift_invalid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="11sp"
@@ -15,16 +15,16 @@
         android:text="赠品"/>
     <!-- 赠品名称 -->
     <TextView
-        android:id="@+id/tv_gift_name"
+        android:id="@+id/tv_gift_invalid_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         android:textColor="@color/gray"
-        android:layout_toRightOf="@+id/tv_gift"
+        android:layout_toRightOf="@+id/tv_gift_invalid"
         android:layout_marginLeft="10dp"/>
     <!-- 赠品数量 -->
     <TextView
-        android:id="@+id/tv_gift_count"
+        android:id="@+id/tv_gift_invalid_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10sp"
