@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="15dp"
+    android:orientation="vertical">
+    <!-- 单品 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
+        android:background="@color/color_white">
+        <!-- 子选 -->
+        <CheckBox
+            android:id="@+id/cb_child_award"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:button="@drawable/selector_check_box_round_blue"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        <!-- 药品图 -->
+        <ImageView
+            android:id="@+id/iv_child_award"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@color/colorAccent"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        <!-- 药品名称、规格、数量、价格-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+            <!-- 价格 -->
+            <LinearLayout
+                android:id="@+id/ly_child_award_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentRight="true"
+                android:gravity="right">
+                <!-- 实际价格 -->
+                <TextView
+                    android:id="@+id/tv_real_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_color_black2"
+                    android:text="￥326.60"/>
+                <!-- 原始价格 -->
+                <TextView
+                    android:id="@+id/tv_origin_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="￥261.60"
+                    android:layout_marginTop="7dp"
+                    android:textColor="@color/text_color_common_lighted"/>
+            </LinearLayout>
+            <!-- 药品名称、规格、数量 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toLeftOf="@+id/ly_child_award_price">
+                <!-- 药品名称 -->
+                <TextView
+                    android:id="@+id/tv_drug_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_color_black2"
+                    android:singleLine="true"
+                    android:ellipsize = "end"
+                    android:text="金锁固精丸金锁固精丸金锁固精丸金锁固精丸金锁固精丸金锁固精丸"/>
+                <!-- 规格 -->
+                <TextView
+                    android:id="@+id/tv_drug_specification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_color_common_lighted"
+                    android:layout_marginTop="8dp"
+                    android:text="规格：10包*20"/>
+                <!-- 积分兑换 or 奖品 -->
+                <!-- 积分兑换 -->
+                <ImageView
+                    android:id="@+id/iv_credits_exchange"
+                    android:layout_width="42dp"
+                    android:layout_height="15dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="11dp"
+                    android:background="@color/colorAccent"
+                    android:visibility="gone"/>
+                <!-- 奖品 -->
+                <ImageView
+                    android:id="@+id/iv_award"
+                    android:layout_width="24dp"
+                    android:layout_height="15dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="11dp"
+                    android:background="@color/colorAccent" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
