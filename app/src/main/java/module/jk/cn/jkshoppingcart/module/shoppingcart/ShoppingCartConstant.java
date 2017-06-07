@@ -27,4 +27,20 @@ public class ShoppingCartConstant {
     public final static String NOT_SELECT_GOODS = " 您还没有选择商品哦~";
     // 兑换商品和奖品不可移入收藏哦~
     public final static String AWARD_CANNOT_COLLECT = "兑换商品和奖品不可移入收藏哦~";
+    // 产品类型--单品正常
+    public final static int PRODUCT_TYPE_SKU = 0x10;
+    // 产品类型--组合正常
+    public final static int PRODUCT_TYPE_GROUP = 0x11;
+    // 产品类型--奖品
+    public final static int PRODUCT_TYPE_AWARD = 0x12;
+    // 产品类型--单品失效
+    public final static int PRODUCT_TYPE_SKU_INVALID = 0x13;
+    // 产品类型--组合失效
+    public final static int PRODUCT_TYPE_GROUP_INVALID = 0x14;
+    // 产品类型--奖品失效
+    public final static int PRODUCT_TYPE_AWARD_INVALID = 0x15;
+    // 奖品类型--奖品
+    public final static int AWARD_TYPE_AWARD = 0x20;
+    // 奖品类型--积分兑换
+    public final static int AWARD_CREDITS_EXCHANGE = 0x21;
 }

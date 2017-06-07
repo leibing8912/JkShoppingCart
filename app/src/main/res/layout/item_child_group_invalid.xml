@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ly_child_group_invalid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="15dp"
     android:paddingTop="14dp">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <!-- 失效标志 -->
     <ImageView
         android:id="@+id/iv_invalid_id"
@@ -34,4 +37,12 @@
         android:text="￥12.60"
         android:layout_alignParentRight="true"
         android:textColor="@color/text_color_common_lighted" />
-</RelativeLayout>
+    </RelativeLayout>
+    <!-- 组合单项失效商品容器 -->
+    <LinearLayout
+        android:id="@+id/ly_child_group_invalid_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:orientation="vertical"/>
+</LinearLayout>

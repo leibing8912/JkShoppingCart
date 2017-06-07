@@ -19,11 +19,17 @@ import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.cache.ListCache;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
-import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ShoppingCartAdapter;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
-import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartTestBean;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ShoppingCartAdapter;
+import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD_INVALID;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_GROUP;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_GROUP_INVALID;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_SKU;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_SKU_INVALID;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.SHOPPINGCART;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.TOTAL_PRICE_PREX;
 
@@ -65,7 +71,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     @BindView(R.id.exlv_shoppingcart)
     ExpandableListView shoppingcartExlv;
     // 数据源
-    private ArrayList<ShoppingCartTestBean> mData;
+    private ArrayList<ShoppingCartBean> mData;
     // 适配器
     private ShoppingCartAdapter mAdapter;
     // 购买的商品总价
@@ -80,8 +86,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
 
         @Override
         public void readBeforeEditData(Object object) {
-            ListCache<ShoppingCartTestBean> mReadCache
-                    = (ListCache<ShoppingCartTestBean>) object;
+            ListCache<ShoppingCartBean> mReadCache
+                    = (ListCache<ShoppingCartBean>) object;
             mData = mReadCache.getObjList();
             // 设置全选or反选
             setAllCheck();
@@ -153,22 +159,50 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
       * @return
       */
     private void getData() {
-        for (int i=0; i< 100; i++){
-            ShoppingCartTestBean mShoppingCartTestBean = new ShoppingCartTestBean();
-            mShoppingCartTestBean.isSelected = false;
-            mShoppingCartTestBean.sellerName = "卖家" + i;
-            ArrayList<ShoppingCartTestBean.Product> mProducts = new ArrayList<>();
-            for (int j=0;j< 5;j++){
-                ShoppingCartTestBean.Product mProduct = new ShoppingCartTestBean.Product();
-                mProduct.productName = "产品" + j;
-                mProduct.isSelected = false;
-                mProduct.count = j + 1;
-                mProduct.price = 1 + j * 1.6;
-                mProducts.add(mProduct);
-            }
-            mShoppingCartTestBean.product = mProducts;
-            mData.add(mShoppingCartTestBean);
-        }
+        ShoppingCartBean mShoppingCartBean = new ShoppingCartBean();
+        mShoppingCartBean.isInvalidGoods = false;
+        mShoppingCartBean.freeShippingTips = "健客自营产品，优惠多多~";
+        mShoppingCartBean.sellerName = "健客自营";
+        ArrayList<ShoppingCartBean.Product> products = new ArrayList<>();
+
+        ShoppingCartBean.Product product = new ShoppingCartBean.Product();
+        product.productType = PRODUCT_TYPE_SKU;
+        products.add(product);
+
+        product = new ShoppingCartBean.Product();
+        product.productType = PRODUCT_TYPE_GROUP;
+        products.add(product);
+
+        product = new ShoppingCartBean.Product();
+        product.productType = PRODUCT_TYPE_AWARD;
+        products.add(product);
+
+        mShoppingCartBean.product = products;
+
+        mData.add(mShoppingCartBean);
+
+        mShoppingCartBean = new ShoppingCartBean();
+        mShoppingCartBean.isInvalidGoods = true;
+        mShoppingCartBean.freeShippingTips = "";
+        mShoppingCartBean.sellerName = "失效商品";
+        products = new ArrayList<>();
+
+        product = new ShoppingCartBean.Product();
+        product.productType = PRODUCT_TYPE_SKU_INVALID;
+        products.add(product);
+
+        product = new ShoppingCartBean.Product();
+        product.productType = PRODUCT_TYPE_GROUP_INVALID;
+        products.add(product);
+
+        product = new ShoppingCartBean.Product();
+        product.productType = PRODUCT_TYPE_AWARD_INVALID;
+        products.add(product);
+
+        mShoppingCartBean.product = products;
+
+        mData.add(mShoppingCartBean);
+
         if (mAdapter != null){
             mAdapter.setData(mData);
             for (int i = 0; i < mAdapter.getGroupCount(); i++) {
@@ -195,6 +229,13 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         mAdapter.setCheckInterface(this);
         // set adapter
         shoppingcartExlv.setAdapter(mAdapter);
+        // 设置点击不收缩
+        shoppingcartExlv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return true;
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.btn_edit, R.id.btn_collect, R.id.btn_delete,
@@ -274,7 +315,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
       * @return
       */
     private boolean isAllCheck() {
-        for (ShoppingCartTestBean model : mData) {
+        for (ShoppingCartBean model : mData) {
             if (!model.isSelected)
                 return false;
         }
@@ -410,11 +451,33 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 if (mData.get(i) != null
                         && mData.get(i).product != null){
                     for (int j=0; j<mData.get(i).product.size();j++){
-                        ShoppingCartTestBean.Product mProduct = mData.get(i).product.get(j);
+                        ShoppingCartBean.Product mProduct = mData.get(i).product.get(j);
                         if (mProduct != null
                                 && mProduct.isSelected){
                             totalCount++;
-                            totalPrice += mProduct.price * mProduct.count;
+                            switch (mProduct.productType){
+                                case PRODUCT_TYPE_SKU:
+                                    // 单品正常
+                                    if (mProduct.skuProduct != null){
+                                        totalPrice += mProduct.skuProduct.realPrice
+                                                * mProduct.skuProduct.productAmount;
+                                    }
+                                    break;
+                                case PRODUCT_TYPE_GROUP:
+                                    // 组合正常
+                                    if (mProduct.groupProduct != null){
+                                        totalPrice += mProduct.groupProduct.groupPrice
+                                                * mProduct.groupProduct.groupAmount;
+                                    }
+                                    break;
+                                case PRODUCT_TYPE_AWARD:
+                                    // 奖品正常
+                                    if (mProduct.awardProduct != null){
+                                        totalPrice += mProduct.awardProduct.realPrice
+                                                * mProduct.awardProduct.awardAmount;
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }

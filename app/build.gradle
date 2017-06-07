@@ -32,4 +32,7 @@ dependencies {
     //butterknife注解框架
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    // 图片加载库采用Glide框架
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
 }
