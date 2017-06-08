@@ -38,6 +38,8 @@ public class ShoppingCartBean implements Serializable{
         public int productType = PRODUCT_TYPE_SKU;
         // 产品是否选中
         public boolean isSelected = false;
+        // 产品是否编辑状态
+        public boolean isEdit = false;
         // 单品
         public SkuProduct skuProduct;
 

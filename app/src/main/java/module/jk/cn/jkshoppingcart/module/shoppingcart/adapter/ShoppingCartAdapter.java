@@ -198,7 +198,7 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
 
         return convertView;
     }
-    
+
     /**
      * @className: GroupViewHolder
      * @classDescription: 组元素绑定器
@@ -758,9 +758,13 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             childAwardLy.setVisibility(View.VISIBLE);
             childSkuInvalidLy.setVisibility(View.GONE);
             childGroupInvalidLy.setVisibility(View.GONE);
-
-            // 子选
-            childAwardCb.setChecked(model.isSelected);
+            if (model.isEdit){
+                childAwardCb.setVisibility(View.INVISIBLE);
+            } else {
+                childAwardCb.setVisibility(View.VISIBLE);
+                // 子选
+                childAwardCb.setChecked(model.isSelected);
+            }
             if (model.awardProduct == null)
                 return;
             // 药品图

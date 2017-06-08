@@ -86,6 +86,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     private double totalPrice = 0.00;
     // 购买的商品总数量
     private int totalCount = 0;
+    // 是否编辑
+    private boolean isEdited = false;
     // shoppingcart logical processing instance
     private ShoppingCartViewModel mShoppingCartViewModel;
     // shoppingcart logical processing listener
@@ -118,7 +120,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
 
         @Override
         public void saveBeforeEditDataSuccess() {
-            doCheckAll(false);
+            doCheckAll(false, isEdited);
         }
     };
 
@@ -356,12 +358,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
             case R.id.cb_all_check:
                 // 全选、反选
-                doCheckAll(allCheckCb.isChecked());
+                doCheckAll(allCheckCb.isChecked(), isEdited);
                 break;
             case R.id.ly_all_check:
                 allCheckCb.setChecked(!allCheckCb.isChecked());
                 // 全选、反选
-                doCheckAll(allCheckCb.isChecked());
+                doCheckAll(allCheckCb.isChecked(), isEdited);
                 break;
             default:
                 break;
@@ -381,6 +383,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             case EDIT_TXT:
                 // 编辑处理
                 // 保存编辑前数据
+                isEdited = true;
                 if (mShoppingCartViewModel != null)
                     mShoppingCartViewModel.saveBeforeEditData(mData);
                 allCheckCb.setChecked(false);
@@ -391,6 +394,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             case COMPLETE_TXT:
                 // 编辑完成
                 // 获取编辑前数据
+                isEdited = false;
                 if (mShoppingCartViewModel != null)
                     mShoppingCartViewModel.getBeforeEditData();
                 editBtn.setText(EDIT_TXT);
@@ -443,10 +447,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
       * @author leibing
       * @createTime 2017/6/5
       * @lastModify 2017/6/5
-      * @param isSelectAll
+      * @param isSelectAll 是否全选
+      * @param isEdit 是否编辑
       * @return
       */
-    private void doCheckAll(boolean isSelectAll) {
+    private void doCheckAll(boolean isSelectAll, boolean isEdit) {
         if (mData == null || mData.size() == 0)
             return;
         for (int i = 0; i < mData.size(); i++) {
@@ -455,6 +460,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                     && mData.get(i).product.size() != 0) {
                 for (int j = 0; j < mData.get(i).product.size(); j++) {
                     mData.get(i).product.get(j).isSelected = isSelectAll;
+                    mData.get(i).product.get(j).isEdit = isEdit;
                 }
             }
         }
