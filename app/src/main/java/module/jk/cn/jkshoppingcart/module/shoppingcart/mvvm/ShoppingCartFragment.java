@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +40,8 @@ import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConsta
  * @author: leibing
  * @createTime: 2017/6/1
  */
-public class ShoppingCartFragment extends Fragment implements ShoppingCartInterface.CheckInterface {
+public class ShoppingCartFragment extends Fragment implements ShoppingCartInterface.CheckInterface,
+        ShoppingCartInterface.ModifyCountInterface {
     // actionbar返回
     @BindView(R.id.iv_back)
     ImageView backIv;
@@ -251,6 +253,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         mAdapter = new ShoppingCartAdapter(getActivity(), mData);
         // 设置复选框接口
         mAdapter.setCheckInterface(this);
+        // 设置改变数量接口
+        mAdapter.setModifyCountInterface(this);
         // set adapter
         shoppingcartExlv.setAdapter(mAdapter);
         // 设置点击不收缩
@@ -515,5 +519,78 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 titleTv.setText(SHOPPINGCART + "(" + totalCount + ")");
             }
         }
+    }
+
+    @Override
+    public void doIncrease(int groupPosition, int childPosition, View showCountView, boolean isChecked) {
+        int currentCount = 0;
+        ShoppingCartBean.Product product = mData.get(groupPosition).product.get(childPosition);
+        switch (product.productType){
+            case PRODUCT_TYPE_SKU:
+                // 单品正常
+                currentCount = product.skuProduct.productAmount;
+                if (currentCount >= 200){
+                    return;
+                }
+                currentCount ++;
+                mData.get(groupPosition).product.get(childPosition).skuProduct.productAmount
+                        = currentCount;
+                break;
+            case PRODUCT_TYPE_GROUP:
+                // 组合正常
+                currentCount = product.groupProduct.groupAmount;
+                if (currentCount >= 100){
+                    return;
+                }
+                currentCount ++;
+                mData.get(groupPosition).product.get(childPosition).groupProduct.groupAmount
+                        = currentCount;
+                break;
+            default:
+                break;
+        }
+        ((EditText) showCountView).setText(currentCount + "");
+        // 更新数据源
+        updateData();
+        // 统计操作(购物车数量、合计金额)
+        calculate();
+    }
+
+    @Override
+    public void doDecrease(int groupPosition, int childPosition, View showCountView, boolean isChecked) {
+        int currentCount = 0;
+        ShoppingCartBean.Product product = mData.get(groupPosition).product.get(childPosition);
+        switch (product.productType){
+            case PRODUCT_TYPE_SKU:
+                // 单品正常
+                currentCount = product.skuProduct.productAmount;
+                if (currentCount == 1)
+                    return;
+                currentCount --;
+                mData.get(groupPosition).product.get(childPosition).skuProduct.productAmount
+                        = currentCount;
+                break;
+            case PRODUCT_TYPE_GROUP:
+                // 组合正常
+                currentCount = product.groupProduct.groupAmount;
+                if (currentCount == 1)
+                    return;
+                currentCount --;
+                mData.get(groupPosition).product.get(childPosition).groupProduct.groupAmount
+                        = currentCount;
+                break;
+            default:
+                break;
+        }
+        ((EditText) showCountView).setText(currentCount + "");
+        // 更新数据源
+        updateData();
+        // 统计操作(购物车数量、合计金额)
+        calculate();
+    }
+
+    @Override
+    public void childDelete(int groupPosition, int childPosition) {
+
     }
 }

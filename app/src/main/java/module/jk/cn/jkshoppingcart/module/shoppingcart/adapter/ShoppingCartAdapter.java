@@ -39,6 +39,8 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
     public ArrayList<ShoppingCartBean> mData;
     // 复选框接口
     private ShoppingCartInterface.CheckInterface mCheckInterface;
+    // 改变数量接口
+    private ShoppingCartInterface.ModifyCountInterface modifyCountInterface;
     // 布局填充器
     private LayoutInflater mLayoutInflater;
 
@@ -79,6 +81,19 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
       */
     public void setCheckInterface(ShoppingCartInterface.CheckInterface mCheckInterface){
         this.mCheckInterface = mCheckInterface;
+    }
+
+    /**
+      * 设置改变数量接口
+      * @author leibing
+      * @createTime 2017/6/8
+      * @lastModify 2017/6/8
+      * @param modifyCountInterface
+      * @return
+      */
+    public void setModifyCountInterface(ShoppingCartInterface.ModifyCountInterface
+                                                modifyCountInterface) {
+        this.modifyCountInterface = modifyCountInterface;
     }
 
     @Override
@@ -272,7 +287,7 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
         }
 
         // listener
-        // 子选点击事件
+        // 子选
         cholder.childSkuCb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,6 +310,47 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
                 cholder.childAwardCb.setChecked(((CheckBox) v).isChecked());
                 // 更新子选项
                 updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
+            }
+        });
+        // 增加、减少数量
+        // 单品增加
+        cholder.childSkuAddIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 暴露单品增加接口
+                if (modifyCountInterface != null)
+                    modifyCountInterface.doIncrease(groupPosition, childPosition,
+                            cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
+            }
+        });
+        // 单品减少
+        cholder.childSkuSubIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 暴露单品删减接口
+                if (modifyCountInterface != null)
+                    modifyCountInterface.doDecrease(groupPosition, childPosition,
+                            cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
+            }
+        });
+        // 组合增加
+        cholder.childGroupAddIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 暴露组合增加接口
+                if (modifyCountInterface != null)
+                    modifyCountInterface.doIncrease(groupPosition, childPosition,
+                            cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
+            }
+        });
+        // 组合减少
+        cholder.childGroupSubIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 暴露组合删减接口
+                if (modifyCountInterface != null)
+                    modifyCountInterface.doDecrease(groupPosition, childPosition,
+                            cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
             }
         });
 
