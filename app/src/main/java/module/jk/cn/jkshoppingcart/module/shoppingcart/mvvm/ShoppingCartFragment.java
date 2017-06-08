@@ -355,11 +355,13 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
             case R.id.btn_collect:
                 // 移入收藏
+                if (mShoppingCartViewModel != null)
+                    mShoppingCartViewModel.collectSeletedProduct(mData);
                 break;
             case R.id.btn_delete:
                 // 删除
                 if (mShoppingCartViewModel != null)
-                    mShoppingCartViewModel.delSeletedItem(mData);
+                    mShoppingCartViewModel.delSeletedProduct(mData);
                 break;
             case R.id.btn_pay:
                 // 结算

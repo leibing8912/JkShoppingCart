@@ -3,6 +3,8 @@ package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 import android.content.Context;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_COLLECT;
@@ -130,14 +132,68 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
     }
 
     /**
-      * 删除选中item
+      * 收藏选中商品
+      * @author leibing
+      * @createTime 2017/6/8
+      * @lastModify 2017/6/8
+      * @param mData
+      * @return
+      */
+    public void collectSeletedProduct(ArrayList<ShoppingCartBean> mData){
+        if (mData == null || mData.size() == 0){
+            if (mModelListener != null)
+                mModelListener.toastShow(NOT_SELECT_GOODS);
+            return;
+        }
+        for (int i=0;i<mData.size();i++){
+            if (mData.get(i).product != null) {
+                boolean isHasSelected = false;
+                String productIds = "";
+                // 遍历添加需要删除的数据
+                for (int j = 0; j < mData.get(i).product.size(); j++) {
+                    ShoppingCartBean.Product product = mData.get(i).product.get(j);
+                    if (product != null && product.isSelected){
+                        isHasSelected = true;
+                        switch (product.productType){
+                            case PRODUCT_TYPE_SKU:
+                            case PRODUCT_TYPE_GROUP:
+                                // 单品正常
+                                // 组合正常
+                                productIds += product.productId + ",";
+                                break;
+                            case PRODUCT_TYPE_AWARD:
+                                // 奖品
+                                if (mModelListener != null)
+                                    mModelListener.toastShow(AWARD_CANNOT_DELETE);
+                                return;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                // 没有选中商品
+                if (!isHasSelected && mModelListener != null){
+                    mModelListener.toastShow(NOT_SELECT_GOODS);
+                    return;
+                }
+                // 收藏处理
+                if (StringUtil.isNotEmpty(productIds)){
+                    if (mShoppingCartModel != null)
+                        mShoppingCartModel.collectProduct(productIds);
+                }
+            }
+        }
+    }
+
+    /**
+      * 删除选中商品
       * @author leibing
       * @createTime 2017/6/8
       * @lastModify 2017/6/8
       * @param
       * @return
       */
-    public void delSeletedItem(ArrayList<ShoppingCartBean> mData){
+    public void delSeletedProduct(ArrayList<ShoppingCartBean> mData){
         if (mData == null || mData.size() == 0){
             if (mModelListener != null)
                 mModelListener.toastShow(NOT_SELECT_GOODS);
