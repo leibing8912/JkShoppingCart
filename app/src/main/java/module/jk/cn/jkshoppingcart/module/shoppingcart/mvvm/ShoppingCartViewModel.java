@@ -3,10 +3,8 @@ package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 import android.content.Context;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
-
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_DELETE;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.NOT_SELECT_GOODS;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
@@ -104,7 +102,7 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
         if (mViewModelListener != null)
             mViewModelListener.setData(mData);
     }
-    
+
     /**
       * 删除选中item
       * @author leibing
@@ -149,6 +147,9 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                 }
             }
         }
+        // 更新编辑前缓存数据
+        if (mShoppingCartModel != null)
+            mShoppingCartModel.updateBeforeEditData(needDelList);
         // 遍历删除无数据组
         for (int i=0;i<mData.size();i++){
             if (mData.get(i).product == null

@@ -40,6 +40,8 @@ public class ShoppingCartBean implements Serializable{
         public boolean isSelected = false;
         // 产品是否编辑状态
         public boolean isEdit = false;
+        // 产品id
+        public String productId = "";
         // 单品
         public SkuProduct skuProduct;
 
@@ -52,8 +54,6 @@ public class ShoppingCartBean implements Serializable{
         public static class SkuProduct implements Serializable{
             // uid
             private static final long serialVersionUID = 3403986876262729285L;
-            // 产品id
-            public String productId = "";
             // 产品图片地址
             public String imgUrl = "";
             // 产品名称
@@ -97,8 +97,6 @@ public class ShoppingCartBean implements Serializable{
         public static class GroupProduct implements Serializable{
             // uid
             private static final long serialVersionUID = -2128058434540954370L;
-            // 组合产品id
-            public String productId = "";
             // 组合产品名称
             public String productName = "";
             // 组合产品图片url
@@ -144,8 +142,6 @@ public class ShoppingCartBean implements Serializable{
         public static class AwardProduct implements Serializable{
             // uid
             private static final long serialVersionUID = -6058625283973914720L;
-            // 奖品id
-            public String awardId = "";
             // 奖品图片地址
             public String imgUrl = "";
             // 奖品名称
