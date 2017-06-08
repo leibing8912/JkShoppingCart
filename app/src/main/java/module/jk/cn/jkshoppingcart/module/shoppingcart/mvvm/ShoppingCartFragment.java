@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,9 +22,13 @@ import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.cache.ListCache;
 import module.jk.cn.jkshoppingcart.common.ShoppingCartDialog;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
+import module.jk.cn.jkshoppingcart.common.ToastUtils;
+import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ShoppingCartAdapter;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_COLLECT;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_DELETE;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
@@ -86,6 +91,17 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     // shoppingcart logical processing listener
     private ShoppingCartViewModel.ViewModelListener mViewModelListener
             = new ShoppingCartViewModel.ViewModelListener() {
+
+        @Override
+        public void setData(ArrayList<ShoppingCartBean> mDatas) {
+            mData = mDatas;
+            // 设置全选or反选
+            setAllCheck();
+            // 更新数据源
+            updateData();
+            // 统计操作(购物车数量、合计金额)
+            calculate();
+        }
 
         @Override
         public void readBeforeEditData(Object object) {
@@ -256,6 +272,54 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         mAdapter.setCheckInterface(this);
         // 设置改变数量接口
         mAdapter.setModifyCountInterface(this);
+        shoppingcartExlv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (ExpandableListView.getPackedPositionType(id)
+                        == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                    long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
+                    final int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
+                    final int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+                    if (getActivity() == null)
+                        return false;
+                    // 失效产品长按不让弹窗
+                    if (mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_AWARD_INVALID ||
+                            mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_GROUP_INVALID ||
+                            mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_SKU_INVALID)
+                        return false;
+                    // 收藏、删除
+                    ShoppingCartDialog.getInstance().createDialogOne(getActivity(),
+                                new ShoppingCartDialog.DialogCallBack() {
+                                    @Override
+                                    public void leftBtnListener() {
+                                        // 收藏处理
+                                        // 当子项为单品正常、组合正常才能收藏
+                                        if (mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_SKU ||
+                                                mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_GROUP) {
+
+                                        }else {
+                                            ToastUtils.show(AppManager.getInstance().currentActivity(), AWARD_CANNOT_COLLECT);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void rightBtnListener(String content) {
+                                        // 当子项为单品正常、组合正常才能删除
+                                        if (mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_SKU ||
+                                                mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_GROUP) {
+                                            // 删除处理
+                                            if (mShoppingCartViewModel != null)
+                                                mShoppingCartViewModel.delSingleItem(mData, groupPosition, childPosition);
+                                        }else {
+                                            ToastUtils.show(AppManager.getInstance().currentActivity(), AWARD_CANNOT_DELETE);
+                                        }
+                                    }
+                                }).show();
+                    return true;
+                }
+                return false;
+            }
+        });
         // set adapter
         shoppingcartExlv.setAdapter(mAdapter);
         // 设置点击不收缩
