@@ -3,6 +3,7 @@
     android:id="@+id/ly_child_group_normal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_white"
     android:orientation="vertical">
     <!-- 组合 -->
     <LinearLayout
@@ -11,7 +12,6 @@
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
         android:paddingBottom="6dp"
-        android:background="@color/color_white"
         android:paddingRight="15dp">
         <!-- 子选 -->
         <CheckBox

@@ -167,10 +167,34 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
 
         ShoppingCartBean.Product product = new ShoppingCartBean.Product();
         product.productType = PRODUCT_TYPE_SKU;
+        ShoppingCartBean.Product.SkuProduct skuProduct = new ShoppingCartBean.Product.SkuProduct();
+        skuProduct.realPrice = 89;
+        skuProduct.productQualification = "5包*10";
+        skuProduct.productAmount = 5;
+        skuProduct.imgUrl = "https://image.jianke.com/suo/upload/prodimage/201403/2014310103337874!200x200.jpg";
+        skuProduct.originPrice = 133.1;
+        skuProduct.productId = "77958";
+        skuProduct.productName = "名露";
+        product.skuProduct = skuProduct;
         products.add(product);
 
         product = new ShoppingCartBean.Product();
         product.productType = PRODUCT_TYPE_GROUP;
+        ShoppingCartBean.Product.GroupProduct groupProduct
+                = new ShoppingCartBean.Product.GroupProduct();
+        groupProduct.groupAmount = 2;
+        groupProduct.groupPrice = 12.8;
+        groupProduct.imgUrl = "https://image.jianke.com/suo/upload/prodimage/201603/201631716227853!200x200.jpg";
+        groupProduct.productId = "77959";
+        groupProduct.productName = "盐酸氨基葡萄糖胶囊(葡立)";
+        ArrayList<ShoppingCartBean.Product.GroupProduct.ChildProduct> childList = new ArrayList<>();
+        for (int i=0;i<3;i++) {
+            ShoppingCartBean.Product.GroupProduct.ChildProduct childProduct
+                    = new ShoppingCartBean.Product.GroupProduct.ChildProduct();
+            childList.add(childProduct);
+        }
+        groupProduct.childList = childList;
+        product.groupProduct = groupProduct;
         products.add(product);
 
         product = new ShoppingCartBean.Product();

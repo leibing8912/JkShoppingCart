@@ -558,6 +558,7 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             // 组合单项失效商品
             if (model.groupProduct.childList != null
                     && model.groupProduct.childList.size() != 0){
+                invalidChildGroupContainerLy.removeAllViews();
                 int size = model.groupProduct.childList.size();
                 for (int i=0; i< size;i++) {
                     ShoppingCartBean.Product.GroupProduct.ChildProduct childProduct
@@ -633,6 +634,7 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             // 赠品
             if (model.skuProduct.gifts != null
                     && model.skuProduct.gifts.size() != 0){
+                itemChildSkuInvalidGiftLy.removeAllViews();
                 int giftSize = model.skuProduct.gifts.size();
                 for (int i=0; i< giftSize; i++){
                     ShoppingCartBean.Product.SkuProduct.Gifts gift = model.skuProduct.gifts.get(i);
@@ -737,11 +739,12 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
                 // 数量显示
                 numTv.setText("x" + model.groupProduct.groupAmount);
                 // 数量编辑
-                childGroupNumEdt.setText(model.groupProduct.groupAmount);
+                childGroupNumEdt.setText(model.groupProduct.groupAmount + "");
             }
             // 综合单项商品
             if (model.groupProduct.childList != null
                     && model.groupProduct.childList.size() != 0){
+                itemChildGroupLy.removeAllViews();
                 int size = model.groupProduct.childList.size();
                 for (int i=0; i< size;i++) {
                     ShoppingCartBean.Product.GroupProduct.ChildProduct childProduct
@@ -821,6 +824,7 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             // 赠品
             if (model.skuProduct.gifts != null
                     && model.skuProduct.gifts.size() != 0){
+                childSkuGiftLy.removeAllViews();
                 int giftSize = model.skuProduct.gifts.size();
                 for (int i=0; i< giftSize; i++){
                     ShoppingCartBean.Product.SkuProduct.Gifts gift = model.skuProduct.gifts.get(i);
