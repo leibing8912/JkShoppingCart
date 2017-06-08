@@ -122,6 +122,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         public void saveBeforeEditDataSuccess() {
             doCheckAll(false, isEdited);
         }
+
+        @Override
+        public void toastShow(String msg) {
+            ToastUtils.show(AppManager.getInstance().currentActivity(), msg);
+        }
     };
 
     @Nullable
@@ -352,6 +357,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
             case R.id.btn_delete:
                 // 删除
+                if (mShoppingCartViewModel != null)
+                    mShoppingCartViewModel.delSeletedItem(mData);
                 break;
             case R.id.btn_pay:
                 // 结算

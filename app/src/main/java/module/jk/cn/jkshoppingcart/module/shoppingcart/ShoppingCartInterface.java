@@ -107,5 +107,7 @@ public class ShoppingCartInterface {
         void readBeforeEditData(Object object);
         // 保存编辑前数据成功
         void saveBeforeEditDataSuccess();
+        // toast显示
+        void toastShow(String msg);
     }
 }
