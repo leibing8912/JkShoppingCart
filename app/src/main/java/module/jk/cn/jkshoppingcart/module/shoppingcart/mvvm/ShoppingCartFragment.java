@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.cache.ListCache;
+import module.jk.cn.jkshoppingcart.common.ShoppingCartDialog;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ShoppingCartAdapter;
@@ -587,6 +588,53 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         updateData();
         // 统计操作(购物车数量、合计金额)
         calculate();
+    }
+
+    @Override
+    public void doEditNum(final int groupPosition, final int childPosition, View showCountView, boolean isChecked) {
+        if (getActivity() == null)
+            return;
+        ShoppingCartDialog.getInstance().createDialogTwo(getActivity(),
+                new ShoppingCartDialog.DialogCallBack() {
+            @Override
+            public void leftBtnListener() {
+            }
+
+            @Override
+            public void rightBtnListener(String content) {
+                if (StringUtil.strIsNum(content)){
+                    int count = Integer.parseInt(content);
+                    if (count < 1){
+                        return;
+                    }
+                    ShoppingCartBean.Product product = mData.get(groupPosition).product.get(childPosition);
+                    switch (product.productType){
+                        case PRODUCT_TYPE_SKU:
+                            // 单品正常
+                            if (count > 200){
+                                return;
+                            }
+                            mData.get(groupPosition).product.get(childPosition).skuProduct.productAmount
+                                    = count;
+                            break;
+                        case PRODUCT_TYPE_GROUP:
+                            // 组合正常
+                            if (count > 100){
+                                return;
+                            }
+                            mData.get(groupPosition).product.get(childPosition).groupProduct.groupAmount
+                                    = count;
+                            break;
+                        default:
+                            break;
+                    }
+                    // 更新数据源
+                    updateData();
+                    // 统计操作(购物车数量、合计金额)
+                    calculate();
+                }
+            }
+        }).show();
     }
 
     @Override

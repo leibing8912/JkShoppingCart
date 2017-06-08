@@ -312,7 +312,7 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
                 updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
             }
         });
-        // 增加、减少数量
+        // 增加、删减数量、编辑数量
         // 单品增加
         cholder.childSkuAddIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,6 +333,16 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
                             cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
             }
         });
+        // 单品编辑数量
+        cholder.childSkuNumEdt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 暴露单品编辑数量接口
+                if (modifyCountInterface != null)
+                    modifyCountInterface.doEditNum(groupPosition, childPosition,
+                            cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
+            }
+        });
         // 组合增加
         cholder.childGroupAddIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -350,6 +360,16 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
                 // 暴露组合删减接口
                 if (modifyCountInterface != null)
                     modifyCountInterface.doDecrease(groupPosition, childPosition,
+                            cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
+            }
+        });
+        // 组合编辑数量
+        cholder.childGroupNumEdt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 暴露组合编辑数量接口
+                if (modifyCountInterface != null)
+                    modifyCountInterface.doEditNum(groupPosition, childPosition,
                             cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
             }
         });
