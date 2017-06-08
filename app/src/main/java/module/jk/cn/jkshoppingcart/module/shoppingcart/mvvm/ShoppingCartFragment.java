@@ -700,9 +700,4 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
             }
         }).show();
     }
-
-    @Override
-    public void childDelete(int groupPosition, int childPosition) {
-
-    }
 }

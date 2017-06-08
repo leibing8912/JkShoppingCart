@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
 
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_GROUP;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_SKU;
+
 /**
  * @className: ShoppingCartViewModel
  * @classDescription: 购物车（逻辑层）
@@ -81,8 +84,10 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                               int groupPosition, int childPosition){
         mData.get(groupPosition).product.remove(childPosition);
         for (int i=0;i<mData.size();i++){
-            switch (mData.get(groupPosition).product.get(i).productType){
-
+            if (mData.get(i).product == null
+                    || mData.get(i).product.size() == 0){
+                mData.remove(i);
+                break;
             }
         }
         if (mViewModelListener != null)

@@ -67,13 +67,6 @@ public class ShoppingCartInterface {
          * @param isChecked     子元素选中与否
          */
         void doEditNum(int groupPosition, int childPosition, View showCountView,boolean isChecked);
-
-        /**
-         * 删除子item
-         * @param groupPosition
-         * @param childPosition
-         */
-        void childDelete(int groupPosition, int childPosition);
     }
 
     /**
