@@ -175,7 +175,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         editBtn.setText(EDIT_TXT);
         editBtn.setVisibility(View.VISIBLE);
     }
-    
+
     /**
       * get data to update ui
       * @author leibing
@@ -563,7 +563,10 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                     for (int j=0; j<mData.get(i).product.size();j++){
                         ShoppingCartBean.Product mProduct = mData.get(i).product.get(j);
                         if (mProduct != null
-                                && mProduct.isSelected){
+                                && mProduct.isSelected
+                                && (mProduct.productType == PRODUCT_TYPE_SKU
+                                || mProduct.productType == PRODUCT_TYPE_GROUP 
+                                || mProduct.productType == PRODUCT_TYPE_AWARD)){
                             totalCount++;
                             switch (mProduct.productType){
                                 case PRODUCT_TYPE_SKU:
