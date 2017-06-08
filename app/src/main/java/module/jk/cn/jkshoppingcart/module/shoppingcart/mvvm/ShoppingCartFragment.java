@@ -175,7 +175,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         editBtn.setText(EDIT_TXT);
         editBtn.setVisibility(View.VISIBLE);
     }
-
+    
     /**
       * get data to update ui
       * @author leibing
@@ -306,7 +306,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                                         // 当子项为单品正常、组合正常才能收藏
                                         if (mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_SKU ||
                                                 mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_GROUP) {
-
+                                            if (mShoppingCartViewModel != null)
+                                                mShoppingCartViewModel.collectSingProduct(mData, groupPosition, childPosition);
                                         }else {
                                             ToastUtils.show(AppManager.getInstance().currentActivity(), AWARD_CANNOT_COLLECT);
                                         }

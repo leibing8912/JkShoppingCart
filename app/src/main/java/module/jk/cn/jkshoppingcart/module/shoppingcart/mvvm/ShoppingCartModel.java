@@ -8,6 +8,7 @@ import module.jk.cn.jkshoppingcart.cache.SpLocalCache;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartTestBean;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COLLECT_SUCCESS;
 
 /**
  * @className: ShoppingCartModel
@@ -130,7 +131,20 @@ public class ShoppingCartModel implements ShoppingCartInterface.UIToDataInterfac
                     });
         }
     }
-    
+
+    /**
+      * 收藏产品
+      * @author leibing
+      * @createTime 2017/6/8
+      * @lastModify 2017/6/8
+      * @param productIds 产品id
+      * @return
+      */
+    public void collectProduct(String productIds){
+        if (mModelListener != null)
+            mModelListener.toastShow(COLLECT_SUCCESS);
+    }
+
     /**
      * @interfaceName: ModelListener
      * @interfaceDescription: shoppingcart data listener

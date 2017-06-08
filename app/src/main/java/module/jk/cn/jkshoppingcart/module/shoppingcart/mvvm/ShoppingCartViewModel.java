@@ -5,6 +5,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_COLLECT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_DELETE;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.NOT_SELECT_GOODS;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
@@ -101,6 +102,31 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
         // 回调更新Ui
         if (mViewModelListener != null)
             mViewModelListener.setData(mData);
+    }
+
+    /**
+      * 收藏单个产品
+      * @author leibing
+      * @createTime 2017/6/8
+      * @lastModify 2017/6/8
+      * @param mData
+      * @param groupPosition
+      * @param childPosition
+      * @return
+      */
+    public void collectSingProduct(ArrayList<ShoppingCartBean> mData,
+                                int groupPosition, int childPosition){
+        if (mData.get(groupPosition).product.get(childPosition).productType
+                == PRODUCT_TYPE_AWARD){
+            if (mModelListener != null)
+                mModelListener.toastShow(AWARD_CANNOT_COLLECT);
+            return;
+        }
+        // 产品id
+        String productId = mData.get(groupPosition).product.get(childPosition).productId;
+        // 收藏
+        if (mShoppingCartModel != null)
+            mShoppingCartModel.collectProduct(productId);
     }
 
     /**
