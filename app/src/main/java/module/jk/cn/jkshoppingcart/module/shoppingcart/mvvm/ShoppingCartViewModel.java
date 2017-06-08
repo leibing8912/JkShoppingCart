@@ -95,6 +95,22 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
     }
 
     /**
+      * 清空失效产品
+      * @author leibing
+      * @createTime 2017/6/8
+      * @lastModify 2017/6/8
+      * @param mData
+      * @param groupPosition
+      * @return
+      */
+    public void clearInvalidGoods(ArrayList<ShoppingCartBean> mData,
+                                  int groupPosition){
+        mData.remove(groupPosition);
+        if (mViewModelListener != null)
+            mViewModelListener.setData(mData);
+    }
+
+    /**
      * @interfaceName: ViewModelListener
      * @interfaceDescription: shoppingcart logical processing listener
      * @author: leibing

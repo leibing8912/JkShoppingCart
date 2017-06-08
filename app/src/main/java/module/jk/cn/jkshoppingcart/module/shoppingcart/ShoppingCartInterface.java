@@ -70,6 +70,20 @@ public class ShoppingCartInterface {
     }
 
     /**
+     * @interfaceName: DeleteInterface
+     * @interfaceDescription: 删除的接口
+     * @author: leibing
+     * @createTime: 2017/6/8
+     */
+    public interface DeleteInterface{
+        /**
+         * 清空失效商品
+         * @param groupPosition 组元素位置
+         */
+        void doClearInvalid(int groupPosition);
+    }
+
+    /**
      * @interfaceName:UIToDataInterface
      * @interfaceDescription: ui层往数据层操作接口
      * @author: leibing

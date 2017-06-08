@@ -41,6 +41,8 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
     private ShoppingCartInterface.CheckInterface mCheckInterface;
     // 改变数量接口
     private ShoppingCartInterface.ModifyCountInterface modifyCountInterface;
+    // 删除接口
+    private ShoppingCartInterface.DeleteInterface deleteInterface;
     // 布局填充器
     private LayoutInflater mLayoutInflater;
 
@@ -94,6 +96,18 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
     public void setModifyCountInterface(ShoppingCartInterface.ModifyCountInterface
                                                 modifyCountInterface) {
         this.modifyCountInterface = modifyCountInterface;
+    }
+
+    /**
+      * 设置删除接口
+      * @author leibing
+      * @createTime 2017/6/8
+      * @lastModify 2017/6/8
+      * @param deleteInterface
+      * @return
+      */
+    public void setDeleteInterface(ShoppingCartInterface.DeleteInterface deleteInterface){
+        this.deleteInterface = deleteInterface;
     }
 
     @Override
@@ -177,12 +191,14 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 // 清空处理
+                if (deleteInterface != null)
+                    deleteInterface.doClearInvalid(groupPosition);
             }
         });
 
         return convertView;
     }
-
+    
     /**
      * @className: GroupViewHolder
      * @classDescription: 组元素绑定器

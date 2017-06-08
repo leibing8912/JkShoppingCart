@@ -47,7 +47,7 @@ import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConsta
  * @createTime: 2017/6/1
  */
 public class ShoppingCartFragment extends Fragment implements ShoppingCartInterface.CheckInterface,
-        ShoppingCartInterface.ModifyCountInterface {
+        ShoppingCartInterface.ModifyCountInterface, ShoppingCartInterface.DeleteInterface {
     // actionbar返回
     @BindView(R.id.iv_back)
     ImageView backIv;
@@ -272,6 +272,9 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         mAdapter.setCheckInterface(this);
         // 设置改变数量接口
         mAdapter.setModifyCountInterface(this);
+        // 设置删除接口
+        mAdapter.setDeleteInterface(this);
+        // 设置购物车item长按监听
         shoppingcartExlv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -699,5 +702,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 }
             }
         }).show();
+    }
+
+    @Override
+    public void doClearInvalid(int groupPosition) {
+        if (mShoppingCartViewModel != null)
+            mShoppingCartViewModel.clearInvalidGoods(mData, groupPosition);
     }
 }
