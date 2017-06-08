@@ -146,10 +146,12 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
         ArrayList<ShoppingCartBean.Product> needDelList = new ArrayList<>();
         for (int i=0;i<mData.size();i++){
             if (mData.get(i).product != null) {
+                boolean isHasSelected = false;
                 // 遍历添加需要删除的数据
                 for (int j = 0; j < mData.get(i).product.size(); j++) {
                     ShoppingCartBean.Product product = mData.get(i).product.get(j);
                     if (product != null && product.isSelected){
+                        isHasSelected = true;
                         switch (product.productType){
                             case PRODUCT_TYPE_SKU:
                             case PRODUCT_TYPE_GROUP:
@@ -166,6 +168,11 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                                 break;
                         }
                     }
+                }
+                // 没有选中商品
+                if (!isHasSelected && mModelListener != null){
+                    mModelListener.toastShow(NOT_SELECT_GOODS);
+                    return;
                 }
                 // 遍历删除数据
                 for (int z=0;z< needDelList.size();z++){

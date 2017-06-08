@@ -565,7 +565,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                         if (mProduct != null
                                 && mProduct.isSelected
                                 && (mProduct.productType == PRODUCT_TYPE_SKU
-                                || mProduct.productType == PRODUCT_TYPE_GROUP 
+                                || mProduct.productType == PRODUCT_TYPE_GROUP
                                 || mProduct.productType == PRODUCT_TYPE_AWARD)){
                             totalCount++;
                             switch (mProduct.productType){
