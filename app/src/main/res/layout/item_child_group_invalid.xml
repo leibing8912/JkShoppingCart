@@ -4,16 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="15dp"
-    android:paddingTop="14dp">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    android:paddingTop="14dp"
+    android:orientation="vertical"
+    android:background="@color/color_white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
     <!-- 失效标志 -->
     <ImageView
         android:id="@+id/iv_invalid_id"
         android:layout_width="24dp"
         android:layout_height="13dp"
-        android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
         android:scaleType="fitXY"
         android:src="@drawable/shoppingcart_new_failure" />
@@ -26,18 +29,19 @@
         android:paddingLeft="7dp"
         android:textStyle="bold"
         android:text="前列腺炎并发阳痿"
-        android:layout_toRightOf="@+id/iv_invalid_id"
+        android:singleLine="true"
+        android:maxWidth="250dp"
         android:textColor="@color/text_color_common_lighted"/>
     <!-- 价格 -->
     <TextView
         android:id="@+id/tv_invalid_price"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:text="￥12.60"
-        android:layout_alignParentRight="true"
+        android:gravity="right"
         android:textColor="@color/text_color_common_lighted" />
-    </RelativeLayout>
+    </LinearLayout>
     <!-- 组合单项失效商品容器 -->
     <LinearLayout
         android:id="@+id/ly_child_group_invalid_container"
