@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <!-- 套装上半部布局 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp">
+    <!-- 套装标识文案 -->
+    <TextView
+        android:id="@+id/tv_group_product_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/order_conform_red_txt"
+        android:text="【套装】"
+        android:layout_alignParentLeft="true"/>
+    <!-- 套装名称 -->
+    <TextView
+        android:id="@+id/tv_group_pruduct_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_color_black2"
+        android:layout_toRightOf="@+id/tv_group_product_id"
+        android:text="早泄拯救装"/>
+    <!-- 价格 -->
+    <TextView
+        android:id="@+id/tv_group_product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_color_black2"
+        android:text="￥27.60"
+        android:layout_alignParentRight="true"/>
+    <!-- 数量 -->
+    <TextView
+        android:id="@+id/tv_group_product_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_color_black3"
+        android:layout_toLeftOf="@+id/tv_group_product_price"
+        android:text="x1"/>
+    </RelativeLayout>
+    <!-- 套装子商品容器 -->
+    <LinearLayout
+        android:id="@+id/ly_group_product_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+</LinearLayout>
