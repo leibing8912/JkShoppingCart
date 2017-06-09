@@ -3,7 +3,6 @@ package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 import android.content.Context;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
