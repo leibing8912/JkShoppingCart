@@ -18,6 +18,8 @@
             <include layout="@layout/layout_receive_address"/>
             <!-- 身份校验 -->
             <include layout="@layout/layout_identity_check"/>
+            <!-- 支付方式 -->
+            <include layout="@layout/layout_payment"/>
         </LinearLayout>
     </ScrollView>
 </merge>

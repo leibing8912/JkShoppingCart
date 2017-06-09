@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rly_payment"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+    <!-- 支付方式文案 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/text_color_black3"
+        android:text="支付方式"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"/>
+    <!-- 右箭头 -->
+    <ImageView
+        android:id="@+id/iv_payment_right_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shoppingcart_new_view_product_details"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+    <!-- 在线支付文案 -->
+    <TextView
+        android:id="@+id/tv_pay_online"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/text_color_black3"
+        android:layout_toLeftOf="@+id/iv_payment_right_arrow"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:text="在线支付"/>
+</RelativeLayout>
