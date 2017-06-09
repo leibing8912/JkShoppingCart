@@ -43,4 +43,8 @@ public class ShoppingCartConstant {
     public final static int AWARD_TYPE_AWARD = 0x20;
     // 奖品类型--积分兑换
     public final static int AWARD_CREDITS_EXCHANGE = 0x21;
+    // 布局显示--有商品
+    public final static int LAYOUT_SHOW_HAS_GOODS = 0x30;
+    // 布局显示--无商品
+    public final static int LAYOUT_SHOW_NO_GOODS = 0x31;
 }

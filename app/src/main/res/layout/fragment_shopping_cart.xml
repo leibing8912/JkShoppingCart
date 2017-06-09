@@ -10,6 +10,7 @@
     <include layout="@layout/layout_shoppingcart_tips"/>
     <!-- 购物车列表 + 底部结算布局 -->
     <RelativeLayout
+        android:id="@+id/rly_has_goods"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!-- 底部结算布局 -->
@@ -31,4 +32,6 @@
             android:layout_above="@+id/fly_shoppingcart_settle">
         </ExpandableListView>
     </RelativeLayout>
+    <!-- 无商品页面 -->
+    <include layout="@layout/layout_shoppingcart_no_goods"/>
 </LinearLayout>

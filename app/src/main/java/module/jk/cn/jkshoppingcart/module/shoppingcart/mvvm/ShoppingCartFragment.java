@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -31,6 +32,8 @@ import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConsta
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CANNOT_DELETE;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.COMPLETE_TXT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.EDIT_TXT;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.LAYOUT_SHOW_HAS_GOODS;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.LAYOUT_SHOW_NO_GOODS;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD_INVALID;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_GROUP;
@@ -78,6 +81,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     // 购物车列表
     @BindView(R.id.exlv_shoppingcart)
     ExpandableListView shoppingcartExlv;
+    // 购物车中有商品布局
+    @BindView(R.id.rly_has_goods)
+    RelativeLayout hasGoodsRly;
+    // 购物车中无商品布局
+    @BindView(R.id.ly_no_goods)
+    LinearLayout noGoodsLy;
     // 数据源
     private ArrayList<ShoppingCartBean> mData;
     // 适配器
@@ -343,7 +352,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     }
 
     @OnClick({R.id.iv_back, R.id.btn_edit, R.id.btn_collect, R.id.btn_delete,
-            R.id.btn_pay, R.id.cb_all_check, R.id.ly_all_check})
+            R.id.btn_pay, R.id.cb_all_check, R.id.ly_all_check, R.id.btn_go_shop})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -375,11 +384,14 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 // 全选、反选
                 doCheckAll(allCheckCb.isChecked(), isEdited);
                 break;
+            case R.id.btn_go_shop:
+                // 逛一逛
+                break;
             default:
                 break;
         }
     }
-
+    
     /**
       * 编辑逻辑
       * @author leibing
@@ -523,8 +535,36 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
       * @return
       */
     private void updateData(){
-        if (mAdapter != null){
+        if (mAdapter != null && mData.size() != 0){
+            whatLayoutShow(LAYOUT_SHOW_HAS_GOODS);
             mAdapter.setData(mData);
+        }else {
+            whatLayoutShow(LAYOUT_SHOW_NO_GOODS);
+        }
+    }
+
+    /**
+      * 布局显示
+      * @author leibing
+      * @createTime 2017/6/9
+      * @lastModify 2017/6/9
+      * @param viewIndex
+      * @return
+      */
+    private void whatLayoutShow(int viewIndex){
+        switch (viewIndex){
+            case LAYOUT_SHOW_HAS_GOODS:
+                // 有商品
+                hasGoodsRly.setVisibility(View.VISIBLE);
+                noGoodsLy.setVisibility(View.GONE);
+                break;
+            case LAYOUT_SHOW_NO_GOODS:
+                // 无商品
+                hasGoodsRly.setVisibility(View.GONE);
+                noGoodsLy.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
         }
     }
 
