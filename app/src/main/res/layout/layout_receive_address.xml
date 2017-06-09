@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <!-- 有收货人地址布局 -->
+    <RelativeLayout
+        android:id="@+id/rly_has_receive_address"
+        android:layout_width="match_parent"
+        android:layout_height="93dp">
+        <!-- 底部横条 -->
+        <ImageView
+            android:id="@+id/iv_has_receive_address_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/shoppingcart_new_address_splitter_bar"
+            android:layout_alignParentBottom="true"/>
+        <!-- 收货地址 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_above="@+id/iv_has_receive_address_bottom">
+            <!-- 收货人、联系电话 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="收货人："
+                    android:textColor="@color/text_color_black2"/>
+                <!-- 收货人名称 -->
+                <TextView
+                    android:id="@+id/tv_receive_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="某某某"
+                    android:textColor="@color/text_color_black2"/>
+                <!-- 联系电话 -->
+                <TextView
+                    android:id="@+id/tv_receive_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="15677889966"
+                    android:layout_marginLeft="30dp"
+                    android:textColor="@color/text_color_black2"/>
+                <!-- 默认地址图标 -->
+                <ImageView
+                    android:id="@+id/iv_receive_default"
+                    android:layout_width="36dp"
+                    android:layout_height="17dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/shoppingcart_new_default"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+            <!-- 地址 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="13dp">
+                <!-- 地址图标 -->
+                <ImageView
+                    android:id="@+id/iv_address_icon"
+                    android:layout_width="11dp"
+                    android:layout_height="13dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/shoppingcart_new_address"
+                    android:layout_alignParentLeft="true"/>
+                <!-- 详细地址 -->
+                <TextView
+                    android:id="@+id/tv_receive_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:layout_alignTop="@+id/iv_address_icon"
+                    android:layout_toRightOf="@+id/iv_address_icon"
+                    android:layout_toLeftOf="@+id/iv_right_arrow"
+                    android:textColor="@color/text_color_common_lighted"
+                    android:text="地址地址地址地址地址地址地址地址地址地地址地址地址地址地址"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="36dp"/>
+                <!-- 右箭头图标 -->
+                <ImageView
+                    android:id="@+id/iv_right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/shoppingcart_new_view_product_details"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- 无收货人地址布局 -->
+    <RelativeLayout
+        android:id="@+id/rly_no_receive_address"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:visibility="gone">
+        <!-- 底部横条 -->
+        <ImageView
+            android:id="@+id/iv_no_receive_address_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/shoppingcart_new_address_splitter_bar"
+            android:layout_alignParentBottom="true"/>
+        <!-- 无收货地址布局 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/iv_no_receive_address_bottom"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="收货人：请填写收货人信息"
+                android:textColor="@color/text_color_black2"
+                android:layout_centerVertical="true"/>
+            <!-- 右箭头图标 -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/shoppingcart_new_view_product_details"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

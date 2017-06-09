@@ -391,7 +391,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
         }
     }
-    
+
     /**
       * 编辑逻辑
       * @author leibing
