@@ -20,6 +20,12 @@
             <include layout="@layout/layout_identity_check"/>
             <!-- 支付方式 -->
             <include layout="@layout/layout_payment"/>
+            <!-- 订单信息 -->
+            <LinearLayout
+                android:id="@+id/ly_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
         </LinearLayout>
     </ScrollView>
 </merge>

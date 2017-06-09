@@ -234,7 +234,7 @@ public class ShoppingCartDialog {
                         ,(LinearLayout.LayoutParams.MATCH_PARENT)));
         return mDialog;
     }
-    
+
     /**
       * 关闭对话框
       * @author leibing
