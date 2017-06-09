@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!-- 是否开具发票 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="12dp">
+        <!-- 是否开具发票 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_black2"
+            android:textSize="15sp"
+            android:text="是否开具发票"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <!-- 开具发票选项 -->
+        <CheckBox
+            android:id="@+id/cb_invoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/selector_check_box_invoice"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <include layout="@layout/common_line_gray_horizontal"/>
+    <!-- 运费、合计 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="12dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <!-- 运费 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- 运费文案 -->
+            <TextView
+                android:id="@+id/tv_freight_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black3"
+                android:text="运费"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+            <!-- 运费 -->
+            <TextView
+                android:id="@+id/tv_freight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black3"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="￥5.00"/>
+        </RelativeLayout>
+        <!-- 合计 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+            <!-- 合计文案 -->
+            <TextView
+                android:id="@+id/tv_total_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black3"
+                android:text="合计"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+            <!-- 合计 -->
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/order_conform_red_txt"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="￥123.50"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
