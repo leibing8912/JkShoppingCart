@@ -153,4 +153,48 @@
             android:layout_marginRight="10dp"
             android:text="未使用"/>
     </RelativeLayout>
+    <!-- 现金劵使用 -->
+    <LinearLayout
+        android:id="@+id/ly_cash_coupon_uses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <!-- 分割线 -->
+        <include layout="@layout/common_line_gray_horizontal"/>
+        <!-- 使用现金券布局 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <!-- 使用按钮 -->
+            <Button
+                android:id="@+id/btn_use_coupon"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:textSize="13sp"
+                android:textColor="@color/color_white"
+                android:background="@drawable/selector_btn_blue"
+                android:text="使用"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+            <!-- 现金券编辑框 -->
+            <EditText
+                android:id="@+id/edt_use_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/btn_use_coupon"
+                android:background="@color/color_line_gray"
+                android:hint="请输入现金券代码"
+                android:textColorHint="@color/text_color_common_lighted"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:maxLength="24"
+                android:text="ABCDEFGHILERFTYBNHRTVFGTERCR"
+                android:paddingLeft="8dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
