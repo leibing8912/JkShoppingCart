@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ly_default_edit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <!-- 保存按钮 -->
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:textColor="@color/color_white"
+            android:background="@color/gray"
+            android:layout_alignParentRight="true"
+            android:text="保存"/>
+        <!-- 编辑 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/btn_save"
+            android:paddingLeft="15dp">
+            <!-- 清空编辑按钮 -->
+            <ImageView
+                android:id="@+id/iv_clear_edit"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/shoppingcart_new_delete_button"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"/>
+            <!-- 身份证编辑 -->
+            <EditText
+                android:id="@+id/edt_identify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black2"
+                android:hint="进口商品需输入身份证号才能发货哦~"
+                android:maxLength="30"
+                android:layout_centerVertical="true"
+                android:textColorHint="@color/text_color_common_lighted"/>
+        </RelativeLayout>
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <include layout="@layout/common_line_gray_horizontal"/>
+</LinearLayout>

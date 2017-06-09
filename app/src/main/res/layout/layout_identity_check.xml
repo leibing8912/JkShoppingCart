@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!-- 身份校验默认显示、编辑布局 -->
+    <include layout="@layout/layout_identity_check_default_edit"/>
+    <!-- 身份校验保存成功布局 -->
+    <include layout="@layout/layout_identity_check_save_success"/>
+</LinearLayout>

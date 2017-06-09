@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ly_identity_save_success"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="20dp">
+        <!-- 编辑按钮 -->
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/shoppingcart_new_editor"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+        <!-- 身份证号文案 -->
+        <TextView
+            android:id="@+id/tv_identity_card_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/text_color_black2"
+            android:text="身份证号"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <!-- 身份证号 -->
+        <TextView
+            android:id="@+id/tv_identity_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/text_color_black2"
+            android:layout_toRightOf="@+id/tv_identity_card_tip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:maxLength="30"
+            android:text="487955264134646544655646"/>
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <include layout="@layout/common_line_gray_horizontal"/>
+</LinearLayout>

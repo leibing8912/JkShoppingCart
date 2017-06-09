@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_order_confirm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmActivity">
-    <!-- 收货地址 -->
-    <include layout="@layout/layout_receive_address"/>
-</RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- 收货地址 -->
+            <include layout="@layout/layout_receive_address"/>
+            <!-- 身份校验 -->
+            <include layout="@layout/layout_identity_check"/>
+        </LinearLayout>
+    </ScrollView>
+</merge>
