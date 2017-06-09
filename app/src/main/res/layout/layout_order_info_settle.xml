@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!-- 地址 -->
+    <LinearLayout
+        android:id="@+id/ly_settle_address"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="vertical">
+        <!-- 分割线 -->
+        <include layout="@layout/common_line_gray_horizontal"/>
+        <!-- 地址 -->
+        <TextView
+            android:id="@+id/tv_settle_address"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:textSize="12sp"
+            android:textColor="@color/text_color_black3"
+            android:text="地址地址地址地址地址地址地址地址地址地址"
+            android:gravity="center_vertical"
+            android:ellipsize="end"
+            android:singleLine="true" />
+    </LinearLayout>
+    <!-- 提交订单 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- 分割线 -->
+        <include layout="@layout/common_line_gray_horizontal"/>
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <!-- 提交订单按钮 -->
+        <Button
+            android:id="@+id/btn_settle_total"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:textColor="@color/color_white"
+            android:text="提交订单"
+            android:background="@color/text_color_red_1"
+            android:layout_alignParentRight="true"/>
+        <!-- 合计 -->
+        <TextView
+            android:id="@+id/tv_settle_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_color_black2"
+            android:text="合计：￥258.60"
+            android:layout_toLeftOf="@+id/btn_settle_total"
+            android:layout_marginRight="16dp"
+            android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
