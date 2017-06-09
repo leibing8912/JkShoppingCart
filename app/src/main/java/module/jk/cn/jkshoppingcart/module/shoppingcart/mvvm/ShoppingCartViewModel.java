@@ -145,9 +145,9 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                 mModelListener.toastShow(NOT_SELECT_GOODS);
             return;
         }
+        boolean isHasSelected = false;
         for (int i=0;i<mData.size();i++){
             if (mData.get(i).product != null) {
-                boolean isHasSelected = false;
                 String productIds = "";
                 // 遍历添加需要删除的数据
                 for (int j = 0; j < mData.get(i).product.size(); j++) {
@@ -200,9 +200,9 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
             return;
         }
         ArrayList<ShoppingCartBean.Product> needDelList = new ArrayList<>();
+        boolean isHasSelected = false;
         for (int i=0;i<mData.size();i++){
             if (mData.get(i).product != null) {
-                boolean isHasSelected = false;
                 // 遍历添加需要删除的数据
                 for (int j = 0; j < mData.get(i).product.size(); j++) {
                     ShoppingCartBean.Product product = mData.get(i).product.get(j);
