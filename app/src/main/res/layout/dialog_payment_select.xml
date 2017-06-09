@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="415dp"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        <!-- 选择支付方式文案 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_black2"
+            android:textSize="15sp"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="选择支付方式"/>
+        <!-- 在线支付选项 -->
+        <RelativeLayout
+            android:id="@+id/rly_pay_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="18dp">
+            <!-- 在线支付文案 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black2"
+                android:text="在线支付"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+            <!-- 在线支付选项 -->
+            <ImageView
+                android:id="@+id/iv_pay_online"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/shoppingcart_new_checked"
+                android:scaleType="fitXY"
+                android:layout_marginRight="35dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+        <!-- 分割线 -->
+        <include layout="@layout/common_line_gray_horizontal"/>
+        <!-- 货到付款选项 -->
+        <RelativeLayout
+            android:id="@+id/rly_cash_on_deliver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp">
+            <!-- 货到付款文案 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_black2"
+                android:text="货到付款"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+            <!-- 货到付款选项 -->
+            <ImageView
+                android:id="@+id/iv_cash_on_deliver"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/shoppingcart_new_checked"
+                android:scaleType="fitXY"
+                android:layout_marginRight="35dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

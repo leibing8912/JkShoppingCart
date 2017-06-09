@@ -334,6 +334,10 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                                             ToastUtils.show(AppManager.getInstance().currentActivity(), AWARD_CANNOT_DELETE);
                                         }
                                     }
+
+                                    @Override
+                                    public void selectedListener(String content) {
+                                    }
                                 }).show();
                     return true;
                 }
@@ -760,7 +764,11 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                     calculate();
                 }
             }
-        }).show();
+
+                    @Override
+                    public void selectedListener(String content) {
+                    }
+                }).show();
     }
 
     @Override

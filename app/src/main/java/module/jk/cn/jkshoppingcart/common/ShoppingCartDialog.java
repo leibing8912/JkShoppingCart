@@ -6,9 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import module.jk.cn.jkshoppingcart.R;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_ON_DELIVER;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 
 /**
  * @className: ShoppingCartDialog
@@ -178,6 +182,60 @@ public class ShoppingCartDialog {
     }
 
     /**
+      * 创建支付选择弹窗
+      * @author leibing
+      * @createTime 2017/6/9
+      * @lastModify 2017/6/9
+      * @param context
+      * @param isOnlinePay
+      * @param mCallBack
+      * @return
+      */
+    public Dialog createPaymentSelectDialog(Context context,
+                                            boolean isOnlinePay, final DialogCallBack mCallBack){
+        View view = LayoutInflater.from(context).inflate(
+                R.layout.dialog_payment_select, null);
+        RelativeLayout payOnlineRly = (RelativeLayout) view.findViewById(R.id.rly_pay_online);
+        RelativeLayout cashOnDeliverRly = (RelativeLayout) view.findViewById(R.id.rly_cash_on_deliver);
+        ImageView payOnlineIv = (ImageView) view.findViewById(R.id.iv_pay_online);
+        ImageView cashOnDeliverIv = (ImageView) view.findViewById(R.id.iv_cash_on_deliver);
+        if (isOnlinePay){
+            payOnlineIv.setVisibility(View.VISIBLE);
+            cashOnDeliverIv.setVisibility(View.GONE);
+        }else {
+            payOnlineIv.setVisibility(View.GONE);
+            cashOnDeliverIv.setVisibility(View.VISIBLE);
+        }
+        // 在线支付点击事件
+        payOnlineRly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 关闭对话框
+                dismissDialog();
+                if (mCallBack != null)
+                    mCallBack.selectedListener(PAY_ONLINE);
+            }
+        });
+        // 货到付款点击事件
+        cashOnDeliverRly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 关闭对话框
+                dismissDialog();
+                if (mCallBack != null)
+                    mCallBack.selectedListener(CASH_ON_DELIVER);
+            }
+        });
+
+        mDialog = new Dialog(context, R.style.ShoppingCartDialogStyle);
+        mDialog.setCancelable(true);
+        mDialog.setContentView(view,
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
+                        ,(LinearLayout.LayoutParams.MATCH_PARENT)));
+        return mDialog;
+    }
+    
+    /**
       * 关闭对话框
       * @author leibing
       * @createTime 2017/6/6
@@ -203,5 +261,7 @@ public class ShoppingCartDialog {
        void leftBtnListener();
        // 右按钮监听回调
        void rightBtnListener(String content);
+       // 选中监听回调
+       void selectedListener(String content);
     }
 }
