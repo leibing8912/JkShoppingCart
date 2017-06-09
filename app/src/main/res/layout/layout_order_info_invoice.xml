@@ -32,6 +32,34 @@
             android:layout_alignParentRight="true"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
     </RelativeLayout>
+    <!-- 发票抬头 -->
+    <LinearLayout
+        android:id="@+id/ly_invoice_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <!-- 分割线 -->
+        <include layout="@layout/common_line_gray_horizontal"/>
+        <!-- 发票抬头编辑框 -->
+        <EditText
+            android:id="@+id/edt_invoice_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/btn_use_coupon"
+            android:background="@color/color_line_gray"
+            android:hint="输入发票抬头（如张三）"
+            android:textColorHint="@color/text_color_common_lighted"
+            android:textSize="12sp"
+            android:singleLine="true"
+            android:maxLength="24"
+            android:paddingLeft="8dp"
+            android:layout_centerVertical="true"/>
+    </LinearLayout>
     <!-- 分割线 -->
     <include layout="@layout/common_line_gray_horizontal"/>
     <!-- 运费、合计 -->
