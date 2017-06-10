@@ -6,6 +6,8 @@
     android:orientation="vertical">
     <!-- actionbar -->
     <include layout="@layout/common_actionbar"/>
+    <!-- 分割线 -->
+    <include layout="@layout/common_line_gray_horizontal"/>
     <!-- 提示栏 -->
     <include layout="@layout/layout_shoppingcart_tips"/>
     <!-- 购物车列表 + 底部结算布局 -->

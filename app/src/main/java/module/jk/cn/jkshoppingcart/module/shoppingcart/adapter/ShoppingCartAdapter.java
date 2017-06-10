@@ -168,33 +168,33 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             gholder = (GroupViewHolder) convertView.getTag();
         }
 
-        // 更新ui
         if (mData != null
                 && mData.size() != 0
                 && groupPosition < mData.size()
                 && mData.get(groupPosition) != null){
+            // 更新ui
             gholder.updateUI(mData.get(groupPosition));
+            // listener
+            // 组选点击事件
+            gholder.parentItemCb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mData.get(groupPosition).isSelected = ((CheckBox) v).isChecked();
+                    // 暴露组选接口
+                    if (mCheckInterface != null)
+                        mCheckInterface.checkGroup(groupPosition, ((CheckBox) v).isChecked());
+                }
+            });
+            // 失效产品清空操作
+            gholder.rightInvalidTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 清空处理
+                    if (deleteInterface != null)
+                        deleteInterface.doClearInvalid(groupPosition);
+                }
+            });
         }
-        // listener
-        // 组选点击事件
-        gholder.parentItemCb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mData.get(groupPosition).isSelected = ((CheckBox) v).isChecked();
-                // 暴露组选接口
-                if (mCheckInterface != null)
-                    mCheckInterface.checkGroup(groupPosition, ((CheckBox) v).isChecked());
-            }
-        });
-        // 失效产品清空操作
-        gholder.rightInvalidTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 清空处理
-                if (deleteInterface != null)
-                    deleteInterface.doClearInvalid(groupPosition);
-            }
-        });
 
         return convertView;
     }
@@ -290,7 +290,6 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
             cholder = (ChildViewHolder) convertView.getTag();
         }
 
-        // 更新ui
         if (mData != null
                 && mData.size() != 0
                 && groupPosition < mData.size()
@@ -299,96 +298,96 @@ public class ShoppingCartAdapter extends BaseExpandableListAdapter {
                 && mData.get(groupPosition).product.size() != 0
                 && childPosition < mData.get(groupPosition).product.size()
                 && mData.get(groupPosition).product.get(childPosition) != null){
+            // 更新ui
             cholder.updateUI(mData.get(groupPosition).product.get(childPosition));
+            // listener
+            // 子选
+            cholder.childSkuCb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cholder.childSkuCb.setChecked(((CheckBox) v).isChecked());
+                    // 更新子选项
+                    updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
+                }
+            });
+            cholder.childGroupCb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cholder.childGroupCb.setChecked(((CheckBox) v).isChecked());
+                    // 更新子选项
+                    updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
+                }
+            });
+            cholder.childAwardCb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cholder.childAwardCb.setChecked(((CheckBox) v).isChecked());
+                    // 更新子选项
+                    updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
+                }
+            });
+            // 增加、删减数量、编辑数量
+            // 单品增加
+            cholder.childSkuAddIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 暴露单品增加接口
+                    if (modifyCountInterface != null)
+                        modifyCountInterface.doIncrease(groupPosition, childPosition,
+                                cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
+                }
+            });
+            // 单品减少
+            cholder.childSkuSubIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 暴露单品删减接口
+                    if (modifyCountInterface != null)
+                        modifyCountInterface.doDecrease(groupPosition, childPosition,
+                                cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
+                }
+            });
+            // 单品编辑数量
+            cholder.childSkuNumEdt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 暴露单品编辑数量接口
+                    if (modifyCountInterface != null)
+                        modifyCountInterface.doEditNum(groupPosition, childPosition,
+                                cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
+                }
+            });
+            // 组合增加
+            cholder.childGroupAddIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 暴露组合增加接口
+                    if (modifyCountInterface != null)
+                        modifyCountInterface.doIncrease(groupPosition, childPosition,
+                                cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
+                }
+            });
+            // 组合减少
+            cholder.childGroupSubIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 暴露组合删减接口
+                    if (modifyCountInterface != null)
+                        modifyCountInterface.doDecrease(groupPosition, childPosition,
+                                cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
+                }
+            });
+            // 组合编辑数量
+            cholder.childGroupNumEdt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 暴露组合编辑数量接口
+                    if (modifyCountInterface != null)
+                        modifyCountInterface.doEditNum(groupPosition, childPosition,
+                                cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
+                }
+            });
         }
-
-        // listener
-        // 子选
-        cholder.childSkuCb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cholder.childSkuCb.setChecked(((CheckBox) v).isChecked());
-                // 更新子选项
-                updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
-            }
-        });
-        cholder.childGroupCb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cholder.childGroupCb.setChecked(((CheckBox) v).isChecked());
-                // 更新子选项
-                updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
-            }
-        });
-        cholder.childAwardCb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cholder.childAwardCb.setChecked(((CheckBox) v).isChecked());
-                // 更新子选项
-                updateChildCb(groupPosition, childPosition, ((CheckBox) v).isChecked());
-            }
-        });
-        // 增加、删减数量、编辑数量
-        // 单品增加
-        cholder.childSkuAddIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 暴露单品增加接口
-                if (modifyCountInterface != null)
-                    modifyCountInterface.doIncrease(groupPosition, childPosition,
-                            cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
-            }
-        });
-        // 单品减少
-        cholder.childSkuSubIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 暴露单品删减接口
-                if (modifyCountInterface != null)
-                    modifyCountInterface.doDecrease(groupPosition, childPosition,
-                            cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
-            }
-        });
-        // 单品编辑数量
-        cholder.childSkuNumEdt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 暴露单品编辑数量接口
-                if (modifyCountInterface != null)
-                    modifyCountInterface.doEditNum(groupPosition, childPosition,
-                            cholder.childSkuNumEdt, cholder.childSkuCb.isChecked());
-            }
-        });
-        // 组合增加
-        cholder.childGroupAddIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 暴露组合增加接口
-                if (modifyCountInterface != null)
-                    modifyCountInterface.doIncrease(groupPosition, childPosition,
-                            cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
-            }
-        });
-        // 组合减少
-        cholder.childGroupSubIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 暴露组合删减接口
-                if (modifyCountInterface != null)
-                    modifyCountInterface.doDecrease(groupPosition, childPosition,
-                            cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
-            }
-        });
-        // 组合编辑数量
-        cholder.childGroupNumEdt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 暴露组合编辑数量接口
-                if (modifyCountInterface != null)
-                    modifyCountInterface.doEditNum(groupPosition, childPosition,
-                            cholder.childGroupNumEdt, cholder.childGroupCb.isChecked());
-            }
-        });
 
         return convertView;
     }

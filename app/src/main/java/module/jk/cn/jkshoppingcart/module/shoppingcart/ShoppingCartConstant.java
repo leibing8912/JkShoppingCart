@@ -27,6 +27,8 @@ public class ShoppingCartConstant {
     public final static String NOT_SELECT_GOODS = " 您还没有选择商品哦~";
     // 兑换商品和奖品不可移入收藏哦~
     public final static String AWARD_CANNOT_COLLECT = "兑换商品和奖品不可移入收藏哦~";
+    // 购物车商品已达上限，请先清理后操作~
+    public final static String  PLEASE_CLEAR_SHOPPINGCART = "购物车商品已达上限，请先清理后操作~";
     // 产品类型--单品正常
     public final static int PRODUCT_TYPE_SKU = 0x10;
     // 产品类型--组合正常

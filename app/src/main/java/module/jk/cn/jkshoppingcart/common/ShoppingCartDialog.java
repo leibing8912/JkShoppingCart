@@ -36,7 +36,7 @@ public class ShoppingCartDialog {
       */
     private ShoppingCartDialog(){
     }
-
+    
     /**
       * sington
       * @author leibing
