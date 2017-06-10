@@ -214,14 +214,16 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 switch (model.couponType){
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
-                        if (getConditionAmount() >= mData.get(i).couponRangeValue){
-                            // 可选
-                            mData.get(i).isCouponSelected = false;
-                            mData.get(i).isCouponAvailable = true;
-                        }else {
-                            // 不可选
-                            mData.get(i).isCouponSelected = false;
-                            mData.get(i).isCouponAvailable = false;
+                        if (!isIntegralCouponSelected()) {
+                            if (getConditionAmount() >= mData.get(i).couponRangeValue) {
+                                // 可选
+                                mData.get(i).isCouponSelected = false;
+                                mData.get(i).isCouponAvailable = true;
+                            } else {
+                                // 不可选
+                                mData.get(i).isCouponSelected = false;
+                                mData.get(i).isCouponAvailable = false;
+                            }
                         }
                         break;
                     case ACTIVITY_COUPON_TYPE:
@@ -320,14 +322,16 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 switch (model.couponType){
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
-                        if (getConditionAmount() >= mData.get(i).couponRangeValue){
-                            // 可选
-                            mData.get(i).isCouponSelected = false;
-                            mData.get(i).isCouponAvailable = true;
-                        }else {
-                            // 不可选
-                            mData.get(i).isCouponSelected = false;
-                            mData.get(i).isCouponAvailable = false;
+                        if (!isIntegralCouponSelected()) {
+                            if (getConditionAmount() >= mData.get(i).couponRangeValue) {
+                                // 可选
+                                mData.get(i).isCouponSelected = false;
+                                mData.get(i).isCouponAvailable = true;
+                            } else {
+                                // 不可选
+                                mData.get(i).isCouponSelected = false;
+                                mData.get(i).isCouponAvailable = false;
+                            }
                         }
                         break;
                     case ACTIVITY_COUPON_TYPE:
@@ -492,6 +496,26 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
             UseCouponModel model = mData.get(i);
             if (model != null
                     && model.couponType == ACTIVITY_COUPON_TYPE
+                    && model.isCouponSelected) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 是否有积分优惠券被选中
+     * @author leibing
+     * @createTime 2017/6/10
+     * @lastModify 2017/6/10
+     * @param
+     * @return
+     */
+    private boolean isIntegralCouponSelected(){
+        for (int i=0;i<mData.size();i++){
+            UseCouponModel model = mData.get(i);
+            if (model != null
+                    && model.couponType == INTEGRAL_COUPON_TYPE
                     && model.isCouponSelected) {
                 return true;
             }
