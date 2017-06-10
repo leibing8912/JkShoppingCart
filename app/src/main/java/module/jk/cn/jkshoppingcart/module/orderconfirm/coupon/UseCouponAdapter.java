@@ -100,6 +100,8 @@ public class UseCouponAdapter extends BaseAdapter{
                 && mData.get(position) != null){
             // 更新ui
             viewHodler.updateUi(mData.get(position));
+            // 设置item是否可点击
+            viewHodler.setIsItemClick(mData.get(position));
             // item选项onclick
             viewHodler.useCouponCb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -213,6 +215,24 @@ public class UseCouponAdapter extends BaseAdapter{
             // 有效期至
             if (StringUtil.isNotEmpty(model.couponValidDate))
                 couponValidityTv.setText("有效期至：" + model.couponValidDate);
+        }
+
+        /**
+          * 设置item是否可点击
+          * @author leibing
+          * @createTime 2017/6/10
+          * @lastModify 2017/6/10
+          * @param model
+          * @return
+          */
+        public void setIsItemClick(UseCouponModel model){
+            if (model == null)
+                return;
+            if (model.isCouponAvailable){
+                useCouponLy.setClickable(true);
+            }else {
+                useCouponLy.setClickable(false);
+            }
         }
     }
 
