@@ -72,7 +72,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
       * @return
       */
     private void getData() {
-        totalMoney = 250;
+        totalMoney = 300;
 
         UseCouponModel model;
 

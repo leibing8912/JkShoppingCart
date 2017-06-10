@@ -85,7 +85,7 @@ public class UseCouponAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHodler;
+        final ViewHolder viewHodler;
         if (convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.item_use_coupon, null);
             viewHodler = new ViewHolder(convertView);
@@ -110,6 +110,17 @@ public class UseCouponAdapter extends BaseAdapter{
                         mCheckInterface.itemCheck(position, ((CheckBox) v).isChecked());
                 }
             });
+            // item onclick
+            viewHodler.useCouponLy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mData.get(position).isCouponSelected = !viewHodler.useCouponCb.isChecked();
+                    // 暴露选项接口
+                    if (mCheckInterface != null)
+                        mCheckInterface.itemCheck(position, !viewHodler.useCouponCb.isChecked());
+                    viewHodler.useCouponCb.setChecked(!viewHodler.useCouponCb.isChecked());
+                }
+            });
         }
 
         return convertView;
@@ -122,6 +133,9 @@ public class UseCouponAdapter extends BaseAdapter{
      * @createTime: 2017/6/10
      */
     static class ViewHolder{
+        // 父容器
+        @BindView(R.id.ly_use_coupon)
+        LinearLayout useCouponLy;
         // 优惠劵面值布局
         @BindView(R.id.ly_coupon_value)
         LinearLayout couponValueLy;
