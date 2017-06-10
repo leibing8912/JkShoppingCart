@@ -572,7 +572,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
         for (int i=0;i<mData.size();i++){
             UseCouponModel model = mData.get(i);
             if (model != null && model.isCouponSelected) {
-                discountAmount+=model.couponType;
+                discountAmount+=model.couponValue;
             }
         }
         discountAmountTv.setText("优惠劵累计金额：" + discountAmount);
