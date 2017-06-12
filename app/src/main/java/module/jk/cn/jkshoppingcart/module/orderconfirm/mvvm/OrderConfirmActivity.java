@@ -18,16 +18,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.common.ImageLoader;
+import module.jk.cn.jkshoppingcart.common.ShoppingCartDialog;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.common.ToastUtils;
 import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
+
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_ON_DELIVER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.INVALID_NUMBER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_RED_ENVELOPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.ORDER_CONFIRM;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel.JIANKE_SELF_SUPPORT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CREDITS_EXCHANGE;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_TYPE_AWARD;
@@ -109,6 +113,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     private double totalFreight = 0;
     // 是否显示现金劵使用布局
     boolean isShowCouponUses = false;
+    // 是否在线支付
+    boolean isPayOnline = false;
     // logic process
     private OrderConfirmViewModel mViewModel;
 
@@ -235,6 +241,34 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 break;
             case R.id.rly_payment:
                 // 支付方式选择
+                ShoppingCartDialog.getInstance().createPaymentSelectDialog(this, isPayOnline,
+                        new ShoppingCartDialog.DialogCallBack() {
+                    @Override
+                    public void leftBtnListener() {
+                    }
+
+                    @Override
+                    public void rightBtnListener(String content) {
+                    }
+
+                    @Override
+                    public void selectedListener(String content) {
+                        payMethodTv.setText(content);
+                        switch (content){
+                            case PAY_ONLINE:
+                                // 在线支付
+                                isPayOnline = true;
+                                break;
+                            case CASH_ON_DELIVER:
+                                isPayOnline = false;
+                                // 货到付款
+                                break;
+                            default:
+                                isPayOnline = false;
+                                break;
+                        }
+                    }
+                }).show();
                 break;
             case R.id.btn_settle_commit:
                 // 提交订单
@@ -271,8 +305,22 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 receiveAddressTv.setText(bean.receiveAddress.detailAddress);
         }
         // 支付方式
-        if (StringUtil.isNotEmpty(bean.payMode))
+        if (StringUtil.isNotEmpty(bean.payMode)) {
             payMethodTv.setText(bean.payMode);
+            switch (bean.payMode){
+                case PAY_ONLINE:
+                    // 在线支付
+                    isPayOnline = true;
+                    break;
+                case CASH_ON_DELIVER:
+                    isPayOnline = false;
+                    // 货到付款
+                    break;
+                default:
+                    isPayOnline = false;
+                    break;
+            }
+        }
         // 订单信息
         if (bean.productInfoList != null
                 && bean.productInfoList.size() != 0){
