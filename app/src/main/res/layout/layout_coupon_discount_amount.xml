@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="@color/text_color_black2"
-        android:text="优惠劵累计金额：￥0"
+        android:text="累计金额：￥0"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"/>
     <!-- 确认按钮 -->

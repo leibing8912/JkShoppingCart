@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ly_use_red_envelope"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+    <LinearLayout
+        android:id="@+id/ly_red_envelope"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shoppingcart_new_lucky_money"
+        android:orientation="vertical">
+        <!-- 红包金额 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|right"
+            android:paddingRight="20dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="￥"/>
+                <TextView
+                    android:id="@+id/tv_red_envelope_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_white"
+                    android:textStyle="bold"
+                    android:textSize="40sp"
+                    android:text="5"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!-- 有效期、选项 -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="20dp">
+            <!-- 有效期 -->
+            <TextView
+                android:id="@+id/tv_red_envelope_validity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/text_color_black3"
+                android:text="有效期：还有10天过期"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+            <!-- 选项 -->
+            <CheckBox
+                android:id="@+id/cb_red_envelope"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:button="@drawable/selector_check_box_round_blue"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

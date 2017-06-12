@@ -47,7 +47,9 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
     // 数据源
     private ArrayList<UseCouponModel> mData;
     // 待付款总金额
-    private double totalMoney;
+    private double totalAmount;
+    // 总计优惠金额
+    private double totalDiscountAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
       * @return
       */
     private void getData() {
-        totalMoney = 300;
+        totalAmount = 300;
 
         UseCouponModel model;
 
@@ -371,7 +373,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
                         // 优惠参考金额
-                        double conditionAmount = totalMoney - mData.get(position).couponValue;
+                        double conditionAmount = totalAmount - mData.get(position).couponValue;
                         if (conditionAmount >= mData.get(i).couponRangeValue){
                             // 可选
                             mData.get(i).isCouponSelected = false;
@@ -552,7 +554,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
       * @return
       */
     private double getConditionAmount(){
-        double conditionAmount = totalMoney;
+        double conditionAmount = totalAmount;
         for (int i=0;i<mData.size();i++){
             UseCouponModel model = mData.get(i);
             if (model != null && model.isCouponSelected) {
@@ -577,11 +579,12 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
             mData.get(i).isCouponAvailable = true;
             mData.get(i).isCouponSelected = false;
         }
-        discountAmountTv.setText("优惠劵累计金额：" + 0);
+        totalDiscountAmount = 0;
+        discountAmountTv.setText("优惠劵累计金额：" + (int) totalDiscountAmount);
         if (mAdapter != null)
             mAdapter.setData(mData);
     }
-
+    
     /**
       * 计算优惠金额
       * @author leibing
@@ -592,14 +595,14 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
       */
     private void calculateDiscountAmount(){
         // 优惠劵金额
-        double discountAmount = 0;
+        totalDiscountAmount = 0;
         for (int i=0;i<mData.size();i++){
             UseCouponModel model = mData.get(i);
             if (model != null && model.isCouponSelected) {
-                discountAmount+=model.couponValue;
+                totalDiscountAmount+=model.couponValue;
             }
         }
-        discountAmountTv.setText("优惠劵累计金额：" + discountAmount);
+        discountAmountTv.setText("优惠劵累计金额：" + (int) totalDiscountAmount);
     }
 
     @OnClick({R.id.btn_discount_amount_ok,

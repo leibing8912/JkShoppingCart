@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_use_red_envelope"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeActivity">
+    <!-- actionbar -->
+    <include layout="@layout/common_actionbar"/>
+    <!-- 分割线 -->
+    <include layout="@layout/common_line_gray_horizontal"/>
+    <!-- 列表、优惠金额模块 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- 列表 -->
+        <ListView
+            android:id="@+id/lv_use_red_envelope"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:divider="@null"
+            android:paddingTop="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@color/color_line_gray"
+            android:layout_above="@+id/fly_discount_amount"/>
+        <!-- 优惠金额模块 -->
+        <FrameLayout
+            android:id="@+id/fly_discount_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+            <include
+                layout="@layout/layout_coupon_discount_amount" />
+        </FrameLayout>
+    </RelativeLayout>
+</LinearLayout>
