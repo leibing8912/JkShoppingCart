@@ -398,7 +398,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                                 skuGiftLy.removeAllViews();
                                                 for (int z = 0; z < giftSize; z++) {
                                                     OrderInfoModel.Product.SkuProduct.Gifts gifts
-                                                            = new OrderInfoModel.Product.SkuProduct.Gifts();
+                                                            = product.skuProduct.gifts.get(z);
                                                     if (gifts != null) {
                                                         View giftView = LayoutInflater.from(this)
                                                                 .inflate(R.layout.layout_order_info_gifts, null);
