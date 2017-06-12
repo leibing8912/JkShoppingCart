@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_order_confirm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm.OrderConfirmActivity">
+    <LinearLayout
+        android:id="@+id/ly_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/ly_bottom">
     <!-- actionbar -->
     <include layout="@layout/common_actionbar"/>
     <!-- 分割线 -->
@@ -32,4 +38,13 @@
                 android:orientation="vertical"/>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ly_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <include layout="@layout/layout_order_info_settle"/>
+    </LinearLayout>
+</RelativeLayout>

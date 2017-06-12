@@ -2,6 +2,7 @@ package module.jk.cn.jkshoppingcart.module.orderconfirm.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 
 /**
  * @className: OrderConfirmBean
@@ -38,7 +39,7 @@ public class OrderConfirmBean implements Serializable{
     // 进口商品需要填入的身份证号
     public String identityCard;
     // 支付方式（在线支付、货到付款）
-    public String payMode = "在线支付";
+    public String payMode = PAY_ONLINE;
     // 订单信息列表
     public ArrayList<OrderInfoModel> productInfoList;
 }

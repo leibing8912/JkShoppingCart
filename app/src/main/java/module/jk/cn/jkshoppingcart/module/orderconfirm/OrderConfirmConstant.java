@@ -27,4 +27,8 @@ public class OrderConfirmConstant {
     public final static String PLEASE_USE_COUPON_USING_CASH_COUPON = "请先使用优惠劵再使用现金券~";
     // 您还未选中红包哦~
     public final static String SELECT_RED_ENVELOPE = "您还未选中红包哦~";
+    // 无可用优惠券哦~
+    public final static String NO_AVAILABLE_COUPON = "无可用优惠券哦~";
+    // 无可用红包哦~
+    public final static String NO_AVAILABLE_RED_ENVELOPE = "无可用红包哦~";
 }

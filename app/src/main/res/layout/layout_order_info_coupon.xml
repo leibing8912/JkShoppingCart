@@ -7,6 +7,7 @@
     <include layout="@layout/common_line_gray_horizontal"/>
     <!-- 优惠劵 -->
     <RelativeLayout
+        android:id="@+id/rly_coupon"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:paddingLeft="15dp"
@@ -57,6 +58,7 @@
     <include layout="@layout/common_line_gray_horizontal"/>
     <!-- 使用红包 -->
     <RelativeLayout
+        android:id="@+id/rly_red_envelope"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:paddingLeft="15dp"
@@ -107,6 +109,7 @@
     <include layout="@layout/common_line_gray_horizontal"/>
     <!-- 现金劵 -->
     <RelativeLayout
+        android:id="@+id/rly_cash_coupon"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:paddingLeft="15dp"
@@ -120,19 +123,6 @@
             android:textColor="@color/text_color_black3"
             android:text="使用现金劵"
             android:layout_centerVertical="true"/>
-        <!-- 可用现金券 -->
-        <TextView
-            android:id="@+id/tv_cash_coupon_available"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/order_conform_red_txt"
-            android:layout_toRightOf="@+id/tv_cash_coupon_tip"
-            android:text="2个可用"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:textSize="10sp"
-            android:padding="2dp"
-            android:background="@drawable/conner_txt_red"/>
         <!-- 右箭头图标 -->
         <ImageView
             android:id="@+id/iv_cash_coupon_right_arrow"
@@ -141,17 +131,6 @@
             android:src="@drawable/shoppingcart_new_view_product_details"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
-        <!-- 现金券金额或未使用文案 -->
-        <TextView
-            android:id="@+id/tv_cash_coupon_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/text_color_black3"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_cash_coupon_right_arrow"
-            android:layout_marginRight="10dp"
-            android:text="未使用"/>
     </RelativeLayout>
     <!-- 现金劵使用 -->
     <LinearLayout

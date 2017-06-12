@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +20,11 @@ import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
+
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_RED_ENVELOPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.ORDER_CONFIRM;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel.JIANKE_SELF_SUPPORT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CREDITS_EXCHANGE;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_TYPE_AWARD;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
@@ -79,6 +84,21 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     // 订单信息容器
     @BindView(R.id.ly_order_info)
     LinearLayout orderInfoLy;
+    // 底部地址布局
+    @BindView(R.id.ly_settle_address)
+    LinearLayout settleAddressLy;
+    // 底部地址
+    @BindView(R.id.tv_settle_address)
+    TextView settleAddressTv;
+    // 合计金额
+    @BindView(R.id.tv_settle_total)
+    TextView settleTotalTv;
+    // 总合计金额
+    private double totalAmount = 0;
+    // 总运费
+    private double totalFreight = 0;
+    // 是否显示现金劵使用布局
+    boolean isShowCouponUses = false;
     // logic process
     private OrderConfirmViewModel mViewModel;
 
@@ -93,7 +113,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
         // init logic process
         initViewModel();
     }
-    
+
     /**
       * init logic process
       * @author leibing
@@ -121,7 +141,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     }
 
     @OnClick({R.id.iv_back, R.id.rly_has_receive_address, R.id.rly_no_receive_address,
-            R.id.btn_save, R.id.iv_clear_edit, R.id.iv_edit, R.id.rly_payment})
+            R.id.btn_save, R.id.iv_clear_edit, R.id.iv_edit, R.id.rly_payment,
+            R.id.btn_settle_commit})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -143,6 +164,9 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 break;
             case R.id.rly_payment:
                 // 支付方式选择
+                break;
+            case R.id.btn_settle_commit:
+                // 提交订单
                 break;
         }
     }
@@ -182,10 +206,13 @@ public class OrderConfirmActivity extends BaseFragmentActivity
         if (bean.productInfoList != null
                 && bean.productInfoList.size() != 0){
             orderInfoLy.removeAllViews();
+            totalAmount = 0;
             int infoSize = bean.productInfoList.size();
             for (int i=0;i<infoSize;i++){
                 OrderInfoModel model = bean.productInfoList.get(i);
-                if (model != null){
+                double groupFreight = 0;
+                double groupTotalAmount = 0;
+                if (model != null) {
                     // 厂家布局
                     View manufacturerView = LayoutInflater.from(this).inflate(
                             R.layout.layout_order_info_manufacturer, null);
@@ -197,12 +224,12 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                     // 添加厂家布局到订单信息
                     orderInfoLy.addView(manufacturerView);
                     // 产品信息
-                    if (model.product != null && model.product.size() != 0){
+                    if (model.product != null && model.product.size() != 0) {
                         int productSize = model.product.size();
-                        for (int j=0; j< productSize;j++){
+                        for (int j = 0; j < productSize; j++) {
                             OrderInfoModel.Product product = new OrderInfoModel.Product();
-                            if (product != null){
-                                switch (product.productType){
+                            if (product != null) {
+                                switch (product.productType) {
                                     case PRODUCT_TYPE_SKU:
                                         // 单品
                                         View skuView = LayoutInflater.from(this).inflate(
@@ -225,7 +252,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                         // 赠品容器
                                         LinearLayout skuGiftLy
                                                 = (LinearLayout) skuView.findViewById(R.id.ly_order_info_sku_gift);
-                                        if (product.skuProduct != null){
+                                        if (product.skuProduct != null) {
                                             if (StringUtil.isNotEmpty(product.skuProduct.imgUrl))
                                                 ImageLoader.getInstance()
                                                         .load(this.getApplicationContext(),
@@ -240,14 +267,20 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                             if (product.skuProduct.productAmount > 0)
                                                 skuProductCountTv.setText("x"
                                                         + product.skuProduct.productAmount);
+                                            // 计算合计金额
+                                            if (product.skuProduct.price > 0
+                                                    && product.skuProduct.productAmount > 0) {
+                                                groupTotalAmount += product.skuProduct.price
+                                                        * product.skuProduct.productAmount;
+                                            }
                                             if (product.skuProduct.gifts != null
-                                                    && product.skuProduct.gifts.size() != 0){
+                                                    && product.skuProduct.gifts.size() != 0) {
                                                 int giftSize = product.skuProduct.gifts.size();
                                                 skuGiftLy.removeAllViews();
-                                                for (int z=0;z<giftSize;z++){
+                                                for (int z = 0; z < giftSize; z++) {
                                                     OrderInfoModel.Product.SkuProduct.Gifts gifts
                                                             = new OrderInfoModel.Product.SkuProduct.Gifts();
-                                                    if (gifts != null){
+                                                    if (gifts != null) {
                                                         View giftView = LayoutInflater.from(this)
                                                                 .inflate(R.layout.layout_order_info_gifts, null);
                                                         // 赠品名称
@@ -285,7 +318,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                         // 套装子商品容器
                                         LinearLayout groupProductContainerLy
                                                 = (LinearLayout) groupView.findViewById(R.id.ly_group_product_container);
-                                        if (product.groupProduct != null){
+                                        if (product.groupProduct != null) {
                                             if (StringUtil.isNotEmpty(product.groupProduct.productName))
                                                 groupPruductNameTv.setText(product.groupProduct.productName);
                                             if (product.groupProduct.groupPrice > 0)
@@ -293,15 +326,21 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                                         + StringUtil.doubleTwoDecimal(product.groupProduct.groupPrice));
                                             if (product.groupProduct.groupAmount > 0)
                                                 groupProductCountTv.setText("x" + product.groupProduct.groupAmount);
+                                            // 计算合计金额
+                                            if (product.groupProduct.groupPrice > 0
+                                                    && product.groupProduct.groupAmount > 0) {
+                                                groupTotalAmount += product.groupProduct.groupPrice
+                                                        * product.groupProduct.groupAmount;
+                                            }
                                             if (product.groupProduct.childList != null
-                                                    && product.groupProduct.childList.size() != 0){
+                                                    && product.groupProduct.childList.size() != 0) {
                                                 groupProductContainerLy.removeAllViews();
                                                 int childSize = product.groupProduct.childList.size();
-                                                for (int c=0;c<childSize;c++) {
+                                                for (int c = 0; c < childSize; c++) {
                                                     OrderInfoModel.Product.GroupProduct.ChildProduct childProduct
                                                             = product.groupProduct.childList.get(c);
-                                                    if (childProduct != null){
-                                                        View childProductView  = LayoutInflater.from(this)
+                                                    if (childProduct != null) {
+                                                        View childProductView = LayoutInflater.from(this)
                                                                 .inflate(R.layout.layout_order_info_group_product_item, null);
                                                         // 组合子商品图片
                                                         ImageView groupItemPicIv = (ImageView)
@@ -365,8 +404,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                         // 奖品图标
                                         ImageView awardIv = (ImageView) awardView
                                                 .findViewById(R.id.iv_order_info_award);
-                                        if (product.awardProduct != null){
-                                            switch (product.awardProduct.awardType){
+                                        if (product.awardProduct != null) {
+                                            switch (product.awardProduct.awardType) {
                                                 case AWARD_TYPE_AWARD:
                                                     // 奖品
                                                     creditsExchangeIv.setVisibility(View.GONE);
@@ -404,13 +443,156 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                             }
                         }
                     }
+                    // 当卖家类型为健客自营才允许有优惠券、红包、现金劵模块
+                    if (model.sellerType == JIANKE_SELF_SUPPORT) {
+                        // 优惠券、红包、现金券模块
+                        View couponView = LayoutInflater.from(this)
+                                .inflate(R.layout.layout_order_info_coupon, null);
+                        // 可用优惠券个数
+                        TextView couponAvailableTv =
+                                (TextView) couponView.findViewById(R.id.tv_coupon_available);
+                        // 优惠劵金额
+                        TextView couponAmountTv = (TextView) couponView.findViewById(R.id.tv_coupon_amount);
+                        boolean isCouponAvailable;
+                        if (model.mUseCouponModelList != null
+                                && model.mUseCouponModelList.size() != 0){
+                            couponAvailableTv.setText(model.mUseCouponModelList.size() + "个可用");
+                            couponAvailableTv.setVisibility(View.VISIBLE);
+                            couponAmountTv.setText("未使用");
+                            isCouponAvailable = true;
+                        }else {
+                            couponAvailableTv.setVisibility(View.GONE);
+                            couponAmountTv.setText("无可用");
+                            isCouponAvailable = false;
+                        }
+                        // 使用优惠券item点击事件
+                        final boolean finalIsCouponAvailable = isCouponAvailable;
+                        couponView.findViewById(R.id.rly_coupon).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!finalIsCouponAvailable){
+                                    toastShow(NO_AVAILABLE_COUPON);
+                                }
+                            }
+                        });
+                        // 可用红包个数
+                        TextView redEnvelopeAvailableTv = (TextView)
+                                couponView.findViewById(R.id.tv_red_envelope_available);
+                        // 红包金额
+                        TextView redEnvelopeAmountTv
+                                = (TextView) couponView.findViewById(R.id.tv_red_envelope_amount);
+                        boolean isRedEnvelopeAvailable;
+                        if (model.mUseRedEnvelopeModelList != null
+                                && model.mUseRedEnvelopeModelList.size() != 0){
+                            redEnvelopeAvailableTv.setText(model.mUseRedEnvelopeModelList.size() + "个可用");
+                            redEnvelopeAvailableTv.setVisibility(View.VISIBLE);
+                            redEnvelopeAmountTv.setText("未使用");
+                            isRedEnvelopeAvailable = true;
+                        }else {
+                            redEnvelopeAvailableTv.setVisibility(View.GONE);
+                            redEnvelopeAmountTv.setText("无可用");
+                            isRedEnvelopeAvailable = false;
+                        }
+                        // 使用红包item点击事件
+                        final boolean finalIsRedEnvelopeAvailable = isRedEnvelopeAvailable;
+                        couponView.findViewById(R.id.rly_red_envelope).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!finalIsRedEnvelopeAvailable){
+                                    toastShow(NO_AVAILABLE_RED_ENVELOPE);
+                                }
+                            }
+                        });
+                        // 现金劵使用布局
+                        final LinearLayout cashCouponUsesLy
+                                = (LinearLayout) couponView.findViewById(R.id.ly_cash_coupon_uses);
+                        // 现金劵编辑框
+                        EditText useCouponEdt = (EditText) couponView.findViewById(R.id.edt_use_coupon);
+                        // 现金劵使用按钮
+                        Button useCouponBtn = (Button) couponView.findViewById(R.id.btn_use_coupon);
+                        // 现金劵使用按钮事件
+                        useCouponBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+                        // 现金券item点击事件
+                        couponView.findViewById(R.id.rly_cash_coupon).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!isShowCouponUses){
+                                    cashCouponUsesLy.setVisibility(View.VISIBLE);
+                                }else {
+                                    cashCouponUsesLy.setVisibility(View.GONE);
+                                }
+                                isShowCouponUses = !isShowCouponUses;
+                            }
+                        });
+                        // 添加优惠券、红包、现金券模块到容器
+                        orderInfoLy.addView(couponView);
+                    }
+                    // 添加分割粗线
+                    View boldDiv = LayoutInflater.from(this)
+                            .inflate(R.layout.common_line_gray_big_interval, null);
+                    orderInfoLy.addView(boldDiv);
+                    // 选填要求模块
+                    View optionalView = LayoutInflater.from(this)
+                            .inflate(R.layout.layout_order_info_optional, null);
+                    // 选填
+                    TextView optionalTv = (TextView) optionalView.findViewById(R.id.tv_optional);
+                    // 添加选填模块到容器
+                    orderInfoLy.addView(optionalView);
+                    // 添加分割粗线
+                    boldDiv = LayoutInflater.from(this)
+                            .inflate(R.layout.common_line_gray_big_interval, null);
+                    orderInfoLy.addView(boldDiv);
+                    // 发票模块
+                    View invoiceView = LayoutInflater.from(this)
+                            .inflate(R.layout.layout_order_info_invoice, null);
+                    // 发票抬头布局
+                    final LinearLayout invoiceTitleLy
+                            = (LinearLayout) invoiceView.findViewById(R.id.ly_invoice_title);
+                    // 发票编辑框
+                    EditText invoiceTitleEdit
+                            = (EditText) invoiceView.findViewById(R.id.edt_invoice_title);
+                    // 发票选项
+                    CheckBox invoiceCb = (CheckBox) invoiceView.findViewById(R.id.cb_invoice);
+                    // 发票选项点击事件
+                    invoiceCb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (((CheckBox) v).isChecked()){
+                                invoiceTitleLy.setVisibility(View.VISIBLE);
+                            }else {
+                                invoiceTitleLy.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                    // 计算合计金额(处理运费)
+                    if (model.freight > 0) {
+                        groupFreight += model.freight;
+                    }
+                    // 运费
+                    TextView freightTv = (TextView) invoiceView.findViewById(R.id.tv_freight);
+                    if (groupFreight > 0)
+                        freightTv.setText("￥" + StringUtil.doubleTwoDecimal(groupFreight));
+                    // 合计金额
+                    TextView totalTv = (TextView) invoiceView.findViewById(R.id.tv_total);
+                    if (groupTotalAmount > 0)
+                        totalTv.setText("￥" + StringUtil.doubleTwoDecimal(groupTotalAmount));
+                    // 计算总合计金额
+                    totalAmount+=groupTotalAmount;
+                    // 计算总运费
+                    totalFreight+=groupFreight;
                 }
             }
+            // 显示合计金额Ui
+            settleTotalTv.setText("合计：￥" + totalAmount);
         }
     }
 
     @Override
     public void toastShow(String msg) {
-
     }
 }

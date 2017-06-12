@@ -16,10 +16,16 @@ import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConsta
 public class OrderInfoModel implements Serializable{
     // uid
     private static final long serialVersionUID = -5398199168037732104L;
+    // 卖家类型--健客自营
+    public final static int JIANKE_SELF_SUPPORT = 0x40;
+    // 卖家类型--其他第三方
+    public final static int OTHER_THIRD_PARTY = 0x41;
     // 卖家名称
     public String sellerName = "";
     // 卖家id
     public String sellerId = "";
+    // 卖家类型
+    public int sellerType = JIANKE_SELF_SUPPORT;
     // 使用优惠券列表
     public ArrayList<UseCouponModel> mUseCouponModelList;
     // 使用红包列表
