@@ -18,7 +18,7 @@
     <include layout="@layout/common_line_gray_horizontal"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,6 +30,8 @@
             <include layout="@layout/layout_identity_check"/>
             <!-- 支付方式 -->
             <include layout="@layout/layout_payment"/>
+            <!-- 分割细线 -->
+            <include layout="@layout/common_line_gray_horizontal"/>
             <!-- 订单信息 -->
             <LinearLayout
                 android:id="@+id/ly_order_info"

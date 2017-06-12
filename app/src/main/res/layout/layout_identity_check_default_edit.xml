@@ -29,6 +29,7 @@
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:scaleType="fitXY"
+                android:background="@null"
                 android:src="@drawable/shoppingcart_new_delete_button"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
@@ -43,6 +44,7 @@
                 android:hint="进口商品需输入身份证号才能发货哦~"
                 android:maxLength="30"
                 android:layout_centerVertical="true"
+                android:background="@null"
                 android:textColorHint="@color/text_color_common_lighted"/>
         </RelativeLayout>
     </RelativeLayout>

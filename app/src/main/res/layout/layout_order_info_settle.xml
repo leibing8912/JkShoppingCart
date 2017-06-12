@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:orientation="vertical"
-        android:background="@color/send_tips_bg">
+        android:background="@color/send_tips_bg"
+        android:visibility="gone">
         <!-- 分割线 -->
         <include layout="@layout/common_line_gray_horizontal"/>
         <!-- 地址 -->

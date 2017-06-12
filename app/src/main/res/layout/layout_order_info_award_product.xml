@@ -88,6 +88,7 @@
                 android:layout_marginTop="5dp"
                 android:text="x1"/>
         </LinearLayout>
-
     </LinearLayout>
+    <!-- 分割细线 -->
+    <include layout="@layout/common_line_gray_horizontal"/>
 </LinearLayout>

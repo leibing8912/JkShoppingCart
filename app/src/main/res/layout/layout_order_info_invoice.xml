@@ -93,7 +93,7 @@
                 android:textColor="@color/text_color_black3"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="￥5.00"/>
+                android:text="￥0.00"/>
         </RelativeLayout>
         <!-- 合计 -->
         <RelativeLayout
@@ -119,7 +119,7 @@
                 android:textColor="@color/order_conform_red_txt"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="￥123.50"/>
+                android:text="￥0.00"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

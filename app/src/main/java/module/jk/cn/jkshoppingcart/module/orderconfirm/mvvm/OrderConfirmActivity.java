@@ -20,7 +20,6 @@ import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
-
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_RED_ENVELOPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.ORDER_CONFIRM;
@@ -227,7 +226,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                     if (model.product != null && model.product.size() != 0) {
                         int productSize = model.product.size();
                         for (int j = 0; j < productSize; j++) {
-                            OrderInfoModel.Product product = new OrderInfoModel.Product();
+                            OrderInfoModel.Product product = model.product.get(j);
                             if (product != null) {
                                 switch (product.productType) {
                                     case PRODUCT_TYPE_SKU:
@@ -534,18 +533,18 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                     }
                     // 添加分割粗线
                     View boldDiv = LayoutInflater.from(this)
-                            .inflate(R.layout.common_line_gray_big_interval, null);
+                            .inflate(R.layout.layout_line_gray_big_interval, null);
                     orderInfoLy.addView(boldDiv);
                     // 选填要求模块
                     View optionalView = LayoutInflater.from(this)
                             .inflate(R.layout.layout_order_info_optional, null);
                     // 选填
-                    TextView optionalTv = (TextView) optionalView.findViewById(R.id.tv_optional);
+                    EditText optionalEdt = (EditText) optionalView.findViewById(R.id.edt_optional);
                     // 添加选填模块到容器
                     orderInfoLy.addView(optionalView);
                     // 添加分割粗线
                     boldDiv = LayoutInflater.from(this)
-                            .inflate(R.layout.common_line_gray_big_interval, null);
+                            .inflate(R.layout.layout_line_gray_big_interval, null);
                     orderInfoLy.addView(boldDiv);
                     // 发票模块
                     View invoiceView = LayoutInflater.from(this)
@@ -572,6 +571,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                     // 计算合计金额(处理运费)
                     if (model.freight > 0) {
                         groupFreight += model.freight;
+                        groupTotalAmount+=groupFreight;
                     }
                     // 运费
                     TextView freightTv = (TextView) invoiceView.findViewById(R.id.tv_freight);
@@ -581,6 +581,12 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                     TextView totalTv = (TextView) invoiceView.findViewById(R.id.tv_total);
                     if (groupTotalAmount > 0)
                         totalTv.setText("￥" + StringUtil.doubleTwoDecimal(groupTotalAmount));
+                    // 添加发票模块到容器
+                    orderInfoLy.addView(invoiceView);
+                    // 添加分割粗线
+                    boldDiv = LayoutInflater.from(this)
+                            .inflate(R.layout.layout_line_gray_big_interval, null);
+                    orderInfoLy.addView(boldDiv);
                     // 计算总合计金额
                     totalAmount+=groupTotalAmount;
                     // 计算总运费
@@ -591,7 +597,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             settleTotalTv.setText("合计：￥" + totalAmount);
         }
     }
-
+    
     @Override
     public void toastShow(String msg) {
     }
