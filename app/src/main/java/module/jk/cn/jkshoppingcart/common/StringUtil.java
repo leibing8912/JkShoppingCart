@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
  * @createTime: 2016/08/30
  */
 public class StringUtil {
+	// 正则表达式:验证身份证
+	public static final String REGEX_ID_CARD = "(^\\d{15}$)|(^\\d{17}([0-9]|X)$)";
 
 	/**
 	 * 判断是否为null或空字符串
@@ -98,5 +100,17 @@ public class StringUtil {
 	public static String doubleTwoDecimal(Double num){
 		DecimalFormat df  = new DecimalFormat("######0.00");
 		return df.format(num);
+	}
+
+	/**
+	  * 是否身份证号
+	  * @author leibing
+	  * @createTime 2017/6/12
+	  * @lastModify 2017/6/12
+	  * @param idCard
+	  * @return
+	  */
+	public static boolean isIDCard(String idCard) {
+		return Pattern.matches(REGEX_ID_CARD, idCard);
 	}
 }

@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:textSize="16sp"
             android:textColor="@color/color_white"
-            android:background="@color/gray"
+            android:background="@color/text_color_blue"
             android:layout_alignParentRight="true"
             android:text="保存"/>
         <!-- 编辑 -->
@@ -33,7 +33,8 @@
                 android:src="@drawable/shoppingcart_new_delete_button"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:visibility="gone"/>
             <!-- 身份证编辑 -->
             <EditText
                 android:id="@+id/edt_identify"

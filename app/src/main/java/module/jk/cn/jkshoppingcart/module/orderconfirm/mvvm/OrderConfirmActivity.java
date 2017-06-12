@@ -1,6 +1,9 @@
 package module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +19,12 @@ import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.common.ImageLoader;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
+import module.jk.cn.jkshoppingcart.common.ToastUtils;
 import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.INVALID_NUMBER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_RED_ENVELOPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.ORDER_CONFIRM;
@@ -71,6 +76,12 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     // 身份证编辑
     @BindView(R.id.edt_identify)
     EditText identifyEdt;
+    // 身份证清空
+    @BindView(R.id.iv_clear_edit)
+    ImageView clearEditIv;
+    // 身份证保存
+    @BindView(R.id.btn_save)
+    Button saveBtn;
     // 身份校验保存成功布局
     @BindView(R.id.ly_identity_save_success)
     LinearLayout identitySaveSuccessLy;
@@ -109,8 +120,57 @@ public class OrderConfirmActivity extends BaseFragmentActivity
         ButterKnife.bind(this);
         // init
         initView();
+        // set listener
+        setListener();
         // init logic process
         initViewModel();
+    }
+
+    /**
+      * set listener
+      * @author leibing
+      * @createTime 2017/6/12
+      * @lastModify 2017/6/12
+      * @param
+      * @return
+      */
+    private void setListener() {
+        // 身份证编辑监听
+        identifyEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 身份证布局显示
+                identifyViewShow();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    /**
+      * 身份证布局显示
+      * @author leibing
+      * @createTime 2017/6/12
+      * @lastModify 2017/6/12
+      * @param
+      * @return
+      */
+    private void identifyViewShow(){
+        if (StringUtil.isEmpty(identifyEdt.getText().toString())){
+            clearEditIv.setVisibility(View.GONE);
+            saveBtn.setBackgroundResource(R.color.gray);
+            saveBtn.setEnabled(false);
+        }else {
+            clearEditIv.setVisibility(View.VISIBLE);
+            saveBtn.setBackgroundResource(R.color.text_color_blue);
+            saveBtn.setEnabled(true);
+        }
     }
 
     /**
@@ -137,6 +197,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
         editBtn.setVisibility(View.GONE);
         backIv.setVisibility(View.VISIBLE);
         titleTv.setText(ORDER_CONFIRM);
+        // 身份证布局显示
+        identifyViewShow();
     }
 
     @OnClick({R.id.iv_back, R.id.rly_has_receive_address, R.id.rly_no_receive_address,
@@ -154,12 +216,22 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 break;
             case R.id.btn_save:
                 // 身份证号保存
+                if (!StringUtil.isIDCard(identifyEdt.getText().toString())){
+                    toastShow(INVALID_NUMBER);
+                    return;
+                }
+                defaultEditLy.setVisibility(View.GONE);
+                identitySaveSuccessLy.setVisibility(View.VISIBLE);
+                identityCardTv.setText(identifyEdt.getText().toString());
                 break;
             case R.id.iv_clear_edit:
                 // 身份证号清空
+                identifyEdt.setText("");
                 break;
             case R.id.iv_edit:
                 // 身份证号编辑
+                defaultEditLy.setVisibility(View.VISIBLE);
+                identitySaveSuccessLy.setVisibility(View.GONE);
                 break;
             case R.id.rly_payment:
                 // 支付方式选择
@@ -597,8 +669,9 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             settleTotalTv.setText("合计：￥" + totalAmount);
         }
     }
-    
+
     @Override
     public void toastShow(String msg) {
+        ToastUtils.show(this, msg);
     }
 }

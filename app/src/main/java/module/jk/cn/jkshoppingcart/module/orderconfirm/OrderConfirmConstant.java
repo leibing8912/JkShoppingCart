@@ -31,4 +31,6 @@ public class OrderConfirmConstant {
     public final static String NO_AVAILABLE_COUPON = "无可用优惠券哦~";
     // 无可用红包哦~
     public final static String NO_AVAILABLE_RED_ENVELOPE = "无可用红包哦~";
+    // 非法身份证号，请重新输入
+    public final static String INVALID_NUMBER = "非法身份证号，请重新输入";
 }
