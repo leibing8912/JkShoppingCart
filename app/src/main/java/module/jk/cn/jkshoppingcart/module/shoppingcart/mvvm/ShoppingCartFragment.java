@@ -50,7 +50,8 @@ import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConsta
  * @createTime: 2017/6/1
  */
 public class ShoppingCartFragment extends Fragment implements ShoppingCartInterface.CheckInterface,
-        ShoppingCartInterface.ModifyCountInterface, ShoppingCartInterface.DeleteInterface {
+        ShoppingCartInterface.ModifyCountInterface, ShoppingCartInterface.DeleteInterface ,
+        ShoppingCartViewModel.ViewModelListener {
     // actionbar返回
     @BindView(R.id.iv_back)
     ImageView backIv;
@@ -97,46 +98,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     private int totalCount = 0;
     // 是否编辑
     private boolean isEdited = false;
-    // shoppingcart logical processing instance
+    // logic process
     private ShoppingCartViewModel mShoppingCartViewModel;
-    // shoppingcart logical processing listener
-    private ShoppingCartViewModel.ViewModelListener mViewModelListener
-            = new ShoppingCartViewModel.ViewModelListener() {
-
-        @Override
-        public void setData(ArrayList<ShoppingCartBean> mDatas) {
-            mData = mDatas;
-            // 设置全选or反选
-            setAllCheck();
-            // 更新数据源
-            updateData();
-            // 统计操作(购物车数量、合计金额)
-            calculate();
-        }
-
-        @Override
-        public void readBeforeEditData(Object object) {
-            ListCache<ShoppingCartBean> mReadCache
-                    = (ListCache<ShoppingCartBean>) object;
-            mData = mReadCache.getObjList();
-            // 设置全选or反选
-            setAllCheck();
-            // 更新数据源
-            updateData();
-            // 统计操作(购物车数量、合计金额)
-            calculate();
-        }
-
-        @Override
-        public void saveBeforeEditDataSuccess() {
-            doCheckAll(false, isEdited);
-        }
-
-        @Override
-        public void toastShow(String msg) {
-            ToastUtils.show(AppManager.getInstance().currentActivity(), msg);
-        }
-    };
 
     @Nullable
     @Override
@@ -151,8 +114,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
         initView();
         // set adapter
         setAdapter();
-        // init shoppingcart logical processing
-        initShoppingCartViewModel();
+        // init logic process
+        initViewModel();
         // get data to update ui
         getData();
 
@@ -160,15 +123,15 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     }
 
     /**
-      * init shoppingcart logical processing
+      * init logic process
       * @author leibing
       * @createTime 2017/6/5
       * @lastModify 2017/6/5
       * @param
       * @return
       */
-    private void initShoppingCartViewModel() {
-        mShoppingCartViewModel = new ShoppingCartViewModel(getActivity(), mViewModelListener);
+    private void initViewModel() {
+        mShoppingCartViewModel = new ShoppingCartViewModel(this);
     }
 
     /**
@@ -775,5 +738,39 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     public void doClearInvalid(int groupPosition) {
         if (mShoppingCartViewModel != null)
             mShoppingCartViewModel.clearInvalidGoods(mData, groupPosition);
+    }
+
+    @Override
+    public void setData(ArrayList<ShoppingCartBean> mDatas) {
+        mData = mDatas;
+        // 设置全选or反选
+        setAllCheck();
+        // 更新数据源
+        updateData();
+        // 统计操作(购物车数量、合计金额)
+        calculate();
+    }
+
+    @Override
+    public void readBeforeEditData(Object object) {
+        ListCache<ShoppingCartBean> mReadCache
+                = (ListCache<ShoppingCartBean>) object;
+        mData = mReadCache.getObjList();
+        // 设置全选or反选
+        setAllCheck();
+        // 更新数据源
+        updateData();
+        // 统计操作(购物车数量、合计金额)
+        calculate();
+    }
+
+    @Override
+    public void saveBeforeEditDataSuccess() {
+        doCheckAll(false, isEdited);
+    }
+
+    @Override
+    public void toastShow(String msg) {
+        ToastUtils.show(AppManager.getInstance().currentActivity(), msg);
     }
 }

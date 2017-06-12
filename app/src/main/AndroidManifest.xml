@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.orderconfirm.OrderConfirmActivity"
+            android:name=".module.orderconfirm.mvvm.OrderConfirmActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name=".module.orderconfirm.coupon.UseCouponActivity" -->

@@ -22,9 +22,9 @@
         android:src="@drawable/shoppingcart_new_view_product_details"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"/>
-    <!-- 在线支付文案 -->
+    <!-- 支付方式 -->
     <TextView
-        android:id="@+id/tv_pay_online"
+        android:id="@+id/tv_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"

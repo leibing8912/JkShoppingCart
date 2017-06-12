@@ -1,29 +1,43 @@
-package module.jk.cn.jkshoppingcart.module.shoppingcart.model;
+package module.jk.cn.jkshoppingcart.module.orderconfirm.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeModel;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_TYPE_AWARD;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_SKU;
 
 /**
- * @className: ShoppingCartBean
- * @classDescription: 购物车数据模型
+ * @className: OrderInfoModel
+ * @classDescription: 订单详情数据模型
  * @author: leibing
- * @createTime: 2017/6/2
+ * @createTime: 2017/6/12
  */
-public class ShoppingCartBean implements Serializable{
+public class OrderInfoModel implements Serializable{
     // uid
-    private static final long serialVersionUID = -8427119425747273036L;
+    private static final long serialVersionUID = -5398199168037732104L;
     // 卖家名称
     public String sellerName = "";
     // 卖家id
     public String sellerId = "";
-    // 包邮提示(目前是自营产品才有)
-    public String freeShippingTips = "";
-    // 该卖家下产品是否全部选中
-    public boolean isSelected = false;
-    // 是否失效商品
-    public boolean isInvalidGoods = false;
+    // 使用优惠券列表
+    public ArrayList<UseCouponModel> mUseCouponModelList;
+    // 使用红包列表
+    public ArrayList<UseRedEnvelopeModel> mUseRedEnvelopeModelList;
+    // 使用优惠券优惠金额
+    public double couponDiscountAmount;
+    // 使用红包优惠金额
+    public double redEnvelopeDiscountAmount;
+    // 现金券优惠金额
+    public double cashCouponDiscountAmount;
+    // 现金券代码
+    public String cashCouponCode;
+    // 选填要求
+    public String optionalRequire;
+    // 发票抬头
+    public String invoiceTitle;
+    // 运费
+    public double freight;
     // 产品
     public ArrayList<Product> product;
 
@@ -38,10 +52,6 @@ public class ShoppingCartBean implements Serializable{
         private static final long serialVersionUID = -7557891821348413638L;
         // 产品组合类型（单品、组合产品、奖品，默认类型为单品）
         public int productType = PRODUCT_TYPE_SKU;
-        // 产品是否选中
-        public boolean isSelected = false;
-        // 产品是否编辑状态
-        public boolean isEdit = false;
         // 产品id
         public String productId = "";
         // 单品
@@ -60,10 +70,8 @@ public class ShoppingCartBean implements Serializable{
             public String imgUrl = "";
             // 产品名称
             public String productName = "";
-            // 产品原始价格
-            public double originPrice;
-            // 产品实际价格
-            public double realPrice;
+            // 产品价格
+            public double price;
             // 产品数量
             public int productAmount;
             // 产品规格
@@ -133,7 +141,7 @@ public class ShoppingCartBean implements Serializable{
         }
 
         // 奖品
-        public AwardProduct awardProduct;
+        public Product.AwardProduct awardProduct;
 
         /**
          * @className: AwardProduct
@@ -148,10 +156,8 @@ public class ShoppingCartBean implements Serializable{
             public String imgUrl = "";
             // 奖品名称
             public String awardName = "";
-            // 奖品原始价格
-            public double originPrice;
-            // 奖品实际价格
-            public double realPrice;
+            // 奖品价格
+            public double awardPrice;
             // 奖品数量
             public int awardAmount;
             // 奖品规格

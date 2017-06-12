@@ -1,7 +1,5 @@
 package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 
-import android.content.Context;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
@@ -19,52 +17,26 @@ import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConsta
  * @author: leibing
  * @createTime: 2017/6/5
  */
-public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInterface {
-    // activity weak refer
-    private WeakReference<Context> mContextWeakRef;
-    // shoppingcart logical processing listener
+public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInterface
+        , ShoppingCartModel.ModelListener {
+    // logic process listner
     private ViewModelListener mViewModelListener;
-    // shoppingcart data instance
+    // model
     private ShoppingCartModel mShoppingCartModel;
-    // shoppingcart data listener
-    private ShoppingCartModel.ModelListener mModelListener
-            = new ShoppingCartModel.ModelListener() {
-
-        @Override
-        public void readBeforeEditData(Object object) {
-            if (mViewModelListener != null)
-                mViewModelListener.readBeforeEditData(object);
-        }
-
-        @Override
-        public void saveBeforeEditDataSuccess() {
-            if (mViewModelListener != null)
-                mViewModelListener.saveBeforeEditDataSuccess();
-        }
-
-        @Override
-        public void toastShow(String msg) {
-            if (mViewModelListener != null)
-                mViewModelListener.toastShow(msg);
-        }
-    };
 
     /**
      * Constructor
      * @author leibing
      * @createTime 2017/5/4
      * @lastModify 2017/5/4
-     * @param mContext activity refer
-     * @param mViewModelListener shoppingcart logical processing listener
+     * @param mViewModelListener logic process listener
      * @return
      */
-    public ShoppingCartViewModel(Context mContext, ViewModelListener mViewModelListener){
-        // init activity weak refer instance
-        this.mContextWeakRef = new WeakReference<Context>(mContext);
-        // init shopingcart logical processing listener
+    public ShoppingCartViewModel(ViewModelListener mViewModelListener){
+        // init logic process listener
         this.mViewModelListener = mViewModelListener;
-        // init shoppingcart data instance
-        mShoppingCartModel = new ShoppingCartModel(mContext, mModelListener);
+        // init model
+        mShoppingCartModel = new ShoppingCartModel(this);
     }
 
     @Override
@@ -119,8 +91,7 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                                 int groupPosition, int childPosition){
         if (mData.get(groupPosition).product.get(childPosition).productType
                 == PRODUCT_TYPE_AWARD){
-            if (mModelListener != null)
-                mModelListener.toastShow(AWARD_CANNOT_COLLECT);
+            toastShow(AWARD_CANNOT_COLLECT);
             return;
         }
         // 产品id
@@ -140,8 +111,7 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
       */
     public void collectSeletedProduct(ArrayList<ShoppingCartBean> mData){
         if (mData == null || mData.size() == 0){
-            if (mModelListener != null)
-                mModelListener.toastShow(NOT_SELECT_GOODS);
+            toastShow(NOT_SELECT_GOODS);
             return;
         }
         boolean isHasSelected = false;
@@ -162,8 +132,7 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                                 break;
                             case PRODUCT_TYPE_AWARD:
                                 // 奖品
-                                if (mModelListener != null)
-                                    mModelListener.toastShow(AWARD_CANNOT_DELETE);
+                                toastShow(AWARD_CANNOT_DELETE);
                                 return;
                             default:
                                 break;
@@ -171,8 +140,8 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                     }
                 }
                 // 没有选中商品
-                if (!isHasSelected && mModelListener != null){
-                    mModelListener.toastShow(NOT_SELECT_GOODS);
+                if (!isHasSelected){
+                    toastShow(NOT_SELECT_GOODS);
                     return;
                 }
                 // 收藏处理
@@ -194,8 +163,7 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
       */
     public void delSeletedProduct(ArrayList<ShoppingCartBean> mData){
         if (mData == null || mData.size() == 0){
-            if (mModelListener != null)
-                mModelListener.toastShow(NOT_SELECT_GOODS);
+            toastShow(NOT_SELECT_GOODS);
             return;
         }
         ArrayList<ShoppingCartBean.Product> needDelList = new ArrayList<>();
@@ -216,8 +184,7 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                                 break;
                             case PRODUCT_TYPE_AWARD:
                                 // 奖品
-                                if (mModelListener != null)
-                                    mModelListener.toastShow(AWARD_CANNOT_DELETE);
+                                toastShow(AWARD_CANNOT_DELETE);
                                 return;
                             default:
                                 break;
@@ -225,8 +192,8 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
                     }
                 }
                 // 没有选中商品
-                if (!isHasSelected && mModelListener != null){
-                    mModelListener.toastShow(NOT_SELECT_GOODS);
+                if (!isHasSelected){
+                    toastShow(NOT_SELECT_GOODS);
                     return;
                 }
                 // 遍历删除数据
@@ -267,9 +234,27 @@ public class ShoppingCartViewModel implements ShoppingCartInterface.UIToDataInte
             mViewModelListener.setData(mData);
     }
 
+    @Override
+    public void readBeforeEditData(Object object) {
+        if (mViewModelListener != null)
+            mViewModelListener.readBeforeEditData(object);
+    }
+
+    @Override
+    public void saveBeforeEditDataSuccess() {
+        if (mViewModelListener != null)
+            mViewModelListener.saveBeforeEditDataSuccess();
+    }
+
+    @Override
+    public void toastShow(String msg) {
+        if (mViewModelListener != null)
+            mViewModelListener.toastShow(msg);
+    }
+
     /**
      * @interfaceName: ViewModelListener
-     * @interfaceDescription: shoppingcart logical processing listener
+     * @interfaceDescription: logic process listener
      * @author: leibing
      * @createTime: 2017/6/5
      */

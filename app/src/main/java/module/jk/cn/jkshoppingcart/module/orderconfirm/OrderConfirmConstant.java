@@ -11,6 +11,8 @@ public class OrderConfirmConstant {
     public final static String PAY_ONLINE = "在线支付";
     // 货到付款文案
     public final static String CASH_ON_DELIVER = "货到付款";
+    // 订单确认文案
+    public final static String ORDER_CONFIRM = "订单确认";
     // 请先填写收货地址后重试
     public final static String PLEASE_FILL_RECEIVED_ADDRESS_TRY_AGAIN = "请先填写收货地址后重试";
     // 请先保存身份证后重试

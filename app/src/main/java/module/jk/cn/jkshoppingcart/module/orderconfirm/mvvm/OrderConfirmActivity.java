@@ -1,0 +1,416 @@
+package module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import module.jk.cn.jkshoppingcart.R;
+import module.jk.cn.jkshoppingcart.common.ImageLoader;
+import module.jk.cn.jkshoppingcart.common.StringUtil;
+import module.jk.cn.jkshoppingcart.module.AppManager;
+import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.ORDER_CONFIRM;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CREDITS_EXCHANGE;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_TYPE_AWARD;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_GROUP;
+import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_SKU;
+
+/**
+ * @className: OrderConfirmActivity
+ * @classDescription: 订单确认UI层（Activity）
+ * @author: leibing
+ * @createTime: 2017/6/9
+ */
+public class OrderConfirmActivity extends BaseFragmentActivity
+        implements OrderConfirmViewModel.ViewModelListener {
+    // 返回
+    @BindView(R.id.iv_back)
+    ImageView backIv;
+    // 标题
+    @BindView(R.id.tv_title)
+    TextView titleTv;
+    // 右按钮
+    @BindView(R.id.btn_edit)
+    Button editBtn;
+    // 有收货人地址布局
+    @BindView(R.id.rly_has_receive_address)
+    RelativeLayout hasReceiveAddressRly;
+    // 收货人名称
+    @BindView(R.id.tv_receive_name)
+    TextView receiveNameTv;
+    // 联系电话
+    @BindView(R.id.tv_receive_phone)
+    TextView receivePhoneTv;
+    // 默认地址图标
+    @BindView(R.id.iv_receive_default)
+    ImageView receiveDefaultIv;
+    // 详细地址
+    @BindView(R.id.tv_receive_address)
+    TextView receiveAddressTv;
+    // 无收货人地址布局
+    @BindView(R.id.rly_no_receive_address)
+    RelativeLayout noReceiveAddressRly;
+    // 身份校验默认显示、编辑布局
+    @BindView(R.id.ly_default_edit)
+    LinearLayout defaultEditLy;
+    // 身份证编辑
+    @BindView(R.id.edt_identify)
+    EditText identifyEdt;
+    // 身份校验保存成功布局
+    @BindView(R.id.ly_identity_save_success)
+    LinearLayout identitySaveSuccessLy;
+    // 身份证号
+    @BindView(R.id.tv_identity_card)
+    TextView identityCardTv;
+    // 支付方式
+    @BindView(R.id.tv_pay_method)
+    TextView payMethodTv;
+    // 订单信息容器
+    @BindView(R.id.ly_order_info)
+    LinearLayout orderInfoLy;
+    // logic process
+    private OrderConfirmViewModel mViewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_order_confirm);
+        // bind buffer knife
+        ButterKnife.bind(this);
+        // init
+        initView();
+        // init logic process
+        initViewModel();
+    }
+    
+    /**
+      * init logic process
+      * @author leibing
+      * @createTime 2017/6/12
+      * @lastModify 2017/6/12
+      * @param
+      * @return
+      */
+    private void initViewModel() {
+        mViewModel = new OrderConfirmViewModel(this);
+    }
+
+    /**
+     * init View
+     * @author leibing
+     * @createTime 2017/6/10
+     * @lastModify 2017/6/10
+     * @param
+     * @return
+     */
+    private void initView() {
+        editBtn.setVisibility(View.GONE);
+        backIv.setVisibility(View.VISIBLE);
+        titleTv.setText(ORDER_CONFIRM);
+    }
+
+    @OnClick({R.id.iv_back, R.id.rly_has_receive_address, R.id.rly_no_receive_address,
+            R.id.btn_save, R.id.iv_clear_edit, R.id.iv_edit, R.id.rly_payment})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.iv_back:
+                // 返回
+                AppManager.getInstance().finishActivity();
+                break;
+            case R.id.rly_has_receive_address:
+            case R.id.rly_no_receive_address:
+                // 选择地址
+                break;
+            case R.id.btn_save:
+                // 身份证号保存
+                break;
+            case R.id.iv_clear_edit:
+                // 身份证号清空
+                break;
+            case R.id.iv_edit:
+                // 身份证号编辑
+                break;
+            case R.id.rly_payment:
+                // 支付方式选择
+                break;
+        }
+    }
+
+    @Override
+    public void updateUI(OrderConfirmBean bean) {
+        if (bean == null)
+            return;
+        if (bean.receiveAddress == null){
+            // 无地址
+            hasReceiveAddressRly.setVisibility(View.GONE);
+            noReceiveAddressRly.setVisibility(View.VISIBLE);
+        }else {
+            // 有地址
+            hasReceiveAddressRly.setVisibility(View.VISIBLE);
+            noReceiveAddressRly.setVisibility(View.GONE);
+            // 收货人名称
+            if (StringUtil.isNotEmpty(bean.receiveAddress.receiveName))
+                receiveNameTv.setText(bean.receiveAddress.receiveName);
+            // 联系电话
+            if (StringUtil.isNotEmpty(bean.receiveAddress.contactPhone))
+                receivePhoneTv.setText(bean.receiveAddress.contactPhone);
+            // 默认地址图标
+            if (bean.receiveAddress.isDefaultAddress){
+                receiveDefaultIv.setVisibility(View.VISIBLE);
+            }else {
+                receiveDefaultIv.setVisibility(View.GONE);
+            }
+            // 详细地址
+            if (StringUtil.isNotEmpty(bean.receiveAddress.detailAddress))
+                receiveAddressTv.setText(bean.receiveAddress.detailAddress);
+        }
+        // 支付方式
+        if (StringUtil.isNotEmpty(bean.payMode))
+            payMethodTv.setText(bean.payMode);
+        // 订单信息
+        if (bean.productInfoList != null
+                && bean.productInfoList.size() != 0){
+            orderInfoLy.removeAllViews();
+            int infoSize = bean.productInfoList.size();
+            for (int i=0;i<infoSize;i++){
+                OrderInfoModel model = bean.productInfoList.get(i);
+                if (model != null){
+                    // 厂家布局
+                    View manufacturerView = LayoutInflater.from(this).inflate(
+                            R.layout.layout_order_info_manufacturer, null);
+                    // 厂家名称
+                    TextView manufacturerNameTv =
+                            (TextView) manufacturerView.findViewById(R.id.tv_manufacturer_name);
+                    if (StringUtil.isNotEmpty(model.sellerName))
+                        manufacturerNameTv.setText(model.sellerName);
+                    // 添加厂家布局到订单信息
+                    orderInfoLy.addView(manufacturerView);
+                    // 产品信息
+                    if (model.product != null && model.product.size() != 0){
+                        int productSize = model.product.size();
+                        for (int j=0; j< productSize;j++){
+                            OrderInfoModel.Product product = new OrderInfoModel.Product();
+                            if (product != null){
+                                switch (product.productType){
+                                    case PRODUCT_TYPE_SKU:
+                                        // 单品
+                                        View skuView = LayoutInflater.from(this).inflate(
+                                                R.layout.layout_order_info_sku_product, null);
+                                        // 单品图片
+                                        ImageView skuProductPicIv =
+                                                (ImageView) skuView.findViewById(R.id.iv_sku_product_pic);
+                                        // 单品名称
+                                        TextView skuProductNameTv
+                                                = (TextView) skuView.findViewById(R.id.tv_sku_product_name);
+                                        // 规格
+                                        TextView skuProductSpecificationTv
+                                                = (TextView) skuView.findViewById(R.id.tv_sku_product_specification);
+                                        // 价格
+                                        TextView skuProductPriceTv
+                                                = (TextView) skuView.findViewById(R.id.tv_sku_product_price);
+                                        // 数量
+                                        TextView skuProductCountTv
+                                                = (TextView) skuView.findViewById(R.id.tv_sku_product_count);
+                                        // 赠品容器
+                                        LinearLayout skuGiftLy
+                                                = (LinearLayout) skuView.findViewById(R.id.ly_order_info_sku_gift);
+                                        if (product.skuProduct != null){
+                                            if (StringUtil.isNotEmpty(product.skuProduct.imgUrl))
+                                                ImageLoader.getInstance()
+                                                        .load(this.getApplicationContext(),
+                                                                skuProductPicIv, product.skuProduct.imgUrl);
+                                            if (StringUtil.isNotEmpty(product.skuProduct.productName))
+                                                skuProductNameTv.setText(product.skuProduct.productName);
+                                            if (StringUtil.isNotEmpty(product.skuProduct.productQualification))
+                                                skuProductSpecificationTv.setText(product.skuProduct.productQualification);
+                                            if (product.skuProduct.price > 0)
+                                                skuProductPriceTv.setText("￥"
+                                                        + StringUtil.doubleTwoDecimal(product.skuProduct.price));
+                                            if (product.skuProduct.productAmount > 0)
+                                                skuProductCountTv.setText("x"
+                                                        + product.skuProduct.productAmount);
+                                            if (product.skuProduct.gifts != null
+                                                    && product.skuProduct.gifts.size() != 0){
+                                                int giftSize = product.skuProduct.gifts.size();
+                                                skuGiftLy.removeAllViews();
+                                                for (int z=0;z<giftSize;z++){
+                                                    OrderInfoModel.Product.SkuProduct.Gifts gifts
+                                                            = new OrderInfoModel.Product.SkuProduct.Gifts();
+                                                    if (gifts != null){
+                                                        View giftView = LayoutInflater.from(this)
+                                                                .inflate(R.layout.layout_order_info_gifts, null);
+                                                        // 赠品名称
+                                                        TextView giftNameTv
+                                                                = (TextView) giftView.findViewById(R.id.tv_order_info_gift_name);
+                                                        // 赠品数量
+                                                        TextView giftCountTv
+                                                                = (TextView) giftView.findViewById(R.id.tv_order_info_gift_count);
+                                                        if (StringUtil.isNotEmpty(gifts.giftName))
+                                                            giftNameTv.setText(gifts.giftName);
+                                                        if (gifts.giftAmount > 0)
+                                                            giftCountTv.setText("x" + gifts.giftAmount);
+                                                        // 添加赠品到赠品容器
+                                                        skuGiftLy.addView(giftView);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        // 添加单品到容器
+                                        orderInfoLy.addView(skuView);
+                                        break;
+                                    case PRODUCT_TYPE_GROUP:
+                                        // 组合
+                                        View groupView = LayoutInflater.from(this)
+                                                .inflate(R.layout.layout_order_info_group_product, null);
+                                        // 套装名称
+                                        TextView groupPruductNameTv
+                                                = (TextView) groupView.findViewById(R.id.tv_group_pruduct_name);
+                                        // 价格
+                                        TextView groupProductPriceTv
+                                                = (TextView) groupView.findViewById(R.id.tv_group_product_price);
+                                        // 数量
+                                        TextView groupProductCountTv
+                                                = (TextView) groupView.findViewById(R.id.tv_group_product_count);
+                                        // 套装子商品容器
+                                        LinearLayout groupProductContainerLy
+                                                = (LinearLayout) groupView.findViewById(R.id.ly_group_product_container);
+                                        if (product.groupProduct != null){
+                                            if (StringUtil.isNotEmpty(product.groupProduct.productName))
+                                                groupPruductNameTv.setText(product.groupProduct.productName);
+                                            if (product.groupProduct.groupPrice > 0)
+                                                groupProductPriceTv.setText("￥"
+                                                        + StringUtil.doubleTwoDecimal(product.groupProduct.groupPrice));
+                                            if (product.groupProduct.groupAmount > 0)
+                                                groupProductCountTv.setText("x" + product.groupProduct.groupAmount);
+                                            if (product.groupProduct.childList != null
+                                                    && product.groupProduct.childList.size() != 0){
+                                                groupProductContainerLy.removeAllViews();
+                                                int childSize = product.groupProduct.childList.size();
+                                                for (int c=0;c<childSize;c++) {
+                                                    OrderInfoModel.Product.GroupProduct.ChildProduct childProduct
+                                                            = product.groupProduct.childList.get(c);
+                                                    if (childProduct != null){
+                                                        View childProductView  = LayoutInflater.from(this)
+                                                                .inflate(R.layout.layout_order_info_group_product_item, null);
+                                                        // 组合子商品图片
+                                                        ImageView groupItemPicIv = (ImageView)
+                                                                childProductView.findViewById(R.id.iv_group_item_product_pic);
+                                                        // 组合子商品名称
+                                                        TextView groupItemProductNameTv = (TextView)
+                                                                childProductView.findViewById(R.id.tv_group_item_product_name);
+                                                        // 组合子商品规格
+                                                        TextView groupItemSpecificationTv = (TextView) childProductView
+                                                                .findViewById(R.id.tv_group_item_product_specification);
+                                                        // 组合子商品价格
+                                                        TextView groupItemProductPriceTv = (TextView) childProductView
+                                                                .findViewById(R.id.tv_group_item_product_price);
+                                                        // 组合子商品数量
+                                                        TextView groupItemProductCountTv = (TextView) childProductView
+                                                                .findViewById(R.id.tv_group_item_product_count);
+                                                        if (StringUtil.isNotEmpty(childProduct.imgUrl))
+                                                            ImageLoader.getInstance().load(this.getApplicationContext(),
+                                                                    groupItemPicIv, childProduct.imgUrl);
+                                                        if (StringUtil.isNotEmpty(childProduct.productName))
+                                                            groupItemProductNameTv.setText(childProduct.productName);
+                                                        if (StringUtil.isNotEmpty(childProduct.productQualification))
+                                                            groupItemSpecificationTv.setText(childProduct.productQualification);
+                                                        if (childProduct.price > 0)
+                                                            groupItemProductPriceTv.setText("￥"
+                                                                    + StringUtil.doubleTwoDecimal(childProduct.price));
+                                                        if (childProduct.productAmount > 0)
+                                                            groupItemProductCountTv.setText("x"
+                                                                    + childProduct.productAmount);
+                                                        // 添加组合子商品到容器
+                                                        groupProductContainerLy.addView(childProductView);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        // 添加组合到容器
+                                        orderInfoLy.addView(groupView);
+                                        break;
+                                    case PRODUCT_TYPE_AWARD:
+                                        // 奖品
+                                        View awardView = LayoutInflater.from(this).inflate(
+                                                R.layout.layout_order_info_award_product, null);
+                                        // 奖品图片
+                                        ImageView awardProductPicIv =
+                                                (ImageView) awardView.findViewById(R.id.iv_award_product_pic);
+                                        // 奖品名称
+                                        TextView awardProductNameTv
+                                                = (TextView) awardView.findViewById(R.id.tv_award_product_name);
+                                        // 规格
+                                        TextView awardProductSpecificationTv
+                                                = (TextView) awardView.findViewById(R.id.tv_award_product_specification);
+                                        // 价格
+                                        TextView awardProductPriceTv
+                                                = (TextView) awardView.findViewById(R.id.tv_award_product_price);
+                                        // 数量
+                                        TextView awardProductCountTv
+                                                = (TextView) awardView.findViewById(R.id.tv_award_product_count);
+                                        // 积分兑换图标
+                                        ImageView creditsExchangeIv
+                                                = (ImageView) awardView.findViewById(R.id.iv_order_info_credits_exchange);
+                                        // 奖品图标
+                                        ImageView awardIv = (ImageView) awardView
+                                                .findViewById(R.id.iv_order_info_award);
+                                        if (product.awardProduct != null){
+                                            switch (product.awardProduct.awardType){
+                                                case AWARD_TYPE_AWARD:
+                                                    // 奖品
+                                                    creditsExchangeIv.setVisibility(View.GONE);
+                                                    awardIv.setVisibility(View.VISIBLE);
+                                                    break;
+                                                case AWARD_CREDITS_EXCHANGE:
+                                                    // 积分兑换
+                                                    creditsExchangeIv.setVisibility(View.VISIBLE);
+                                                    awardIv.setVisibility(View.GONE);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            if (StringUtil.isNotEmpty(product.awardProduct.imgUrl))
+                                                ImageLoader.getInstance()
+                                                        .load(this.getApplicationContext(),
+                                                                awardProductPicIv, product.awardProduct.imgUrl);
+                                            if (StringUtil.isNotEmpty(product.awardProduct.awardName))
+                                                awardProductNameTv.setText(product.awardProduct.awardName);
+                                            if (StringUtil.isNotEmpty(product.awardProduct.awardQualification))
+                                                awardProductSpecificationTv.setText(product.awardProduct.awardQualification);
+                                            if (product.awardProduct.awardPrice > 0)
+                                                awardProductPriceTv.setText("￥"
+                                                        + StringUtil.doubleTwoDecimal(product.awardProduct.awardPrice));
+                                            if (product.awardProduct.awardAmount > 0)
+                                                awardProductCountTv.setText("x"
+                                                        + product.awardProduct.awardAmount);
+                                        }
+                                        // 添加单品到容器
+                                        orderInfoLy.addView(awardView);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void toastShow(String msg) {
+
+    }
+}
