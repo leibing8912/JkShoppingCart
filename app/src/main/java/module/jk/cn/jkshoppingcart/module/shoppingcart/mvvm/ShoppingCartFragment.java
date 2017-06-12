@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.module.shoppingcart.mvvm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import module.jk.cn.jkshoppingcart.common.ShoppingCartDialog;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.common.ToastUtils;
 import module.jk.cn.jkshoppingcart.module.AppManager;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm.OrderConfirmActivity;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartInterface;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.adapter.ShoppingCartAdapter;
 import module.jk.cn.jkshoppingcart.module.shoppingcart.model.ShoppingCartBean;
@@ -341,6 +343,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                 break;
             case R.id.btn_pay:
                 // 结算
+                startTargetActivity(OrderConfirmActivity.class);
                 break;
             case R.id.cb_all_check:
                 // 全选、反选
@@ -738,6 +741,35 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     public void doClearInvalid(int groupPosition) {
         if (mShoppingCartViewModel != null)
             mShoppingCartViewModel.clearInvalidGoods(mData, groupPosition);
+    }
+
+    /**
+     * 启动目标页
+     * @author leibing
+     * @createTime 2017/3/14
+     * @lastModify 2017/3/14
+     * @param clazz
+     * @return
+     */
+    protected void startTargetActivity(Class clazz) {
+        Intent intent = new Intent(getActivity(), clazz);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动目标页
+     * @author leibing
+     * @createTime 2017/3/14
+     * @lastModify 2017/3/14
+     * @param clazz
+     * @param bundle
+     * @return
+     */
+    protected void startTargetActivity(Class clazz, Bundle bundle) {
+        Intent intent = new Intent(getActivity(), clazz);
+        if (bundle != null)
+            intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

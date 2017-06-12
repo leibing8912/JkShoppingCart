@@ -31,16 +31,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- <activity -->
-        <!-- android:name=".module.shoppingcart.mvvm.ShoppingCartActivity" -->
-        <!-- android:screenOrientation="portrait"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
         <activity
-            android:name=".module.orderconfirm.mvvm.OrderConfirmActivity"
+            android:name=".module.shoppingcart.mvvm.ShoppingCartActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
@@ -48,14 +40,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".module.orderconfirm.mvvm.OrderConfirmActivity"-->
-            <!--android:screenOrientation="portrait" />-->
-        <!-- <activity -->
-        <!-- android:name=".module.orderconfirm.coupon.UseCouponActivity" -->
-        <!-- android:screenOrientation="portrait" ></activity> -->
-        <!--<activity -->
-            <!--android:name=".module.orderconfirm.redenvelope.UseRedEnvelopeActivity"-->
-            <!--android:screenOrientation="portrait"></activity>-->
+        <activity
+            android:name=".module.orderconfirm.mvvm.OrderConfirmActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+         <activity
+         android:name=".module.orderconfirm.coupon.UseCouponActivity"
+         android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".module.orderconfirm.redenvelope.UseRedEnvelopeActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 </manifest>
