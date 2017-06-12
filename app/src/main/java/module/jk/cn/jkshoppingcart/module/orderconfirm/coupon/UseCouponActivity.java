@@ -584,7 +584,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
         if (mAdapter != null)
             mAdapter.setData(mData);
     }
-    
+
     /**
       * 计算优惠金额
       * @author leibing
