@@ -1,12 +1,16 @@
 package module.jk.cn.jkshoppingcart.module.orderconfirm.coupon;
 
+import java.io.Serializable;
+
 /**
  * @className: UseCouponModel
  * @classDescription: 使用优惠券数据模型
  * @author: leibing
  * @createTime: 2017/6/10
  */
-public class UseCouponModel {
+public class UseCouponModel implements Serializable{
+    // uid
+    private static final long serialVersionUID = -4297744804030210372L;
     // 优惠券类型--积分优惠券
     public final static int INTEGRAL_COUPON_TYPE = 0;
     // 优惠券类型--活动优惠券

@@ -30,5 +30,5 @@ public class OrderConfirmInterface {
         void updateUI(OrderConfirmBean bean);
         // toast显示
         void toastShow(String msg);
-    }   
+    }
 }

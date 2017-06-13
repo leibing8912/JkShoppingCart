@@ -1,6 +1,6 @@
 package module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm;
 
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,14 +23,19 @@ import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.common.ToastUtils;
 import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
-
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_ON_DELIVER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.INVALID_NUMBER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_RED_ENVELOPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.ORDER_CONFIRM;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_COUPON_LIST;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_COUPON_REQUEST_ID;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ORIGIN_COUPON_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_REAL_COUPON_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_TOTAL_AMOUNT;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel.JIANKE_SELF_SUPPORT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_CREDITS_EXCHANGE;
@@ -107,6 +112,22 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     // 合计金额
     @BindView(R.id.tv_settle_total)
     TextView settleTotalTv;
+    // 可用优惠券个数
+    TextView couponAvailableTv;
+    // 优惠券金额
+    TextView couponAmountTv;
+    // 可用红包个数
+    TextView redEnvelopeAvailableTv;
+    // 红包金额
+    TextView redEnvelopeAmountTv;
+    // 现金劵编辑框
+    EditText useCouponEdt;
+    // 健客自营合计金额
+    TextView jkTotalTv;
+    // 健客自营分组合计金额
+    private double jkGroupTotalAmount = 0;
+    // 健客自营优惠劵金额
+    private double jkCouponValue = 0;
     // 总合计金额
     private double totalAmount = 0;
     // 总运费
@@ -328,7 +349,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             totalAmount = 0;
             int infoSize = bean.productInfoList.size();
             for (int i=0;i<infoSize;i++){
-                OrderInfoModel model = bean.productInfoList.get(i);
+                final OrderInfoModel model = bean.productInfoList.get(i);
                 double groupFreight = 0;
                 double groupTotalAmount = 0;
                 if (model != null) {
@@ -568,10 +589,10 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                         View couponView = LayoutInflater.from(this)
                                 .inflate(R.layout.layout_order_info_coupon, null);
                         // 可用优惠券个数
-                        TextView couponAvailableTv =
+                        couponAvailableTv =
                                 (TextView) couponView.findViewById(R.id.tv_coupon_available);
                         // 优惠劵金额
-                        TextView couponAmountTv = (TextView) couponView.findViewById(R.id.tv_coupon_amount);
+                        couponAmountTv = (TextView) couponView.findViewById(R.id.tv_coupon_amount);
                         boolean isCouponAvailable;
                         if (model.mUseCouponModelList != null
                                 && model.mUseCouponModelList.size() != 0){
@@ -586,19 +607,28 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                         }
                         // 使用优惠券item点击事件
                         final boolean finalIsCouponAvailable = isCouponAvailable;
-                        couponView.findViewById(R.id.rly_coupon).setOnClickListener(new View.OnClickListener() {
+                        couponView.findViewById(R.id.rly_coupon).setOnClickListener(
+                                new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (!finalIsCouponAvailable){
                                     toastShow(NO_AVAILABLE_COUPON);
                                 }
+                                // 跳转到使用优惠券页面
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(PAGE_INTENT_COUPON_LIST,
+                                        model.mUseCouponModelList);
+                                bundle.putDouble(PAGE_INTENT_TOTAL_AMOUNT, totalAmount);
+                                bundle.putDouble(PAGE_INTENT_ORIGIN_COUPON_VALUE, jkCouponValue);
+                                startTargetActivityForResult(UseCouponActivity.class, bundle,
+                                        PAGE_INTENT_COUPON_REQUEST_ID);
                             }
                         });
                         // 可用红包个数
-                        TextView redEnvelopeAvailableTv = (TextView)
+                        redEnvelopeAvailableTv = (TextView)
                                 couponView.findViewById(R.id.tv_red_envelope_available);
                         // 红包金额
-                        TextView redEnvelopeAmountTv
+                        redEnvelopeAmountTv
                                 = (TextView) couponView.findViewById(R.id.tv_red_envelope_amount);
                         boolean isRedEnvelopeAvailable;
                         if (model.mUseRedEnvelopeModelList != null
@@ -626,7 +656,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                         final LinearLayout cashCouponUsesLy
                                 = (LinearLayout) couponView.findViewById(R.id.ly_cash_coupon_uses);
                         // 现金劵编辑框
-                        EditText useCouponEdt = (EditText) couponView.findViewById(R.id.edt_use_coupon);
+                        useCouponEdt = (EditText) couponView.findViewById(R.id.edt_use_coupon);
                         // 现金劵使用按钮
                         Button useCouponBtn = (Button) couponView.findViewById(R.id.btn_use_coupon);
                         // 现金劵使用按钮事件
@@ -697,10 +727,18 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                     TextView freightTv = (TextView) invoiceView.findViewById(R.id.tv_freight);
                     if (groupFreight > 0)
                         freightTv.setText("￥" + StringUtil.doubleTwoDecimal(groupFreight));
-                    // 合计金额
-                    TextView totalTv = (TextView) invoiceView.findViewById(R.id.tv_total);
-                    if (groupTotalAmount > 0)
-                        totalTv.setText("￥" + StringUtil.doubleTwoDecimal(groupTotalAmount));
+                    if (model.sellerType == JIANKE_SELF_SUPPORT){
+                        // 合计金额（健客自营合计金额）
+                        jkTotalTv = (TextView) invoiceView.findViewById(R.id.tv_total);
+                        jkGroupTotalAmount = groupTotalAmount;
+                        if (groupTotalAmount > 0)
+                            jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(groupTotalAmount));
+                    }else {
+                        // 合计金额
+                        TextView totalTv = (TextView) invoiceView.findViewById(R.id.tv_total);
+                        if (groupTotalAmount > 0)
+                            totalTv.setText("￥" + StringUtil.doubleTwoDecimal(groupTotalAmount));
+                    }
                     // 添加发票模块到容器
                     orderInfoLy.addView(invoiceView);
                     // 添加分割粗线
@@ -721,5 +759,30 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     @Override
     public void toastShow(String msg) {
         ToastUtils.show(this, msg);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PAGE_INTENT_COUPON_REQUEST_ID
+                && resultCode == RESULT_OK){
+            // 选择优惠劵处理
+            totalAmount = data.getDoubleExtra(PAGE_INTENT_TOTAL_AMOUNT, 0.0);
+            double originCouponValue = data.getDoubleExtra(PAGE_INTENT_ORIGIN_COUPON_VALUE, 0.0);
+            double realCouponValue = data.getDoubleExtra(PAGE_INTENT_REAL_COUPON_VALUE, 0.0);
+            if (realCouponValue > 0) {
+                jkCouponValue = realCouponValue;
+                couponAmountTv.setText("-￥" + StringUtil.doubleTwoDecimal(realCouponValue));
+            }
+            System.out.println("ddddddddddddddddd originCouponValue = " + originCouponValue);
+            System.out.println("ddddddddddddddddd realCouponValue = " + realCouponValue);
+            jkGroupTotalAmount-= (realCouponValue - originCouponValue);
+            totalAmount -= (realCouponValue - originCouponValue);
+            // 显示合计金额Ui
+            if (settleTotalTv != null)
+                settleTotalTv.setText("合计：￥" + totalAmount);
+            // 显示健客自营分组合计金额Ui
+            if (jkTotalTv != null)
+                jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(jkGroupTotalAmount));
+        }
     }
 }

@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -31,5 +32,51 @@ public class BaseFragmentActivity extends FragmentActivity{
     public void onBackPressed() {
         AppManager.getInstance().finishActivity(this);
         super.onBackPressed();
+    }
+
+    /**
+     * 启动目标页
+     * @author leibing
+     * @createTime 2017/3/14
+     * @lastModify 2017/3/14
+     * @param clazz
+     * @return
+     */
+    protected void startTargetActivity(Class clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动目标页
+     * @author leibing
+     * @createTime 2017/3/14
+     * @lastModify 2017/3/14
+     * @param clazz
+     * @param bundle
+     * @return
+     */
+    protected void startTargetActivity(Class clazz, Bundle bundle) {
+        Intent intent = new Intent(this, clazz);
+        if (bundle != null)
+            intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动目标页(带返回结果)
+     * @author leibing
+     * @createTime 2017/3/14
+     * @lastModify 2017/6/13
+     * @param clazz
+     * @param bundle
+     * @param requestId
+     * @return
+     */
+    protected void startTargetActivityForResult(Class clazz, Bundle bundle, int requestId) {
+        Intent intent = new Intent(this, clazz);
+        if (bundle != null)
+            intent.putExtras(bundle);
+        startActivityForResult(intent, requestId);
     }
 }

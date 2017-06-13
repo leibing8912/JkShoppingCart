@@ -33,4 +33,14 @@ public class OrderConfirmConstant {
     public final static String NO_AVAILABLE_RED_ENVELOPE = "无可用红包哦~";
     // 非法身份证号，请重新输入
     public final static String INVALID_NUMBER = "非法身份证号，请重新输入";
+    // 页面传值--优惠券列表
+    public final static String PAGE_INTENT_COUPON_LIST = "page_intent_coupon_list";
+    // 页面传值--合计总金额
+    public final static String PAGE_INTENT_TOTAL_AMOUNT = "page_intent_total_amount";
+    // 页面传值--原始优惠劵金额
+    public final static String PAGE_INTENT_ORIGIN_COUPON_VALUE = "page_intent_origin_coupon_value";
+    // 页面传值--实际优惠劵金额
+    public final static String PAGE_INTENT_REAL_COUPON_VALUE = "page_intent_real_coupon_value";
+    // 页面传值--进入优惠券页面请求标识
+    public final static int PAGE_INTENT_COUPON_REQUEST_ID = 0x13;
 }

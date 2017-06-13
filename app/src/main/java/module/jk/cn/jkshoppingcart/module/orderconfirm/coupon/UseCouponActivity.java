@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.module.orderconfirm.coupon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
+import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_COUPON_LIST;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ORIGIN_COUPON_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_REAL_COUPON_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_TOTAL_AMOUNT;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.ACTIVITY_COUPON_TYPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.INTEGRAL_COUPON_TYPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.OTHER_COUPON_TYPE;
@@ -48,6 +54,8 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
     private ArrayList<UseCouponModel> mData;
     // 待付款总金额
     private double totalAmount;
+    // 原始优惠金额
+    private double originDiscountAmount;
     // 总计优惠金额
     private double totalDiscountAmount;
 
@@ -61,70 +69,31 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
         init();
         // set adapter
         setAdapter();
-        // get data
-        getData();
+        // get intent to update ui
+        getIntentUpdateUi();
     }
 
     /**
-      * get data
+      * get intent to update ui
       * @author leibing
-      * @createTime 2017/6/10
-      * @lastModify 2017/6/10
+      * @createTime 2017/6/13
+      * @lastModify 2017/6/13
       * @param
       * @return
       */
-    private void getData() {
-        totalAmount = 300;
-
-        UseCouponModel model;
-
-        for (int i =0; i<5;i++) {
-            model = new UseCouponModel();
-            model.couponValue = 50;
-            model.couponRangeValue = 200;
-            model.couponRangeGroup = "健客自营产品";
-            model.couponType = INTEGRAL_COUPON_TYPE;
-            model.couponValidDate = "2017.06.10-07.10";
-            model.couponSortName = "积分兑换";
-            mData.add(model);
+    private void getIntentUpdateUi() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            mData = (ArrayList<UseCouponModel>) bundle.getSerializable(PAGE_INTENT_COUPON_LIST);
+            totalAmount = bundle.getDouble(PAGE_INTENT_TOTAL_AMOUNT);
+            originDiscountAmount = bundle.getDouble(PAGE_INTENT_ORIGIN_COUPON_VALUE);
+            totalDiscountAmount = originDiscountAmount;
         }
-
-        for (int i =0; i<5;i++) {
-            model = new UseCouponModel();
-            model.couponValue = 100;
-            model.couponRangeValue = 300;
-            model.couponRangeGroup = "健客自营产品";
-            model.couponType = ACTIVITY_COUPON_TYPE;
-            model.couponValidDate = "2017.06.10-07.10";
-            model.couponSortName = "活动领取";
-            mData.add(model);
-        }
-
-        for (int i =0; i<5;i++) {
-            model = new UseCouponModel();
-            model.couponValue = 10;
-            model.couponRangeValue = 99;
-            model.couponRangeGroup = "结算页测试1";
-            model.couponType = OTHER_COUPON_TYPE;
-            model.couponValidDate = "2017.06.10-07.10";
-            model.couponSortName = "详情页领取";
-            mData.add(model);
-        }
-
-        for (int i =0; i<2;i++) {
-            model = new UseCouponModel();
-            model.couponValue = 10;
-            model.couponRangeValue = 99;
-            model.couponRangeGroup = "结算页测试2";
-            model.couponType = OTHER_COUPON_TYPE;
-            model.couponValidDate = "2017.06.10-07.10";
-            model.couponSortName = "详情页领取";
-            mData.add(model);
-        }
-
-        if (mAdapter != null){
+        // 更新数据源
+        if (mAdapter != null)
             mAdapter.setData(mData);
-        }
+        // 计算优惠金额
+        calculateDiscountAmount();
     }
 
     /**
@@ -606,11 +575,22 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
     }
 
     @OnClick({R.id.btn_discount_amount_ok,
-            R.id.btn_discount_amount_reset})
+            R.id.btn_discount_amount_reset,
+            R.id.iv_back})
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.iv_back:
+                // 返回
+                AppManager.getInstance().finishActivity();
+                break;
             case R.id.btn_discount_amount_ok:
                 // 确定
+                Intent intent = new Intent();
+                intent.putExtra(PAGE_INTENT_TOTAL_AMOUNT, totalAmount);
+                intent.putExtra(PAGE_INTENT_ORIGIN_COUPON_VALUE, originDiscountAmount);
+                intent.putExtra(PAGE_INTENT_REAL_COUPON_VALUE, totalDiscountAmount);
+                setResult(RESULT_OK, intent);
+                AppManager.getInstance().finishActivity();
                 break;
             case R.id.btn_discount_amount_reset:
                 // 重置
