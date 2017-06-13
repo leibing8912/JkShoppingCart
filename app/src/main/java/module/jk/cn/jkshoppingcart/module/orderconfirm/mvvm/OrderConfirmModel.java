@@ -74,7 +74,7 @@ public class OrderConfirmModel {
         ArrayList<UseCouponModel> mUseCouponModelList = new ArrayList<>();
         UseCouponModel couponModel = new UseCouponModel();
         couponModel.couponValue = 5;
-        couponModel.couponRangeValue = 100;
+        couponModel.couponRangeValue = 50;
         couponModel.couponSortName = "积分兑换";
         couponModel.couponType = INTEGRAL_COUPON_TYPE;
         couponModel.couponRangeGroup = "健客自营";
@@ -83,7 +83,7 @@ public class OrderConfirmModel {
 
         couponModel = new UseCouponModel();
         couponModel.couponValue = 10;
-        couponModel.couponRangeValue = 100;
+        couponModel.couponRangeValue = 50;
         couponModel.couponSortName = "积分兑换";
         couponModel.couponType = INTEGRAL_COUPON_TYPE;
         couponModel.couponRangeGroup = "健客自营";
@@ -92,7 +92,7 @@ public class OrderConfirmModel {
 
         couponModel = new UseCouponModel();
         couponModel.couponValue = 15;
-        couponModel.couponRangeValue = 100;
+        couponModel.couponRangeValue = 50;
         couponModel.couponSortName = "积分兑换";
         couponModel.couponType = INTEGRAL_COUPON_TYPE;
         couponModel.couponRangeGroup = "健客自营";

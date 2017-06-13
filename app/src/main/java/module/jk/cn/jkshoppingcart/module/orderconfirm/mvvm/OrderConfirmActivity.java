@@ -32,7 +32,6 @@ import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeModel;
-
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_COUPON_IS_EMPTY;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_ON_DELIVER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.INVALID_NUMBER;
@@ -135,6 +134,10 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     TextView redEnvelopeAvailableTv;
     // 红包金额
     TextView redEnvelopeAmountTv;
+    // 现金劵右箭头图标
+    ImageView cashCouponRightArrowIv;
+    // 现金劵使用布局
+    LinearLayout cashCouponUsesLy;
     // 现金劵使用按钮
     Button useCouponBtn;
     // 现金劵编辑框
@@ -624,7 +627,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                         View couponView = LayoutInflater.from(this)
                                 .inflate(R.layout.layout_order_info_coupon, null);
                         // 现金劵使用布局
-                        final LinearLayout cashCouponUsesLy
+                        cashCouponUsesLy
                                 = (LinearLayout) couponView.findViewById(R.id.ly_cash_coupon_uses);
                         // 现金劵编辑框
                         useCouponEdt = (EditText) couponView.findViewById(R.id.edt_use_coupon);
@@ -633,6 +636,9 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                 = (TextView) couponView.findViewById(R.id.tv_cash_coupon_amount);
                         // 现金劵使用按钮
                         useCouponBtn = (Button) couponView.findViewById(R.id.btn_use_coupon);
+                        // 现金劵右箭头图标
+                        cashCouponRightArrowIv
+                                = (ImageView) couponView.findViewById(R.id.iv_cash_coupon_right_arrow);
                         // 现金劵使用按钮事件
                         useCouponBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -645,6 +651,10 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                     isUseCoupon = true;
                                     useCouponEdt.setEnabled(false);
                                     useCouponBtn.setBackgroundResource(R.color.gray);
+                                    cashCouponUsesLy.setVisibility(View.GONE);
+                                    cashCouponRightArrowIv.setImageDrawable(
+                                            OrderConfirmActivity.this.getResources().getDrawable(
+                                                    R.drawable.shoppingcart_new_view_product_details));
                                     // 暂时设定的现金劵金额
                                     jkCashCouponValue = 5;
                                 }else {
@@ -681,8 +691,14 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                             public void onClick(View v) {
                                 if (!isShowCouponUses){
                                     cashCouponUsesLy.setVisibility(View.VISIBLE);
+                                    cashCouponRightArrowIv.setImageDrawable(
+                                            OrderConfirmActivity.this.getResources().getDrawable(
+                                                    R.drawable.unfold));
                                 }else {
                                     cashCouponUsesLy.setVisibility(View.GONE);
+                                    cashCouponRightArrowIv.setImageDrawable(
+                                            OrderConfirmActivity.this.getResources().getDrawable(
+                                                    R.drawable.shoppingcart_new_view_product_details));
                                 }
                                 isShowCouponUses = !isShowCouponUses;
                             }
