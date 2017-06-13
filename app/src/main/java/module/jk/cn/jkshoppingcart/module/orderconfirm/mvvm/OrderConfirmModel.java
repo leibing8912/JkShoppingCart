@@ -9,6 +9,7 @@ import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelop
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.ACTIVITY_COUPON_TYPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.INTEGRAL_COUPON_TYPE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.OTHER_COUPON_TYPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel.JIANKE_SELF_SUPPORT;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.AWARD_TYPE_AWARD;
 import static module.jk.cn.jkshoppingcart.module.shoppingcart.ShoppingCartConstant.PRODUCT_TYPE_AWARD;
@@ -81,10 +82,28 @@ public class OrderConfirmModel {
 
         couponModel = new UseCouponModel();
         couponModel.couponValue = 10;
-        couponModel.couponRangeValue = 200;
+        couponModel.couponRangeValue = 100;
         couponModel.couponSortName = "活动领取";
         couponModel.couponType = ACTIVITY_COUPON_TYPE;
         couponModel.couponRangeGroup = "健客自营";
+        couponModel.couponValidDate = "2017.06.12-07.10";
+        mUseCouponModelList.add(couponModel);
+
+        couponModel = new UseCouponModel();
+        couponModel.couponValue = 15;
+        couponModel.couponRangeValue = 100;
+        couponModel.couponSortName = "单品测试1";
+        couponModel.couponType = OTHER_COUPON_TYPE;
+        couponModel.couponRangeGroup = "单品范围1";
+        couponModel.couponValidDate = "2017.06.12-07.10";
+        mUseCouponModelList.add(couponModel);
+
+        couponModel = new UseCouponModel();
+        couponModel.couponValue = 20;
+        couponModel.couponRangeValue = 100;
+        couponModel.couponSortName = "单品测试2";
+        couponModel.couponType = OTHER_COUPON_TYPE;
+        couponModel.couponRangeGroup = "单品范围2";
         couponModel.couponValidDate = "2017.06.12-07.10";
         mUseCouponModelList.add(couponModel);
 

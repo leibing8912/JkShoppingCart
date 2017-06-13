@@ -399,7 +399,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                         break;
                     case ACTIVITY_COUPON_TYPE:
                         // 活动优惠券
-                        if (!isActivityCouponSelected()){
+                        if (!isActivityCouponSelected() && !isOtherCouponSelected()){
                             if (getConditionAmount() >= mData.get(i).couponRangeValue){
                                 mData.get(i).isCouponAvailable = true;
                             }else {
@@ -439,7 +439,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                         break;
                     case ACTIVITY_COUPON_TYPE:
                         // 活动优惠券
-                        if (!isActivityCouponSelected()){
+                        if (!isActivityCouponSelected() && !isOtherCouponSelected()){
                             if (getConditionAmount() >= mData.get(i).couponRangeValue){
                                 mData.get(i).isCouponAvailable = true;
                             }else {

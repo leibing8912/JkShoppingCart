@@ -771,10 +771,9 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             double realCouponValue = data.getDoubleExtra(PAGE_INTENT_REAL_COUPON_VALUE, 0.0);
             if (realCouponValue > 0) {
                 jkCouponValue = realCouponValue;
+                couponAmountTv.setTextColor(getResources().getColor(R.color.order_conform_red_txt));
                 couponAmountTv.setText("-￥" + StringUtil.doubleTwoDecimal(realCouponValue));
             }
-            System.out.println("ddddddddddddddddd originCouponValue = " + originCouponValue);
-            System.out.println("ddddddddddddddddd realCouponValue = " + realCouponValue);
             jkGroupTotalAmount-= (realCouponValue - originCouponValue);
             totalAmount -= (realCouponValue - originCouponValue);
             // 显示合计金额Ui
