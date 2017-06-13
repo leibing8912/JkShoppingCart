@@ -64,7 +64,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_use_coupon);
+        setContentView(R.layout.activity_use_coupon_new);
         // bind buffer knife
         ButterKnife.bind(this);
         // init
