@@ -35,16 +35,26 @@ public class OrderConfirmConstant {
     public final static String INVALID_NUMBER = "非法身份证号，请重新输入";
     // 页面传值--优惠券列表
     public final static String PAGE_INTENT_COUPON_LIST = "page_intent_coupon_list";
+    // 页面传值--红包列表
+    public final static String PAGE_INTENT_RED_ENVELOPE_LIST = "page_intent_red_envelope_list";
     // 页面传值--合计总金额
     public final static String PAGE_INTENT_TOTAL_AMOUNT = "page_intent_total_amount";
     // 页面传值--最佳活动或其他优惠券位置
     public final static String PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION = "page_intent_activity_optimal_position";
     // 页面传值--最佳积分优惠券位置
     public final static String PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION = "page_intent_integral_optimal_position";
+    // 页面传值--最佳红包位置
+    public final static String PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION = "page_intent_red_envelope_optimal_position";
     // 页面传值--原始优惠劵金额
     public final static String PAGE_INTENT_ORIGIN_COUPON_VALUE = "page_intent_origin_coupon_value";
     // 页面传值--实际优惠劵金额
     public final static String PAGE_INTENT_REAL_COUPON_VALUE = "page_intent_real_coupon_value";
+    // 页面传值--原始红包金额
+    public final static String PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE = "page_intent_origin_red_envelope_value";
+    // 页面传值--实际红包金额
+    public final static String PAGE_INTENT_REAL_RED_ENVELOPE_VALUE = "page_intent_real_red_envelope_value";
     // 页面传值--进入优惠券页面请求标识
     public final static int PAGE_INTENT_COUPON_REQUEST_ID = 0x13;
+    // 页面传值--进入红包页面请求标识
+    public final static int PAGE_INTENT_RED_ENVELOPE_REQUEST_ID = 0x14;
 }

@@ -98,8 +98,6 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
         // 更新数据源
         if (mAdapter != null)
             mAdapter.setData(mData);
-        // 计算优惠金额
-        calculateDiscountAmount();
         if (activityPosition != -1
                 && integralPosition != -1){
             itemCheck(activityPosition, true);

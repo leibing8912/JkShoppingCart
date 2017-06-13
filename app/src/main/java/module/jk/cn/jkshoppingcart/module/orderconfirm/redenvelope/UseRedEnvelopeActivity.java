@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
+import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_REAL_RED_ENVELOPE_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_RED_ENVELOPE_LIST;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION;
 
 /**
  * @className: 使用红包
@@ -44,7 +50,9 @@ public class UseRedEnvelopeActivity extends BaseFragmentActivity
     private ArrayList<UseRedEnvelopeModel> mData;
     // 待付款总金额
     private double totalAmount;
-    // 总计优惠金额
+    // 原始红包优惠金额
+    private double originDiscountAmount;
+    // 总计红包优惠金额
     private double totalDiscountAmount;
 
     @Override
@@ -57,40 +65,33 @@ public class UseRedEnvelopeActivity extends BaseFragmentActivity
         init();
         // set adapter
         setAdapter();
-        // get data
-        getData();
+        // get intent to update ui
+        getIntentUpdateUi();
     }
 
     /**
-     * get data
+     * get intent to update ui
      * @author leibing
-     * @createTime 2017/6/10
-     * @lastModify 2017/6/10
+     * @createTime 2017/6/13
+     * @lastModify 2017/6/13
      * @param
      * @return
      */
-    private void getData() {
-        UseRedEnvelopeModel model = new UseRedEnvelopeModel();
-        model.redEnvelopeValue = 10;
-        model.redEnvelopeValidDate = "有效期：还有5天到期";
-        mData.add(model);
-
-        for (int i=0;i<3;i++){
-            model = new UseRedEnvelopeModel();
-            model.redEnvelopeValue = 5;
-            model.redEnvelopeValidDate = "有效期：还有10天到期";
-            mData.add(model);
+    private void getIntentUpdateUi() {
+        Bundle bundle = getIntent().getExtras();
+        int redEnvelopePosition = -1;
+        if (bundle != null){
+            mData = (ArrayList<UseRedEnvelopeModel>) bundle.getSerializable(PAGE_INTENT_RED_ENVELOPE_LIST);
+            originDiscountAmount = bundle.getDouble(PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE);
+            totalDiscountAmount = originDiscountAmount;
+            redEnvelopePosition = bundle.getInt(PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION, -1);
         }
-
-        for (int i=0;i<5;i++){
-            model = new UseRedEnvelopeModel();
-            model.redEnvelopeValue = 20;
-            model.redEnvelopeValidDate = "有效期：还有3天到期";
-            mData.add(model);
-        }
-
+        // 更新数据源
         if (mAdapter != null)
             mAdapter.setData(mData);
+        if (redEnvelopePosition != -1){
+            itemCheck(redEnvelopePosition, true);
+        }
     }
 
     /**
@@ -167,15 +168,27 @@ public class UseRedEnvelopeActivity extends BaseFragmentActivity
     }
 
     @OnClick({R.id.btn_discount_amount_ok,
-            R.id.btn_discount_amount_reset})
+            R.id.btn_discount_amount_reset,
+            R.id.iv_back})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_discount_amount_ok:
                 // 确定
+                Intent intent = new Intent();
+                intent.putExtra(PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE, originDiscountAmount);
+                intent.putExtra(PAGE_INTENT_REAL_RED_ENVELOPE_VALUE, totalDiscountAmount);
+                intent.putExtra(PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION, -1);
+                intent.putExtra(PAGE_INTENT_RED_ENVELOPE_LIST, mData);
+                setResult(RESULT_OK, intent);
+                AppManager.getInstance().finishActivity();
                 break;
             case R.id.btn_discount_amount_reset:
                 // 重置
                 resetData();
+                break;
+            case R.id.iv_back:
+                // 返回
+                AppManager.getInstance().finishActivity();
                 break;
         }
     }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmInterface;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeModel;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.ACTIVITY_COUPON_TYPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.INTEGRAL_COUPON_TYPE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel.OTHER_COUPON_TYPE;
@@ -98,6 +99,38 @@ public class OrderConfirmViewModel implements OrderConfirmModel.ModelListener {
         }
     }
 
+    /**
+      * 红包最优选择处理
+      * @author leibing
+      * @createTime 2017/6/13
+      * @lastModify 2017/6/13
+      * @param mUseRedEnvelopeModelList
+      * @return
+      */
+    public void redEnvelopeOptimalDeal(ArrayList<UseRedEnvelopeModel> mUseRedEnvelopeModelList){
+        if (mUseRedEnvelopeModelList != null
+                && mUseRedEnvelopeModelList.size() != 0){
+            int position = -1;
+            int redEnvelopeSize = mUseRedEnvelopeModelList.size();
+            double referValue = -1;
+            // 遍历获取最佳红包位置
+            for (int i=0;i<redEnvelopeSize;i++){
+                UseRedEnvelopeModel model = mUseRedEnvelopeModelList.get(i);
+                if (model != null){
+                    if (model.redEnvelopeValue >= referValue){
+                        referValue = model.redEnvelopeValue;
+                        position = i;
+                    }
+                }
+            }
+            if (position != -1
+                    && mViewModel != null){
+                // 回调最优红包选择
+                mViewModel.redEnvelopeOptimal(position, mUseRedEnvelopeModelList);
+            }
+        }
+    }
+
     @Override
     public void updateUI(OrderConfirmBean bean) {
         if (mViewModel != null)
@@ -125,5 +158,13 @@ public class OrderConfirmViewModel implements OrderConfirmModel.ModelListener {
          */
         void couponOptimal(int activityPosition, int integralPosition,
                            ArrayList<UseCouponModel> mUseCouponModelList);
+
+        /**
+         * 红包最优选择
+         * @param position 红包最佳选择位置
+         * @param mUseRedEnvelopeModelList 红包列表
+         */
+        void redEnvelopeOptimal(int position,
+                                ArrayList<UseRedEnvelopeModel> mUseRedEnvelopeModelList);
     }
 }

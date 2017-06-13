@@ -2,6 +2,8 @@ package module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -28,6 +30,9 @@ import module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderConfirmBean;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeActivity;
+import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeModel;
+
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_ON_DELIVER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.INVALID_NUMBER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
@@ -38,7 +43,12 @@ import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConsta
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_COUPON_REQUEST_ID;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ORIGIN_COUPON_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_REAL_COUPON_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_REAL_RED_ENVELOPE_VALUE;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_RED_ENVELOPE_LIST;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_RED_ENVELOPE_REQUEST_ID;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_TOTAL_AMOUNT;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel.JIANKE_SELF_SUPPORT;
@@ -132,6 +142,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     private double jkGroupTotalAmount = 0;
     // 健客自营优惠劵金额
     private double jkCouponValue = 0;
+    // 健客自营红包金额
+    private double jkRedEnvelopeValue = 0;
     // 总合计金额
     private double totalAmount = 0;
     // 总运费
@@ -142,8 +154,12 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     private int activityPosition = -1;
     // 最优积分优惠券位置
     private int integralPosition = -1;
+    // 最优红包位置
+    private int redEnvelopePosition = -1;
     // 积分优惠券列表
     private ArrayList<UseCouponModel> mUseCouponModelList;
+    // 红包优惠券列表
+    private ArrayList<UseRedEnvelopeModel> mUseRedEnvelopeModelList;
     // 是否在线支付
     boolean isPayOnline = false;
     // logic process
@@ -666,6 +682,19 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                 if (!finalIsRedEnvelopeAvailable){
                                     toastShow(NO_AVAILABLE_RED_ENVELOPE);
                                 }
+                                if (mUseRedEnvelopeModelList != null){
+                                    model.mUseRedEnvelopeModelList = mUseRedEnvelopeModelList;
+                                }
+                                // 跳转到红包选择页面
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(PAGE_INTENT_RED_ENVELOPE_LIST,
+                                        model.mUseRedEnvelopeModelList);
+                                bundle.putDouble(PAGE_INTENT_TOTAL_AMOUNT, jkGroupTotalAmount
+                                        + jkRedEnvelopeValue);
+                                bundle.putInt(PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION, redEnvelopePosition);
+                                bundle.putDouble(PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE, jkRedEnvelopeValue);
+                                startTargetActivityForResult(UseRedEnvelopeActivity.class, bundle,
+                                        PAGE_INTENT_RED_ENVELOPE_REQUEST_ID);
                             }
                         });
                         // 现金劵使用布局
@@ -750,9 +779,17 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                         jkGroupTotalAmount = groupTotalAmount;
                         if (groupTotalAmount > 0)
                             jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(groupTotalAmount));
-                        // 计算最佳优惠劵选择
-                        if (mViewModel != null)
+                        if (mViewModel != null) {
+                            // 计算最佳优惠劵选择
                             mViewModel.couponOptimalDeal(model.mUseCouponModelList, jkGroupTotalAmount);
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 计算最佳红包选择
+                                    mViewModel.redEnvelopeOptimalDeal(model.mUseRedEnvelopeModelList);
+                                }
+                            },50);
+                        }
                     }else {
                         // 合计金额
                         TextView totalTv = (TextView) invoiceView.findViewById(R.id.tv_total);
@@ -820,13 +857,51 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             // 显示健客自营分组合计金额Ui
             if (jkTotalTv != null)
                 jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(jkGroupTotalAmount));
+        }else if (requestCode == PAGE_INTENT_RED_ENVELOPE_REQUEST_ID
+                && resultCode == RESULT_OK){
+            // 选择红包处理
+            double originRedEnvelopeValue
+                    = data.getDoubleExtra(PAGE_INTENT_ORIGIN_RED_ENVELOPE_VALUE, 0.0);
+            double realRedEnvelopeValue
+                    = data.getDoubleExtra(PAGE_INTENT_REAL_RED_ENVELOPE_VALUE, 0.0);
+            redEnvelopePosition = data.getIntExtra(PAGE_INTENT_RED_ENVELOPE_OPTIMAL_POSITION, -1);
+            mUseRedEnvelopeModelList = (ArrayList<UseRedEnvelopeModel>)
+                    data.getSerializableExtra(PAGE_INTENT_RED_ENVELOPE_LIST);
+            if (mUseRedEnvelopeModelList != null
+                    && mUseRedEnvelopeModelList.size() != 0){
+                int i;
+                for (i=0;i<mUseRedEnvelopeModelList.size();i++){
+                    UseRedEnvelopeModel model = mUseRedEnvelopeModelList.get(i);
+                    if (model != null && model.isRedEnvelopeSelected){
+                        break;
+                    }
+                }
+                if (i>= mUseRedEnvelopeModelList.size()){
+                    redEnvelopeAmountTv.setTextColor(getResources().getColor(R.color.text_color_black3));
+                    redEnvelopeAmountTv.setText("未使用");
+                    jkRedEnvelopeValue = 0;
+                }
+            }
+            if (realRedEnvelopeValue > 0) {
+                jkRedEnvelopeValue = realRedEnvelopeValue;
+                redEnvelopeAmountTv.setTextColor(getResources().getColor(R.color.order_conform_red_txt));
+                redEnvelopeAmountTv.setText("-￥" + StringUtil.doubleTwoDecimal(realRedEnvelopeValue));
+            }
+            jkGroupTotalAmount-= (realRedEnvelopeValue - originRedEnvelopeValue);
+            totalAmount -= (realRedEnvelopeValue - originRedEnvelopeValue);
+            // 显示合计金额Ui
+            if (settleTotalTv != null)
+                settleTotalTv.setText("合计：￥" + totalAmount);
+            // 显示健客自营分组合计金额Ui
+            if (jkTotalTv != null)
+                jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(jkGroupTotalAmount));
         }
     }
-
+    
     @Override
     public void couponOptimal(int activityPosition, int integralPosition,
                               ArrayList<UseCouponModel> mUseCouponModelList) {
-        // 处理优惠券最优处理ui显示
+        // 处理优惠券最优ui显示
         jkCouponValue = mUseCouponModelList.get(activityPosition).couponValue
                 + mUseCouponModelList.get(integralPosition).couponValue;
         couponAmountTv.setTextColor(getResources().getColor(R.color.order_conform_red_txt));
@@ -837,6 +912,30 @@ public class OrderConfirmActivity extends BaseFragmentActivity
         // 计算合计金额
         jkGroupTotalAmount-= jkCouponValue;
         totalAmount -= jkCouponValue;
+        // 显示合计金额Ui
+        if (settleTotalTv != null)
+            settleTotalTv.setText("合计：￥" + totalAmount);
+        // 显示健客自营分组合计金额Ui
+        if (jkTotalTv != null)
+            jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(jkGroupTotalAmount));
+    }
+
+    @Override
+    public void redEnvelopeOptimal(int position,
+                                   ArrayList<UseRedEnvelopeModel> mUseRedEnvelopeModelList) {
+        // 处理红包最优ui显示
+        jkRedEnvelopeValue = mUseRedEnvelopeModelList.get(position).redEnvelopeValue;
+        redEnvelopeAmountTv.setTextColor(getResources().getColor(R.color.order_conform_red_txt));
+        redEnvelopeAmountTv.setText("-￥" + StringUtil.doubleTwoDecimal(jkRedEnvelopeValue));
+        // 初始化最优红包位置
+        this.redEnvelopePosition = position;
+        // 计算合计金额
+        jkGroupTotalAmount-= jkRedEnvelopeValue;
+        totalAmount -= jkRedEnvelopeValue;
+        if (jkGroupTotalAmount < 0)
+            jkGroupTotalAmount = 0;
+        if (totalAmount < 0)
+            totalAmount = 0;
         // 显示合计金额Ui
         if (settleTotalTv != null)
             settleTotalTv.setText("合计：￥" + totalAmount);
