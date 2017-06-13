@@ -14,7 +14,6 @@ import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
-
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_COUPON_LIST;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION;

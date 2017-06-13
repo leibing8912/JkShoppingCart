@@ -804,6 +804,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 if (i>= mUseCouponModelList.size()){
                     couponAmountTv.setTextColor(getResources().getColor(R.color.text_color_black3));
                     couponAmountTv.setText("未使用");
+                    jkCouponValue = 0;
                 }
             }
             if (realCouponValue > 0) {
