@@ -14,7 +14,10 @@ import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.module.AppManager;
 import module.jk.cn.jkshoppingcart.module.BaseFragmentActivity;
+
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_COUPON_LIST;
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_ORIGIN_COUPON_VALUE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_REAL_COUPON_VALUE;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAGE_INTENT_TOTAL_AMOUNT;
@@ -83,17 +86,26 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
       */
     private void getIntentUpdateUi() {
         Bundle bundle = getIntent().getExtras();
+        int activityPosition = -1;
+        int integralPosition = -1;
         if (bundle != null){
             mData = (ArrayList<UseCouponModel>) bundle.getSerializable(PAGE_INTENT_COUPON_LIST);
             totalAmount = bundle.getDouble(PAGE_INTENT_TOTAL_AMOUNT);
             originDiscountAmount = bundle.getDouble(PAGE_INTENT_ORIGIN_COUPON_VALUE);
             totalDiscountAmount = originDiscountAmount;
+            activityPosition = bundle.getInt(PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION, -1);
+            integralPosition = bundle.getInt(PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION, -1);
         }
         // 更新数据源
         if (mAdapter != null)
             mAdapter.setData(mData);
         // 计算优惠金额
         calculateDiscountAmount();
+        if (activityPosition != -1
+                && integralPosition != -1){
+            itemCheck(activityPosition, true);
+            itemCheck(integralPosition, true);
+        }
     }
 
     /**
@@ -586,7 +598,6 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
             case R.id.btn_discount_amount_ok:
                 // 确定
                 Intent intent = new Intent();
-                intent.putExtra(PAGE_INTENT_TOTAL_AMOUNT, totalAmount);
                 intent.putExtra(PAGE_INTENT_ORIGIN_COUPON_VALUE, originDiscountAmount);
                 intent.putExtra(PAGE_INTENT_REAL_COUPON_VALUE, totalDiscountAmount);
                 setResult(RESULT_OK, intent);

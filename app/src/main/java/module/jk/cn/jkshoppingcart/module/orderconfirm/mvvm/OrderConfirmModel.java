@@ -1,5 +1,6 @@
 package module.jk.cn.jkshoppingcart.module.orderconfirm.mvvm;
 
+import android.os.Handler;
 import java.util.ArrayList;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmInterface;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.coupon.UseCouponModel;
@@ -214,8 +215,13 @@ public class OrderConfirmModel {
 
         bean.productInfoList = productInfoList;
 
-        if (modelListener != null)
-            modelListener.updateUI(bean);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (modelListener != null)
+                    modelListener.updateUI(bean);
+            }
+        }, 500);
     }
 
     /**

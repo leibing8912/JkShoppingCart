@@ -37,6 +37,10 @@ public class OrderConfirmConstant {
     public final static String PAGE_INTENT_COUPON_LIST = "page_intent_coupon_list";
     // 页面传值--合计总金额
     public final static String PAGE_INTENT_TOTAL_AMOUNT = "page_intent_total_amount";
+    // 页面传值--最佳活动或其他优惠券位置
+    public final static String PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION = "page_intent_activity_optimal_position";
+    // 页面传值--最佳积分优惠券位置
+    public final static String PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION = "page_intent_integral_optimal_position";
     // 页面传值--原始优惠劵金额
     public final static String PAGE_INTENT_ORIGIN_COUPON_VALUE = "page_intent_origin_coupon_value";
     // 页面传值--实际优惠劵金额
