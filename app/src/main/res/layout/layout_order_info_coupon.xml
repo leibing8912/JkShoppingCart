@@ -131,6 +131,17 @@
             android:src="@drawable/shoppingcart_new_view_product_details"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
+        <!-- 现金劵金额 -->
+        <TextView
+            android:id="@+id/tv_cash_coupon_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/order_conform_red_txt"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_cash_coupon_right_arrow"
+            android:layout_marginRight="10dp"
+            android:text=""/>
     </RelativeLayout>
     <!-- 现金劵使用 -->
     <LinearLayout
@@ -171,7 +182,6 @@
                 android:textSize="12sp"
                 android:singleLine="true"
                 android:maxLength="24"
-                android:text="ABCDEFGHILERFTYBNHRTVFGTERCR"
                 android:paddingLeft="8dp"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>

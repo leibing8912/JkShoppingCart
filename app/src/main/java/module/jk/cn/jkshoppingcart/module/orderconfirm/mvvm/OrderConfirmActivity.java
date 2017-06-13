@@ -33,6 +33,7 @@ import module.jk.cn.jkshoppingcart.module.orderconfirm.model.OrderInfoModel;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeActivity;
 import module.jk.cn.jkshoppingcart.module.orderconfirm.redenvelope.UseRedEnvelopeModel;
 
+import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_COUPON_IS_EMPTY;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.CASH_ON_DELIVER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.INVALID_NUMBER;
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.NO_AVAILABLE_COUPON;
@@ -134,8 +135,12 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     TextView redEnvelopeAvailableTv;
     // 红包金额
     TextView redEnvelopeAmountTv;
+    // 现金劵使用按钮
+    Button useCouponBtn;
     // 现金劵编辑框
     EditText useCouponEdt;
+    // 现金劵金额
+    TextView cashCouponAmountTv;
     // 健客自营合计金额
     TextView jkTotalTv;
     // 健客自营分组合计金额
@@ -144,6 +149,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     private double jkCouponValue = 0;
     // 健客自营红包金额
     private double jkRedEnvelopeValue = 0;
+    // 健客自营现金劵金额
+    private double jkCashCouponValue = 0;
     // 总合计金额
     private double totalAmount = 0;
     // 总运费
@@ -162,6 +169,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     private ArrayList<UseRedEnvelopeModel> mUseRedEnvelopeModelList;
     // 是否在线支付
     boolean isPayOnline = false;
+    // 是否使用现金劵
+    boolean isUseCoupon = false;
     // logic process
     private OrderConfirmViewModel mViewModel;
 
@@ -614,6 +623,72 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                         // 优惠券、红包、现金券模块
                         View couponView = LayoutInflater.from(this)
                                 .inflate(R.layout.layout_order_info_coupon, null);
+                        // 现金劵使用布局
+                        final LinearLayout cashCouponUsesLy
+                                = (LinearLayout) couponView.findViewById(R.id.ly_cash_coupon_uses);
+                        // 现金劵编辑框
+                        useCouponEdt = (EditText) couponView.findViewById(R.id.edt_use_coupon);
+                        // 现金劵金额
+                        cashCouponAmountTv
+                                = (TextView) couponView.findViewById(R.id.tv_cash_coupon_amount);
+                        // 现金劵使用按钮
+                        useCouponBtn = (Button) couponView.findViewById(R.id.btn_use_coupon);
+                        // 现金劵使用按钮事件
+                        useCouponBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (StringUtil.isEmpty(useCouponEdt.getText().toString())){
+                                    toastShow(CASH_COUPON_IS_EMPTY);
+                                    return;
+                                }
+                                if (!isUseCoupon){
+                                    isUseCoupon = true;
+                                    useCouponEdt.setEnabled(false);
+                                    useCouponBtn.setBackgroundResource(R.color.gray);
+                                    // 暂时设定的现金劵金额
+                                    jkCashCouponValue = 5;
+                                }else {
+                                    isUseCoupon = false;
+                                    useCouponEdt.setEnabled(true);
+                                    useCouponBtn.setBackgroundResource(R.drawable.selector_btn_blue);
+                                    jkCashCouponValue = -jkCashCouponValue;
+                                }
+                                // 更新现金劵ui显示
+                                if (jkCashCouponValue < 0){
+                                    cashCouponAmountTv.setText("");
+                                }else {
+                                    cashCouponAmountTv.setText("-￥"
+                                            + StringUtil.doubleTwoDecimal(jkCashCouponValue));
+                                }
+                                // 计算合计金额
+                                jkGroupTotalAmount-= jkCashCouponValue;
+                                totalAmount -= jkCashCouponValue;
+                                if (jkGroupTotalAmount < 0)
+                                    jkGroupTotalAmount = 0;
+                                if (totalAmount < 0)
+                                    totalAmount = 0;
+                                // 显示合计金额Ui
+                                if (settleTotalTv != null)
+                                    settleTotalTv.setText("合计：￥" + totalAmount);
+                                // 显示健客自营分组合计金额Ui
+                                if (jkTotalTv != null)
+                                    jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(jkGroupTotalAmount));
+                            }
+                        });
+                        // 现金券item点击事件
+                        couponView.findViewById(R.id.rly_cash_coupon).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!isShowCouponUses){
+                                    cashCouponUsesLy.setVisibility(View.VISIBLE);
+                                }else {
+                                    cashCouponUsesLy.setVisibility(View.GONE);
+                                }
+                                isShowCouponUses = !isShowCouponUses;
+                            }
+                        });
+                        // 添加优惠券、红包、现金券模块到容器
+                        orderInfoLy.addView(couponView);
                         // 可用优惠券个数
                         couponAvailableTv =
                                 (TextView) couponView.findViewById(R.id.tv_coupon_available);
@@ -697,34 +772,6 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                         PAGE_INTENT_RED_ENVELOPE_REQUEST_ID);
                             }
                         });
-                        // 现金劵使用布局
-                        final LinearLayout cashCouponUsesLy
-                                = (LinearLayout) couponView.findViewById(R.id.ly_cash_coupon_uses);
-                        // 现金劵编辑框
-                        useCouponEdt = (EditText) couponView.findViewById(R.id.edt_use_coupon);
-                        // 现金劵使用按钮
-                        Button useCouponBtn = (Button) couponView.findViewById(R.id.btn_use_coupon);
-                        // 现金劵使用按钮事件
-                        useCouponBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        });
-                        // 现金券item点击事件
-                        couponView.findViewById(R.id.rly_cash_coupon).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!isShowCouponUses){
-                                    cashCouponUsesLy.setVisibility(View.VISIBLE);
-                                }else {
-                                    cashCouponUsesLy.setVisibility(View.GONE);
-                                }
-                                isShowCouponUses = !isShowCouponUses;
-                            }
-                        });
-                        // 添加优惠券、红包、现金券模块到容器
-                        orderInfoLy.addView(couponView);
                     }
                     // 添加分割粗线
                     View boldDiv = LayoutInflater.from(this)
@@ -822,6 +869,12 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PAGE_INTENT_COUPON_REQUEST_ID
                 && resultCode == RESULT_OK){
+            if (jkCashCouponValue > 0){
+                jkCashCouponValue = -jkCashCouponValue;
+                cashCouponAmountTv.setText("");
+                useCouponEdt.setEnabled(true);
+                useCouponBtn.setBackgroundResource(R.drawable.selector_btn_blue);
+            }
             // 选择优惠劵处理
             double originCouponValue = data.getDoubleExtra(PAGE_INTENT_ORIGIN_COUPON_VALUE, 0.0);
             double realCouponValue = data.getDoubleExtra(PAGE_INTENT_REAL_COUPON_VALUE, 0.0);
@@ -849,8 +902,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 couponAmountTv.setTextColor(getResources().getColor(R.color.order_conform_red_txt));
                 couponAmountTv.setText("-￥" + StringUtil.doubleTwoDecimal(realCouponValue));
             }
-            jkGroupTotalAmount-= (realCouponValue - originCouponValue);
-            totalAmount -= (realCouponValue - originCouponValue);
+            jkGroupTotalAmount-= (realCouponValue - originCouponValue) + jkCashCouponValue;
+            totalAmount -= (realCouponValue - originCouponValue) + jkCashCouponValue;
             // 显示合计金额Ui
             if (settleTotalTv != null)
                 settleTotalTv.setText("合计：￥" + totalAmount);
@@ -897,7 +950,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 jkTotalTv.setText("￥" + StringUtil.doubleTwoDecimal(jkGroupTotalAmount));
         }
     }
-    
+
     @Override
     public void couponOptimal(int activityPosition, int integralPosition,
                               ArrayList<UseCouponModel> mUseCouponModelList) {

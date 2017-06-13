@@ -57,4 +57,6 @@ public class OrderConfirmConstant {
     public final static int PAGE_INTENT_COUPON_REQUEST_ID = 0x13;
     // 页面传值--进入红包页面请求标识
     public final static int PAGE_INTENT_RED_ENVELOPE_REQUEST_ID = 0x14;
+    // 现金劵为空
+    public final static String CASH_COUPON_IS_EMPTY = "请输入现金劵代码";
 }
