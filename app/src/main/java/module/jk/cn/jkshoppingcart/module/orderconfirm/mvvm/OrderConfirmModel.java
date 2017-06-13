@@ -84,6 +84,24 @@ public class OrderConfirmModel {
         couponModel = new UseCouponModel();
         couponModel.couponValue = 10;
         couponModel.couponRangeValue = 100;
+        couponModel.couponSortName = "积分兑换";
+        couponModel.couponType = INTEGRAL_COUPON_TYPE;
+        couponModel.couponRangeGroup = "健客自营";
+        couponModel.couponValidDate = "2017.06.12-07.10";
+        mUseCouponModelList.add(couponModel);
+
+        couponModel = new UseCouponModel();
+        couponModel.couponValue = 15;
+        couponModel.couponRangeValue = 100;
+        couponModel.couponSortName = "积分兑换";
+        couponModel.couponType = INTEGRAL_COUPON_TYPE;
+        couponModel.couponRangeGroup = "健客自营";
+        couponModel.couponValidDate = "2017.06.12-07.10";
+        mUseCouponModelList.add(couponModel);
+
+        couponModel = new UseCouponModel();
+        couponModel.couponValue = 10;
+        couponModel.couponRangeValue = 100;
         couponModel.couponSortName = "活动领取";
         couponModel.couponType = ACTIVITY_COUPON_TYPE;
         couponModel.couponRangeGroup = "健客自营";
@@ -221,7 +239,7 @@ public class OrderConfirmModel {
                 if (modelListener != null)
                     modelListener.updateUI(bean);
             }
-        }, 500);
+        }, 100);
     }
 
     /**

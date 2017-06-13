@@ -142,6 +142,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
     private int activityPosition = -1;
     // 最优积分优惠券位置
     private int integralPosition = -1;
+    // 积分优惠券列表
+    private ArrayList<UseCouponModel> mUseCouponModelList;
     // 是否在线支付
     boolean isPayOnline = false;
     // logic process
@@ -622,6 +624,9 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                                 if (!finalIsCouponAvailable){
                                     toastShow(NO_AVAILABLE_COUPON);
                                 }
+                                if (mUseCouponModelList != null){
+                                    model.mUseCouponModelList = mUseCouponModelList;
+                                }
                                 // 跳转到使用优惠券页面
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable(PAGE_INTENT_COUPON_LIST,
@@ -783,6 +788,24 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             // 选择优惠劵处理
             double originCouponValue = data.getDoubleExtra(PAGE_INTENT_ORIGIN_COUPON_VALUE, 0.0);
             double realCouponValue = data.getDoubleExtra(PAGE_INTENT_REAL_COUPON_VALUE, 0.0);
+            activityPosition = data.getIntExtra(PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION, -1);
+            integralPosition = data.getIntExtra(PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION, -1);
+            mUseCouponModelList = (ArrayList<UseCouponModel>)
+                    data.getSerializableExtra(PAGE_INTENT_COUPON_LIST);
+            if (mUseCouponModelList != null
+                    && mUseCouponModelList.size() != 0){
+                int i;
+                for (i=0;i<mUseCouponModelList.size();i++){
+                    UseCouponModel model = mUseCouponModelList.get(i);
+                    if (model != null && model.isCouponSelected){
+                        break;
+                    }
+                }
+                if (i>= mUseCouponModelList.size()){
+                    couponAmountTv.setTextColor(getResources().getColor(R.color.text_color_black3));
+                    couponAmountTv.setText("未使用");
+                }
+            }
             if (realCouponValue > 0) {
                 jkCouponValue = realCouponValue;
                 couponAmountTv.setTextColor(getResources().getColor(R.color.order_conform_red_txt));

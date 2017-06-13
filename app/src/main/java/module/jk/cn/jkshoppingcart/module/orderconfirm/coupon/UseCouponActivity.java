@@ -197,7 +197,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 switch (model.couponType){
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
-                        if (!isIntegralCouponSelected()) {
+                        if (!isIntegralCouponSelected()){
                             if (getConditionAmount() >= mData.get(i).couponRangeValue) {
                                 // 可选
                                 mData.get(i).isCouponSelected = false;
@@ -253,6 +253,10 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 switch (model.couponType){
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
+                        if (isIntegralCouponSelected()){
+                            // 重置积分优惠券
+                            resetIntegralSelected();
+                        }
                         if (getConditionAmount() >= mData.get(i).couponRangeValue){
                             // 可选
                             mData.get(i).isCouponSelected = false;
@@ -305,7 +309,7 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 switch (model.couponType){
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
-                        if (!isIntegralCouponSelected()) {
+                        if (!isIntegralCouponSelected()){
                             if (getConditionAmount() >= mData.get(i).couponRangeValue) {
                                 // 可选
                                 mData.get(i).isCouponSelected = false;
@@ -353,6 +357,10 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 switch (model.couponType){
                     case INTEGRAL_COUPON_TYPE:
                         // 积分优惠券
+                        if (isIntegralCouponSelected()){
+                            // 重置积分优惠券
+                            resetIntegralSelected();
+                        }
                         // 优惠参考金额
                         double conditionAmount = totalAmount - mData.get(position).couponValue;
                         if (conditionAmount >= mData.get(i).couponRangeValue){
@@ -487,6 +495,31 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
     }
 
     /**
+      * 重置积分优惠券
+      * @author leibing
+      * @createTime 2017/6/13
+      * @lastModify 2017/6/13
+      * @param
+      * @return
+      */
+    private void resetIntegralSelected(){
+        if (mData == null)
+            return;
+        for (int i=0;i<mData.size();i++){
+            UseCouponModel model = mData.get(i);
+            if (model != null){
+                switch (model.couponType){
+                    case INTEGRAL_COUPON_TYPE:
+                        // 积分优惠券
+                        mData.get(i).isCouponSelected = false;
+                        mData.get(i).isCouponAvailable = true;
+                        break;
+                }
+            }
+        }
+    }
+
+    /**
      * 是否有积分优惠券被选中
      * @author leibing
      * @createTime 2017/6/10
@@ -600,6 +633,9 @@ public class UseCouponActivity extends BaseFragmentActivity implements UseCoupon
                 Intent intent = new Intent();
                 intent.putExtra(PAGE_INTENT_ORIGIN_COUPON_VALUE, originDiscountAmount);
                 intent.putExtra(PAGE_INTENT_REAL_COUPON_VALUE, totalDiscountAmount);
+                intent.putExtra(PAGE_INTENT_ACTIVITY_OPTIMAL_POSITION, -1);
+                intent.putExtra(PAGE_INTENT_INTEGRAL_OPTIMAL_POSITION, -1);
+                intent.putExtra(PAGE_INTENT_COUPON_LIST, mData);
                 setResult(RESULT_OK, intent);
                 AppManager.getInstance().finishActivity();
                 break;
