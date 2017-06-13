@@ -888,6 +888,7 @@ public class OrderConfirmActivity extends BaseFragmentActivity
             if (jkCashCouponValue > 0){
                 jkCashCouponValue = -jkCashCouponValue;
                 cashCouponAmountTv.setText("");
+                isUseCoupon = false;
                 useCouponEdt.setEnabled(true);
                 useCouponBtn.setBackgroundResource(R.drawable.selector_btn_blue);
             }
