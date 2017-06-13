@@ -15,16 +15,16 @@ import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConsta
 import static module.jk.cn.jkshoppingcart.module.orderconfirm.OrderConfirmConstant.PAY_ONLINE;
 
 /**
- * @className: ShoppingCartDialog
+ * @className: CommonDialog
  * @classDescription: 购物车
  * @author: leibing
  * @createTime: 2017/6/6
  */
-public class ShoppingCartDialog {
+public class CommonDialog {
     // 弹窗
     private Dialog mDialog;
     // sington
-    private static ShoppingCartDialog instance;
+    private static CommonDialog instance;
 
     /**
       * Constructor
@@ -34,7 +34,7 @@ public class ShoppingCartDialog {
       * @param
       * @return
       */
-    private ShoppingCartDialog(){
+    private CommonDialog(){
     }
     
     /**
@@ -45,9 +45,9 @@ public class ShoppingCartDialog {
       * @param
       * @return
       */
-    public static ShoppingCartDialog getInstance(){
+    public static CommonDialog getInstance(){
         if (instance == null){
-            instance = new ShoppingCartDialog();
+            instance = new CommonDialog();
         }
         return instance;
     }

@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.common.ImageLoader;
-import module.jk.cn.jkshoppingcart.common.ShoppingCartDialog;
+import module.jk.cn.jkshoppingcart.common.CommonDialog;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.common.ToastUtils;
 import module.jk.cn.jkshoppingcart.module.AppManager;
@@ -300,8 +300,8 @@ public class OrderConfirmActivity extends BaseFragmentActivity
                 break;
             case R.id.rly_payment:
                 // 支付方式选择
-                ShoppingCartDialog.getInstance().createPaymentSelectDialog(this, isPayOnline,
-                        new ShoppingCartDialog.DialogCallBack() {
+                CommonDialog.getInstance().createPaymentSelectDialog(this, isPayOnline,
+                        new CommonDialog.DialogCallBack() {
                     @Override
                     public void leftBtnListener() {
                     }

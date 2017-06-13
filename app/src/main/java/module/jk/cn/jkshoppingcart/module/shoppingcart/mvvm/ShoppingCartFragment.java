@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import module.jk.cn.jkshoppingcart.R;
 import module.jk.cn.jkshoppingcart.cache.ListCache;
-import module.jk.cn.jkshoppingcart.common.ShoppingCartDialog;
+import module.jk.cn.jkshoppingcart.common.CommonDialog;
 import module.jk.cn.jkshoppingcart.common.StringUtil;
 import module.jk.cn.jkshoppingcart.common.ToastUtils;
 import module.jk.cn.jkshoppingcart.module.AppManager;
@@ -272,8 +272,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                             mData.get(groupPosition).product.get(childPosition).productType == PRODUCT_TYPE_SKU_INVALID)
                         return false;
                     // 收藏、删除
-                    ShoppingCartDialog.getInstance().createDialogOne(getActivity(),
-                                new ShoppingCartDialog.DialogCallBack() {
+                    CommonDialog.getInstance().createDialogOne(getActivity(),
+                                new CommonDialog.DialogCallBack() {
                                     @Override
                                     public void leftBtnListener() {
                                         // 收藏处理
@@ -690,8 +690,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
     public void doEditNum(final int groupPosition, final int childPosition, View showCountView, boolean isChecked) {
         if (getActivity() == null)
             return;
-        ShoppingCartDialog.getInstance().createDialogTwo(getActivity(),
-                new ShoppingCartDialog.DialogCallBack() {
+        CommonDialog.getInstance().createDialogTwo(getActivity(),
+                new CommonDialog.DialogCallBack() {
             @Override
             public void leftBtnListener() {
             }
