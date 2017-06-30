@@ -1,5 +1,9 @@
 package module.jk.cn.jkshoppingcart.common;
 
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -112,5 +116,28 @@ public class StringUtil {
 	  */
 	public static boolean isIDCard(String idCard) {
 		return Pattern.matches(REGEX_ID_CARD, idCard);
+	}
+
+	/**
+	 * 设置商品总金额显示样式
+	 * @author leibing
+	 * @createTime 2017/3/16
+	 * @lastModify 2017/3/16
+	 * @param totalPrice
+	 * @return
+	 */
+	public static SpannableString setTotalPriceType(double totalPrice){
+		String targetStr = doubleTwoDecimal(totalPrice);
+		targetStr = "￥" + targetStr;
+		int length = targetStr.length();
+		SpannableString msp = new SpannableString(targetStr);
+		// 第二个参数boolean dip，如果为true，表示前面的字体大小单位为dip，否则为像素。
+		msp.setSpan(new AbsoluteSizeSpan(15,true), 0, 1,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		msp.setSpan(new AbsoluteSizeSpan(24,true), 1, length-3,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		msp.setSpan(new AbsoluteSizeSpan(15,true), length-3, length,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return msp;
 	}
 }

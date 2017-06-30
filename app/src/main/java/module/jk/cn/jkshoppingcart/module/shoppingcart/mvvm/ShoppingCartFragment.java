@@ -110,6 +110,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartInterf
                              @Nullable Bundle savedInstanceState) {
         // create view
         View view = inflater.inflate(R.layout.fragment_shopping_cart, null);
+        // 去掉多余背景，减少过度绘制
+        getActivity().getWindow().setBackgroundDrawable(null);
         // bind buffer knife
         ButterKnife.bind(this, view);
         // initView
